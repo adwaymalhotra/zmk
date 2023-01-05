@@ -27,6 +27,9 @@
 
 #define TRANS_LAST_ROW_HALF &trans &trans &trans
 #define TRANS_LAST_ROW TRANS_LAST_ROW_HALF TRANS_LAST_ROW_HALF
+#define LAG LA(LGUI)
+#define LCG LC(LGUI)
+#define LSG LS(LGUI)
 
 / {
   macros {
@@ -63,20 +66,20 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       colemak_dh {
         bindings = <
-          &kp Q       &hml LA(LGUI) W &hml LC(LGUI) F &hml LS(LGUI) P &kp B   /**/ &kp J &hmr LS(LGUI) L &hmr LC(LGUI) U &hmr LA(LGUI) Y &hlr FN SEMI
-          &hml LGUI A &hml LALT R     &hml LCTL S     &hml LSHFT T    &kp G   /**/ &kp M &hmr LSHFT N    &hmr LCTL E     &hmr LALT I     &hmr LGUI O
-&kp MINUS &kp Z       &kp X           &kp C           &kp D           &kp V   /**/ &kp K &kp H           &kp COMMA       &kp DOT         &kp FSLH     &kp SQT
-                                           &kp ESC &htl EX BSPC &hrl FN SPACE /**/ &htm LSHFT TAB &htl SY RET &tmux
+              &kp Q       &hml LAG W  &hml LCG F  &hml LSG P   &kp B     /**/ &kp J     &hmr LSG L   &hmr LCG U  &hmr LAG Y  &kp SEMI
+              &hml LGUI A &hml LALT R &hml LCTL S &hml LSHFT T &kp G     /**/ &kp M     &hmr LSHFT N &hmr LCTL E &hmr LALT I &hmr LGUI O
+&hml MINUS FN &kp Z       &kp X       &kp C       &kp D        &kp V     /**/ &kp K     &kp H        &kp COMMA   &kp DOT     &kp FSLH     &hml SQT FN
+                                           &mo FN &htl EX BSPC &kp SPACE /**/ &kp LSHFT &htl SY RET  &mo FN
         >;
       };
 
       colemak_dh_mac {
         bindings = <
-       &trans      &trans      &trans      &trans       &trans /**/ &trans &trans       &trans      &trans      &trans
-       &hml LCTL A &hml LALT R &hml LGUI S &hml LSHFT T &trans /**/ &trans &hmr LSHFT N &hmr LGUI E &hmr LALT I &hmr LCTL O
-&trans &trans      &trans      &trans      &trans       &trans /**/ &trans &trans       &trans      &trans      &trans      &trans
+          &trans      &trans      &trans      &trans       &trans /**/ &trans &trans       &trans      &trans      &trans
+          &hml LCTL A &hml LALT R &hml LGUI S &hml LSHFT T &trans /**/ &trans &hmr LSHFT N &hmr LGUI E &hmr LALT I &hmr LCTL O
+   &trans &trans      &trans      &trans      &trans       &trans /**/ &trans &trans       &trans      &trans      &trans      &trans
 
-       TRANS_LAST_ROW
+          TRANS_LAST_ROW
         >;
       };
 
