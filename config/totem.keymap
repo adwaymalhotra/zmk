@@ -68,8 +68,8 @@
         bindings = <
               &kp Q       &hml LAG W  &hml LCG F  &hml LSG P   &kp B     /**/ &kp J     &hmr LSG L   &hmr LCG U  &hmr LAG Y  &kp SEMI
               &hml LGUI A &hml LALT R &hml LCTL S &hml LSHFT T &kp G     /**/ &kp M     &hmr LSHFT N &hmr LCTL E &hmr LALT I &hmr LGUI O
-&hml MINUS FN &kp Z       &kp X       &kp C       &kp D        &kp V     /**/ &kp K     &kp H        &kp COMMA   &kp DOT     &kp FSLH     &hml SQT FN
-                                           &mo FN &htl EX BSPC &kp SPACE /**/ &kp LSHFT &htl SY RET  &mo FN
+&hml FN MINUS &kp Z       &kp X       &kp C       &kp D        &kp V     /**/ &kp K     &kp H        &kp COMMA   &kp DOT     &kp FSLH    &hml FN SQT
+                                      &mo FN      &htl EX BSPC &kp SPACE /**/ &kp LSHFT &htl SY RET  &mo FN
         >;
       };
 
