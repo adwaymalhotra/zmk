@@ -97,9 +97,9 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       qwerty {
         bindings = <
-          &trans &trans      &hml LC(LGUI) E &hml LS(LGUI) R &kp T  /**/ &kp Y  &hmr LS(LGUI) U &hmr LC(LGUI) I &hmr LA(LGUI) O &hlr FN P
-          &trans &hml LALT S &hml LCTL D     &hml LSHFT F    &trans /**/ &trans &hmr LSHFT J    &hmr LCTL K     &hmr LALT L     &hmr LGUI SEMI
-   &trans &trans &trans      &trans          &kp V           &kp B  /**/ &kp N  &kp M           &trans          &trans          &kp FSLH       &trans
+          &trans &trans      &hml LCG E  &hml LSG R   &kp T  /**/ &kp Y  &hmr LSG U   &hmr LCG I  &hmr LAG O  &hlr FN P
+          &trans &hml LALT S &hml LCTL D &hml LSHFT F &trans /**/ &trans &hmr LSHFT J &hmr LCTL K &hmr LALT L &hmr LGUI SEMI
+   &trans &trans &trans      &trans      &kp V        &kp B  /**/ &kp N  &kp M        &trans      &trans      &kp FSLH       &trans
 
           TRANS_LAST_ROW
         >;
