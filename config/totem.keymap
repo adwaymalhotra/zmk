@@ -68,7 +68,7 @@
         bindings = <
               &kp Q       &hml LAG W  &hml LCG F  &hml LSG P   &kp B     /**/ &kp J     &hmr LSG L   &hmr LCG U  &hmr LAG Y  &kp SEMI
               &hml LGUI A &hml LALT R &hml LCTL S &hml LSHFT T &kp G     /**/ &kp M     &hmr LSHFT N &hmr LCTL E &hmr LALT I &hmr LGUI O
-&hml FN MINUS &kp Z       &kp X       &kp C       &kp D        &kp V     /**/ &kp K     &kp H        &kp COMMA   &kp DOT     &kp FSLH    &hml FN SQT
+&hll FN MINUS &kp Z       &kp X       &kp C       &kp D        &kp V     /**/ &kp K     &kp H        &kp COMMA   &kp DOT     &kp FSLH    &hlr FN SQT
                                       &mo FN      &htl EX BSPC &kp SPACE /**/ &kp LSHFT &htl SY RET  &mo FN
         >;
       };
@@ -140,9 +140,9 @@
       // Adjustments layer and Fn Keys
       fns {
         bindings = <
-          &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 /**/ &trans     &kp F1 &kp F2  &kp F3  &kp F4
-          &none        &none        &tog CO_MAC  &tog QW_MAC  &reset       /**/ &bt BT_CLR &kp F5 &kp F6  &kp F7  &kp F8
-    &none &none        &none        &out OUT_BLE &out OUT_USB &bootloader  /**/ &trans     &kp F9 &kp F10 &kp F11 &kp F12 &none
+          &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 /**/ &bt BT_CLR  &kp F1 &kp F2  &kp F3  &kp F4
+          &none        &none        &tog CO_MAC  &tog QW_MAC  &reset       /**/ &reset      &kp F5 &kp F6  &kp F7  &kp F8
+    &none &none        &none        &out OUT_BLE &out OUT_USB &bootloader  /**/ &bootloader &kp F9 &kp F10 &kp F11 &kp F12 &none
 
           TRANS_LAST_ROW
           >;
