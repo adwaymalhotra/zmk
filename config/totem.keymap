@@ -69,7 +69,7 @@
               &kp Q       &hml LAG W  &hml LCG F   &hml LSG P   &kp B  /**/ &kp J     &hmr LSG L   &hmr LCG U  &hmr LAG Y  &kp SEMI
               &hml LGUI A &hml LALT R &hml LCTL S  &hml LSHFT T &kp G  /**/ &kp M     &hmr LSHFT N &hmr LCTL E &hmr LALT I &hmr LGUI O
 &hll FN MINUS &kp Z       &kp X       &kp C        &kp D        &kp V  /**/ &kp K     &kp H        &kp COMMA   &kp DOT     &kp FSLH    &hlr FN SQT
-                                      &htl EX BSPC &kp SPACE    &mo FN /**/ &kp LSHFT &htl SY RET  &mo FN
+                                      &htl FN BSPC &kp SPACE    &mo EX /**/ &kp LSHFT &htl SY RET  &mo FN
         >;
       };
 
