@@ -98,7 +98,7 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       qwerty {
         bindings = <
-          &trans &trans      &hml LCG E  &hml LSG R   &kp T  /**/ &kp Y  &hmr LSG U   &hmr LCG I  &hmr LAG O  &hlr FN P
+          &trans &trans      &hml LCG E  &hml LSG R   &kp T  /**/ &kp Y  &hmr LSG U   &hmr LCG I  &hmr LAG O  &kp P
           &trans &hml LALT S &hml LCTL D &hml LSHFT F &trans /**/ &trans &hmr LSHFT J &hmr LCTL K &hmr LALT L &hmr LGUI SEMI
    &trans &trans &trans      &trans      &kp V        &kp B  /**/ &kp N  &kp M        &trans      &trans      &kp FSLH       &trans
 
@@ -116,11 +116,9 @@
         >;
       };
 
+      // Layer for gaming
       game {
-        bindings = <
-               &kp TAB   &kp Q &kp W &kp E &kp R /**/ &none &N7 &N8 &N9 &N0
-               &kp LCTL  &kp A &kp S &kp D &kp F /**/ &none &N4 &N5 &N6 &none
-   &hll FN ESC &kp LSHFT &kp Z &kp X &kp C &kp V /**/ &none &N1 &N2 &N3 &none &tog GAME
+        bindings = < &kp TAB   &kp Q &kp W &kp E &kp R /**/ &none &N7 &N8 &N9 &N0 &kp LCTL  &kp A &kp S &kp D &kp F /**/ &none &N4 &N5 &N6 &none &hll FN ESC &kp LSHFT &kp Z &kp X &kp C &kp V /**/ &none &N1 &N2 &N3 &none &tog GAME
 
                       &kp LALT &kp RET &kp SPACE /**/ &kp LSHFT &htl SY RET  &kp SQT
         >;
