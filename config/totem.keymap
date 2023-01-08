@@ -122,7 +122,7 @@
    &hll FN ESC &kp LSHFT &kp Z &kp X &kp C &kp V /**/ &none &N1 &N2 &N3 &none &tog GAME
 
                       &kp LALT &kp RET &kp SPACE /**/ &kp LSHFT &htl SY RET  &kp SQT
-      }
+      };
 
       // Symbol Layer with numbers on the top layer
       symbol {
