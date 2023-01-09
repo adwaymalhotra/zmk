@@ -12,6 +12,7 @@
 
 #include "hold_tap_behaviors.dtsi"
 #include "combos.dtsi"
+#include "behaviors.dtsi"
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
@@ -81,7 +82,7 @@
                &kp A &hml LGUI R &hml LALT S &hml LCTL T &hml LSHFT G /**/ &hmr LSHFT M &hmr LCTL N &hmr LALT E &hmr LGUI I &kp O
  &hll FN MINUS &kp Z &kp X       &kp C       &kp D       &kp V        /**/ &kp K        &kp H       &kp COMMA   &kp DOT     &kp FSLH    &hlr FN SQT
 
-                                           &bsdel &htl EX ESC &kp SPC /**/ &kp LSHFT &htl SY RET &kp TAB
+                                        &bsdel &htl EX &gresc &kp SPC /**/ &kp LSHFT &htl SY RET &kp TAB
         >;
       };
 
