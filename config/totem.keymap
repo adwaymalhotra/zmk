@@ -67,8 +67,8 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       colemak_dh {
         bindings = <
-               &kp Q &kp W       &hml LAG F  &hml LCG P  &hml LSG B   /**/ &hmr LSG J   &hmr LCG L  &hmr LAG U  &kp  Y      &kp SEMI
-               &kp A &hml LGUI R &hml LALT S &hml LCTL T &hml LSHFT G /**/ &hmr LSHFT M &hmr LCTL N &hmr LALT E &hmr LGUI I &kp O
+               &kp Q &kp W       &hml LCG F  &hml LAG P  &hml LSG B   /**/ &hmr LSG J   &hmr LAG L  &hmr LCG U  &kp  Y      &kp SEMI
+               &kp A &hml LGUI R &hml LCTL S &hml LALT T &hml LSHFT G /**/ &hmr LSHFT M &hmr LALT N &hmr LCTL E &hmr LGUI I &kp O
  &hll FN MINUS &kp Z &kp X       &kp C       &kp D       &kp V        /**/ &kp K        &kp H       &kp COMMA   &kp DOT     &kp FSLH    &hlr FN SQT
 
                                         &bsdel &htl EX ESCAPE &kp SPC /**/ &kp LSHFT &htl SY RET &kp TAB
@@ -77,9 +77,9 @@
 
       colemak_dh_mac {
         bindings = <
-          &trans &hml LCG W  &trans &kp P       &trans /**/ &trans &kp L       &trans &hmr LCG Y  &trans
-          &trans &hml LCTL R &trans &hml LGUI T &trans /**/ &trans &hmr LGUI N &trans &hmr LCTL I &none
-   &trans &trans &trans      &trans &trans      &trans /**/ &trans &trans      &trans &trans      &trans &trans
+          &trans &hml LCG W  &kp F       &trans &trans /**/ &trans &trans &kp U       &hmr LCG Y  &trans
+          &trans &hml LCTL R &hml LGUI S &trans &trans /**/ &trans &trans &hmr LGUI E &hmr LCTL I &none
+   &trans &trans &trans      &trans      &trans &trans /**/ &trans &trans &trans      &trans      &trans &trans
 
           TRANS_LAST_ROW
         >;
@@ -94,13 +94,13 @@
 // ┏━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┓
 // ┃ FN/-  ┃   Z   ┃   X   ┃   C   ┃   V   ┃   B   ┃   ┃   N   ┃   M   ┃   ,   ┃   .   ┃   /   ┃  FN/' ┃
 // ┗━━━━━━━┻━━━━━━━┻━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┻━━━━━━━┻━━━━━━━┛
-//                         ┃      ┃EX/ESC ┃  SPC  ┃   ┃ LSHFT ┃ SYM/ ┃      ┃
+//                         ┃      ┃EX/ESC ┃  SPC  ┃   ┃  SFT  ┃ SYM/ ┃      ┃
 //                         ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛   ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       qwerty {
         bindings = <
-          &trans &trans      &hml LAG E  &hml LCG R  &hml LSG T /**/ &hmr LSG Y   &hmr LCG U  &hmr LAG I  &kp O       &kp P
-          &trans &hml LGUI S &hml LALT D &hml LCTL F &trans     /**/ &hml LSHFT H &hmr LCTL J &hmr LALT K &hmr LGUI L &kp SEMI
+          &trans &trans      &hml LCG E  &hml LAG R  &hml LSG T /**/ &hmr LSG Y   &hmr LAG U  &hmr LCG I  &kp O       &kp P
+          &trans &hml LGUI S &hml LCTL D &hml LALT F &trans     /**/ &hml LSHFT H &hmr LALT J &hmr LCTL K &hmr LGUI L &kp SEMI
    &trans &trans &trans      &trans      &kp V       &kp B      /**/ &kp N        &kp M       &trans      &trans      &kp FSLH &trans
 
           TRANS_LAST_ROW
@@ -109,8 +109,8 @@
 
       qwerty_mac {
         bindings = <
-          &trans &hml LCG W  &trans &kp R       &trans /**/ &trans &kp U       &trans &hmr LCG O  &trans
-          &trans &hml LCTL S &trans &hml LGUI F &trans /**/ &trans &hmr LGUI J &trans &hmr LCTL L &none
+          &trans &hml LCG W  &kp E       &trans &trans /**/ &trans &trans &kp I       &hmr LCG O  &trans
+          &trans &hml LCTL S &hml LGUI D &trans &trans /**/ &trans &trans &hmr LGUI K &hmr LCTL L &none
    &trans &trans &trans      &trans &trans      &trans /**/ &trans &trans      &trans &trans      &trans &trans
 
           TRANS_LAST_ROW
