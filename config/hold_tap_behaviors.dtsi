@@ -75,5 +75,12 @@
         flavor = "hold-preferred";
         bindings = <&mo>, <&kp>;
       };
+      bsdel: backspace_delete {
+        compatible = "zmk, behavior-mod-morph";
+        label = "BS_DEL";
+        #binding-cells = <0>;
+        bindings = <&kp BSPC>, <&kp DEL>;
+        mods = <(MOD_LSFT)>;
+      };
   };
 };

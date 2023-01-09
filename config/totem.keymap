@@ -12,7 +12,6 @@
 
 #include "hold_tap_behaviors.dtsi"
 #include "combos.dtsi"
-#include "behaviors.dtsi"
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
@@ -49,16 +48,6 @@
     ZMK_MACRO(cut     , bindings = <&kp LC(X)>;)
     ZMK_MACRO(copy    , bindings = <&kp LC(C)>;)
     ZMK_MACRO(paste   , bindings = <&kp LC(V)>;)
-  };
-
-  behaviors {
-    bsdel: backspace_delete {
-      compatible = "zmk, behavior-mod-morph";
-      label = "BS_DEL";
-      #binding-cells = <0>;
-      bindings = <&kp BSPC>, <&kp DEL>;
-      mods = <(MOD_LSFT)>;
-    };
   };
 
   keymap {
