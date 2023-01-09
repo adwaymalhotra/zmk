@@ -76,10 +76,10 @@
         bindings = <&mo>, <&kp>;
       };
       bsdel: backspace_delete {
-        compatible = "zmk, behavior-mod-morph";
+        compatible = "zmk,behavior-mod-morph";
         label = "BS_DEL";
         #binding-cells = <0>;
-        bindings = <&kp BSPC>, <&kp DEL>;
+        bindings = <&kp BACKSPACE>, <&kp DELETE>;
         mods = <(MOD_LSFT)>;
       };
   };
