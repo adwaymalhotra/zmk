@@ -60,17 +60,17 @@
 //         ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫
 //         ┃   A   ┃   R   ┃   S   ┃   T   ┃   G   ┃   ┃   M   ┃   N   ┃   E   ┃   I   ┃   O   ┃
 // ┏━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┓
-// ┃   -   ┃   Z   ┃   X   ┃   C   ┃   D   ┃   V   ┃   ┃   K   ┃   H   ┃   ,   ┃   .   ┃   /   ┃   '   ┃
+// ┃ FN/  ┃   Z   ┃   X   ┃   C   ┃   D   ┃   V   ┃   ┃   K   ┃   H   ┃   ,   ┃   .   ┃   /   ┃ FN/  ┃
 // ┗━━━━━━━┻━━━━━━━┻━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┻━━━━━━━┻━━━━━━━┛
-//                         ┃   -   ┃  BSPC ┃  SPC  ┃   ┃ LSHFT ┃  RET  ┃   '   ┃
+//                         ┃  LG/- ┃EX/ESC ┃ LS/SPC┃   ┃ LS/SPC┃ SYM/ ┃ LC/'  ┃
 //                         ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛   ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       colemak_dh {
         bindings = <
-             &kp Q       &hml LAG W  &hml LCG F  &hml LSG P   &kp B     /**/ &kp J     &hmr LSG L   &hmr LCG U  &hmr LAG Y  &kp SEMI
-             &hml LGUI A &hml LALT R &hml LCTL S &hml LSHFT T &kp G     /**/ &kp M     &hmr LSHFT N &hmr LCTL E &hmr LALT I &hmr LGUI O
-&hll FN BSPC &kp Z       &kp X       &kp C       &kp D        &kp V     /**/ &kp K     &kp H        &kp COMMA   &kp DOT     &kp FSLH    &hlr FN RET
-                                 &hml LGUI MINUS &htl EX BSLH &kp SPACE /**/ &kp LSHFT &htl SY RET  &hmr LCTL SQT
+             &kp Q       &hml LAG W  &hml LCG F  &hml LSG P   &kp B /**/ &kp J &hmr LSG L   &hmr LCG U  &hmr LAG Y  &kp SEMI
+             &hml LGUI A &hml LALT R &hml LCTL S &hml LSHFT T &kp G /**/ &kp M &hmr LSHFT N &hmr LCTL E &hmr LALT I &hmr LGUI O
+ &hll FN TAB &kp Z       &kp X       &kp C       &kp D        &kp V /**/ &kp K &kp H        &kp COMMA   &kp DOT     &kp FSLH    &hlr FN BSPC
+                         &hml LGUI MINUS &htl EX ESC &htm LSHFT SPC /**/ &htm LSHFT SPC &htl SY RET &hmr LCTL SQT
         >;
       };
 
@@ -91,9 +91,9 @@
 //         ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫
 //         ┃   A   ┃   S   ┃   D   ┃   F   ┃   G   ┃   ┃   H   ┃   J   ┃   K   ┃   L   ┃   ;   ┃
 // ┏━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┓
-// ┃   -   ┃   Z   ┃   X   ┃   C   ┃   V   ┃   B   ┃   ┃   N   ┃   M   ┃   ,   ┃   .   ┃   /   ┃   '   ┃
+// ┃ FN/  ┃   Z   ┃   X   ┃   C   ┃   V   ┃   B   ┃   ┃   N   ┃   M   ┃   ,   ┃   .   ┃   /   ┃ FN/  ┃
 // ┗━━━━━━━┻━━━━━━━┻━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┻━━━━━━━┻━━━━━━━┛
-//                         ┃   -   ┃  BSPC ┃  SPC  ┃   ┃ LSHFT ┃  RET  ┃   '   ┃
+//                         ┃  LG|- ┃EX|ESC ┃ LS|SPC┃   ┃ LS|SPC┃ SYM| ┃ LC|'  ┃
 //                         ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛   ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       qwerty {
@@ -132,7 +132,7 @@
         bindings = <
           &kp N1   &kp N2   &kp N3   &kp N4   &kp N5 /**/ &kp N6  &kp N7   &kp N8    &kp N9    &kp N0
           &kp EXCL &kp AT   &kp HASH &kp DLLR &none  /**/ &uc_rup &kp AMPS &kp STAR  &kp PRCNT &kp CARET
-   &trans &kp BSLH &kp PIPE &kp PLUS &kp EQL  &none  /**/ &uc_eur &uc_gbp  &kp COMMA &kp DOT   &kp FSLH  &trans
+  &kp DEL &kp BSLH &kp PIPE &kp PLUS &kp EQL  &none  /**/ &uc_eur &uc_gbp  &kp COMMA &kp DOT   &kp FSLH  &trans
 
           TRANS_LAST_ROW
           >;
@@ -141,9 +141,9 @@
       // Extend Layer with Macros and Special Keys
       extend {
         bindings = <
-          &kp DEL &vi_sav &kp C_VOL_UP &kp C_VOL_DN &kp C_MUTE /**/ &kp HOME &kp PG_DN    &kp PG_UP    &kp END   &none
+          &kp DEL &vi_sav &kp C_VOL_UP &kp C_VOL_DN &kp C_MUTE /**/ &kp HOME &kp PG_DN    &kp PG_UP    &kp END   &kp CAPS
           &none   &find   &pre_tab     &nex_tab     &nex_dsk   /**/ &kp LEFT &kp DOWN     &kp UP       &kp RIGHT &runner
-   &trans &none   &cut    &copy        &paste       &pre_dsk   /**/ &kp CAPS &kp C_BRI_DN &kp C_BRI_UP &none     &none   &trans
+  &kp DEL &none   &cut    &copy        &paste       &pre_dsk   /**/ &none    &kp C_BRI_DN &kp C_BRI_UP &none     &none   &trans
 
           TRANS_LAST_ROW
           >;
