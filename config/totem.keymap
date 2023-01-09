@@ -57,7 +57,7 @@
       #binding-cells = <0>;
       bindings = <&kp BSPC>, <&kp DEL>;
       mods = <(MOD_LSFT)>;
-    }
+    };
   };
 
   keymap {
@@ -81,7 +81,7 @@
                &kp A &hml LGUI R &hml LALT S &hml LCTL T &hml LSHFT G /**/ &hmr LSHFT M &hmr LCTL N &hmr LALT E &hmr LGUI I &kp O
  &hll FN MINUS &kp Z &kp X       &kp C       &kp D       &kp V        /**/ &kp K        &kp H       &kp COMMA   &kp DOT     &kp FSLH    &hlr FN SQT
 
-                                         &kp BSPC &htl EX ESC &kp SPC /**/ &kp LSHFT &htl SY RET &kp TAB
+                                        &bsdel &htl EX &gresc &kp SPC /**/ &kp LSHFT &htl SY RET &kp TAB
         >;
       };
 
