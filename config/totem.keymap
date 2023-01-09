@@ -50,6 +50,16 @@
     ZMK_MACRO(paste   , bindings = <&kp LC(V)>;)
   };
 
+  behaviors {
+    bsdel: backspace_delete {
+      compatible = "zmk, behavior-mod-morph";
+      label = "BS_DEL";
+      #binding-cells = <0>;
+      bindings = <&kp BSPC>, <&kp DEL>;
+      mods = <(MOD_LSFT)>;
+    }
+  }
+
   keymap {
     compatible = "zmk,keymap";
 
@@ -60,25 +70,26 @@
 //         ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫
 //         ┃   A   ┃   R   ┃   S   ┃   T   ┃   G   ┃   ┃   M   ┃   N   ┃   E   ┃   I   ┃   O   ┃
 // ┏━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┓
-// ┃ FN/  ┃   Z   ┃   X   ┃   C   ┃   D   ┃   V   ┃   ┃   K   ┃   H   ┃   ,   ┃   .   ┃   /   ┃ FN/  ┃
+// ┃ FN/-  ┃   Z   ┃   X   ┃   C   ┃   D   ┃   V   ┃   ┃   K   ┃   H   ┃   ,   ┃   .   ┃   /   ┃  FN/' ┃
 // ┗━━━━━━━┻━━━━━━━┻━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┻━━━━━━━┻━━━━━━━┛
-//                         ┃  LG/- ┃EX/ESC ┃ LS/SPC┃   ┃ LS/SPC┃ SYM/ ┃ LC/'  ┃
+//                         ┃      ┃EX/ESC ┃  SPC  ┃   ┃ LSHFT ┃ SYM/ ┃      ┃
 //                         ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛   ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       colemak_dh {
         bindings = <
-             &kp Q       &hml LAG W  &hml LCG F  &hml LSG P   &kp B /**/ &kp J &hmr LSG L   &hmr LCG U  &hmr LAG Y  &kp SEMI
-             &hml LGUI A &hml LALT R &hml LCTL S &hml LSHFT T &kp G /**/ &kp M &hmr LSHFT N &hmr LCTL E &hmr LALT I &hmr LGUI O
- &hll FN TAB &kp Z       &kp X       &kp C       &kp D        &kp V /**/ &kp K &kp H        &kp COMMA   &kp DOT     &kp FSLH    &hlr FN BSPC
-                         &hml LGUI MINUS &htl EX ESC &htm LSHFT SPC /**/ &htm LSHFT SPC &htl SY RET &hmr LCTL SQT
+               &kp Q &kp W       &hml LAG F  &hml LCG P  &hml LSG B   /**/ &hmr LSG J   &hmr LCG L  &hmr LAG U  &kp  Y      &kp SEMI
+               &kp A &hml LGUI R &hml LALT S &hml LCTL T &hml LSHFT G /**/ &hmr LSHFT M &hmr LCTL N &hmr LALT E &hmr LGUI I &kp O
+ &hll FN MINUS &kp Z &kp X       &kp C       &kp D       &kp V        /**/ &kp K        &kp H       &kp COMMA   &kp DOT     &kp FSLH    &hlr FN SQT
+
+                                         &kp BSPC &htl EX ESC &kp SPC /**/ &kp LSHFT &htl SY RET &kp TAB
         >;
       };
 
       colemak_dh_mac {
         bindings = <
-          &trans      &trans      &trans      &trans       &trans /**/ &trans &trans       &trans      &trans      &trans
-          &hml LCTL A &hml LALT R &hml LGUI S &hml LSHFT T &trans /**/ &trans &hmr LSHFT N &hmr LGUI E &hmr LALT I &hmr LCTL O
-   &trans &trans      &trans      &trans      &trans       &trans /**/ &trans &trans       &trans      &trans      &trans      &trans
+          &trans &hml LCG W  &trans &kp P       &trans /**/ &trans &kp L       &trans &hmr LCG Y  &trans
+          &trans &hml LCTL R &trans &hml LGUI T &trans /**/ &trans &hmr LGUI N &trans &hmr LCTL I &none
+   &trans &trans &trans      &trans &trans      &trans /**/ &trans &trans      &trans &trans      &trans &trans
 
           TRANS_LAST_ROW
         >;
@@ -91,16 +102,16 @@
 //         ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫
 //         ┃   A   ┃   S   ┃   D   ┃   F   ┃   G   ┃   ┃   H   ┃   J   ┃   K   ┃   L   ┃   ;   ┃
 // ┏━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┓
-// ┃ FN/  ┃   Z   ┃   X   ┃   C   ┃   V   ┃   B   ┃   ┃   N   ┃   M   ┃   ,   ┃   .   ┃   /   ┃ FN/  ┃
+// ┃ FN/-  ┃   Z   ┃   X   ┃   C   ┃   V   ┃   B   ┃   ┃   N   ┃   M   ┃   ,   ┃   .   ┃   /   ┃  FN/' ┃
 // ┗━━━━━━━┻━━━━━━━┻━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┻━━━━━━━┻━━━━━━━┛
-//                         ┃  LG|- ┃EX|ESC ┃ LS|SPC┃   ┃ LS|SPC┃ SYM| ┃ LC|'  ┃
+//                         ┃      ┃EX/ESC ┃  SPC  ┃   ┃ LSHFT ┃ SYM/ ┃      ┃
 //                         ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛   ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       qwerty {
         bindings = <
-          &trans &trans      &hml LCG E  &hml LSG R   &kp T  /**/ &kp Y  &hmr LSG U   &hmr LCG I  &hmr LAG O  &kp P
-          &trans &hml LALT S &hml LCTL D &hml LSHFT F &trans /**/ &trans &hmr LSHFT J &hmr LCTL K &hmr LALT L &hmr LGUI SEMI
-   &trans &trans &trans      &trans      &kp V        &kp B  /**/ &kp N  &kp M        &trans      &trans      &kp FSLH       &trans
+          &trans &trans      &hml LAG E  &hml LCG R  &hml LSG T /**/ &hmr LSG Y   &hmr LCG U  &hmr LAG I  &kp O       &kp P
+          &trans &hml LGUI S &hml LALT D &hml LCTL F &trans     /**/ &hml LSHFT H &hmr LCTL J &hmr LALT K &hmr LGUI L &kp SEMI
+   &trans &trans &trans      &trans      &kp V       &kp B      /**/ &kp N        &kp M       &trans      &trans      &kp FSLH &trans
 
           TRANS_LAST_ROW
         >;
@@ -108,9 +119,9 @@
 
       qwerty_mac {
         bindings = <
-          &trans      &trans      &trans      &trans       &trans /**/ &trans &trans       &trans      &trans      &trans
-          &hml LCTL A &hml LALT S &hml LGUI D &hml LSHFT F &trans /**/ &trans &hmr LSHFT J &hmr LGUI K &hmr LALT L &hmr LCTL SEMI
-   &trans &trans      &trans      &trans      &trans       &trans /**/ &trans &trans       &trans      &trans      &trans         &trans
+          &trans &hml LCG W  &trans &kp R       &trans /**/ &trans &kp U       &trans &hmr LCG O  &trans
+          &trans &hml LCTL S &trans &hml LGUI F &trans /**/ &trans &hmr LGUI J &trans &hmr LCTL L &none
+   &trans &trans &trans      &trans &trans      &trans /**/ &trans &trans      &trans &trans      &trans &trans
 
           TRANS_LAST_ROW
         >;
@@ -132,7 +143,7 @@
         bindings = <
           &kp N1   &kp N2   &kp N3   &kp N4   &kp N5 /**/ &kp N6  &kp N7   &kp N8    &kp N9    &kp N0
           &kp EXCL &kp AT   &kp HASH &kp DLLR &none  /**/ &uc_rup &kp AMPS &kp STAR  &kp PRCNT &kp CARET
-  &kp DEL &kp BSLH &kp PIPE &kp PLUS &kp EQL  &none  /**/ &uc_eur &uc_gbp  &kp COMMA &kp DOT   &kp FSLH  &trans
+    &none &kp BSLH &kp PIPE &kp PLUS &kp EQL  &none  /**/ &uc_eur &uc_gbp  &kp COMMA &kp DOT   &kp FSLH  &kp DEL
 
           TRANS_LAST_ROW
           >;
@@ -143,7 +154,7 @@
         bindings = <
           &kp DEL &vi_sav &kp C_VOL_UP &kp C_VOL_DN &kp C_MUTE /**/ &kp HOME &kp PG_DN    &kp PG_UP    &kp END   &kp CAPS
           &none   &find   &pre_tab     &nex_tab     &nex_dsk   /**/ &kp LEFT &kp DOWN     &kp UP       &kp RIGHT &runner
-  &kp DEL &none   &cut    &copy        &paste       &pre_dsk   /**/ &none    &kp C_BRI_DN &kp C_BRI_UP &none     &none   &trans
+    &none &none   &cut    &copy        &paste       &pre_dsk   /**/ &none    &kp C_BRI_DN &kp C_BRI_UP &none     &none   &kp DEL
 
           TRANS_LAST_ROW
           >;
