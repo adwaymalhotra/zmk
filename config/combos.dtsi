@@ -27,30 +27,30 @@
       layers = <0 1 2 3>;
     };
     // home row
-    c_bsp {
-      timeout-ms = <40>;
-      key-positions = <11 12>;
-      bindings = <&kp BSPC>;
-      layers = <0 1 2 3>;
-    };
-    c_esc {
-      timeout-ms = <40>;
-      key-positions = <12 13>;
-      bindings = <&kp ESC>;
-      layers = <0 1 2 3>;
-    };
-    c_tab {
-      timeout-ms = <40>;
-      key-positions = <16 17>;
-      bindings = <&kp TAB>;
-      layers = <0 1 2 3>;
-    };
-    c_del {
-      timeout-ms = <40>;
-      key-positions = <17 18>;
-      bindings = <&kp DEL>;
-      layers = <0 1 2 3>;
-    };
+//     c_bsp {
+//       timeout-ms = <40>;
+//       key-positions = <11 12>;
+//       bindings = <&kp BSPC>;
+//       layers = <0 1 2 3>;
+//     };
+//     c_esc {
+//       timeout-ms = <40>;
+//       key-positions = <12 13>;
+//       bindings = <&kp ESC>;
+//       layers = <0 1 2 3>;
+//     };
+//     c_tab {
+//       timeout-ms = <40>;
+//       key-positions = <16 17>;
+//       bindings = <&kp TAB>;
+//       layers = <0 1 2 3>;
+//     };
+//     c_del {
+//       timeout-ms = <40>;
+//       key-positions = <17 18>;
+//       bindings = <&kp DEL>;
+//       layers = <0 1 2 3>;
+//     };
     // bottom row [{( )}]
     c_lpar {
       timeout-ms = <40>;
