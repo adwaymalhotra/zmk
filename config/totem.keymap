@@ -67,7 +67,7 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       colemak_dh {
         bindings = <
-               &kp Q &kp W       &hml LCG F  &hml LAG P  &hml LSG B   /**/ &hmr LSG J   &hmr LAG L  &hmr LCG U  &kp  Y      &kp SEMI
+               &kp Q &kp W       &hml LCG F  &hml LAG P  &kp B        /**/ &kp J   &hmr LAG L  &hmr LCG U  &kp  Y      &kp SEMI
                &kp A &hml LGUI R &hml LCTL S &hml LALT T &hml LSHFT G /**/ &hmr LSHFT M &hmr LALT N &hmr LCTL E &hmr LGUI I &kp O
  &hll FN MINUS &kp Z &kp X       &kp C       &kp D       &kp V        /**/ &kp K        &kp H       &kp COMMA   &kp DOT     &kp FSLH    &hlr FN SQT
 
@@ -99,9 +99,9 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       qwerty {
         bindings = <
-          &trans &trans      &hml LCG E  &hml LAG R  &hml LSG T /**/ &hmr LSG Y   &hmr LAG U  &hmr LCG I  &kp O       &kp P
-          &trans &hml LGUI S &hml LCTL D &hml LALT F &trans     /**/ &hml LSHFT H &hmr LALT J &hmr LCTL K &hmr LGUI L &kp SEMI
-   &trans &trans &trans      &trans      &kp V       &kp B      /**/ &kp N        &kp M       &trans      &trans      &kp FSLH &trans
+          &trans &trans      &hml LCG E  &hml LAG R  &kp T  /**/ &kp Y        &hmr LAG U  &hmr LCG I  &kp O       &kp P
+          &trans &hml LGUI S &hml LCTL D &hml LALT F &trans /**/ &hml LSHFT H &hmr LALT J &hmr LCTL K &hmr LGUI L &kp SEMI
+   &trans &trans &trans      &trans      &kp V       &kp B  /**/ &kp N        &kp M       &trans      &trans      &kp FSLH &trans
 
           TRANS_LAST_ROW
         >;
