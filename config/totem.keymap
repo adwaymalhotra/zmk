@@ -58,7 +58,7 @@
       bindings = <&kp BSPC>, <&kp DEL>;
       mods = <(MOD_LSFT)>;
     }
-  }
+  };
 
   keymap {
     compatible = "zmk,keymap";
