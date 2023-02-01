@@ -25,6 +25,7 @@
 #define SY 5
 #define EX 6
 #define FN 7
+#define ALT 8
 
 #define TRANS_LAST_ROW_HALF &trans &trans &trans
 #define TRANS_LAST_ROW TRANS_LAST_ROW_HALF TRANS_LAST_ROW_HALF
@@ -176,11 +177,21 @@
       fns {
         bindings = <
           &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 /**/ &bt BT_CLR  &kp F1 &kp F2  &kp F3  &kp F4
-          &none        &tog GAME    &tog CO_MAC  &tog QW_MAC  &reset       /**/ &reset      &kp F5 &kp F6  &kp F7  &kp F8
+          &tog ALT     &tog GAME    &tog CO_MAC  &tog QW_MAC  &reset       /**/ &reset      &kp F5 &kp F6  &kp F7  &kp F8
     &none &none        &none        &out OUT_BLE &out OUT_USB &bootloader  /**/ &bootloader &kp F9 &kp F10 &kp F11 &kp F12 &none
 
           TRANS_LAST_ROW
           >;
+      };
+
+      alt_thumb {
+        bindings = <
+          &trans &trans &trans &trans &trans /**/ &trans &trans &trans &trans &trans
+          &trans &trans &trans &trans &trans /**/ &trans &trans &trans &trans &trans
+   &trans &trans &trans &trans &trans &trans /**/ &trans &trans &trans &trans &trans &trans
+
+               &htl EX ESCAPE &kp SPC &bsdel /**/ &kp TAB &kp LSHFT &htl SY RET
+        >;
       };
   };
 };
