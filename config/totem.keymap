@@ -72,7 +72,7 @@
                &kp A &hml LGUI R &hml LCTL S &hml LALT T &hml LSHFT G /**/ &hmr LSHFT M &hmr LALT N &hmr LCTL E &hmr LGUI I &kp O
  &hll FN MINUS &kp Z &kp X       &kp C       &kp D       &kp V        /**/ &kp K        &kp H       &kp COMMA   &kp DOT     &kp FSLH    &hlr FN SQT
 
-                                        &bsdel &htl EX ESCAPE &kp SPC /**/ &kp LSHFT &htl SY RET &kp TAB
+                                        &bsdel &kp SPC &htl EX ESCAPE /**/ &htl SY RET &kp LSHFT &kp TAB
         >;
       };
 
@@ -190,7 +190,7 @@
           &trans &trans &trans &trans &trans /**/ &trans &trans &trans &trans &trans
    &trans &trans &trans &trans &trans &trans /**/ &trans &trans &trans &trans &trans &trans
 
-               &bsdel &kp SPC &htl EX ESCAPE /**/ &htl SY RET &kp LSHFT &kp TAB
+               &bsdel &htl EX ESCAPE &kp SPC /**/ &kp LSHFT &htl SY RET &kp TAB
           >;
       };
   };
