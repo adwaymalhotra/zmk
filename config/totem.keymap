@@ -190,8 +190,8 @@
           &trans &trans &trans &trans &trans /**/ &trans &trans &trans &trans &trans
    &trans &trans &trans &trans &trans &trans /**/ &trans &trans &trans &trans &trans &trans
 
-               &htl EX ESCAPE &kp SPC &bsdel /**/ &kp TAB &kp LSHFT &htl SY RET
-        >;
+               &bsdel &kp SPC &htl EX ESCAPE /**/ &htl SY RET &kp LSHFT &kp TAB
+          >;
       };
   };
 };
