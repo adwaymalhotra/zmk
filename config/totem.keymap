@@ -35,9 +35,9 @@
 
 / {
   macros {
-    ZMK_MACRO(uc_gbp  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N0 &kp N0 &kp A &kp N3>, <&kp SPACE>;)
-    ZMK_MACRO(uc_eur  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N2 &kp N0 &kp A &kp C>, <&kp SPACE>;)
-    ZMK_MACRO(uc_rup  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N2 &kp N0 &kp B &kp N9>, <&kp SPACE>;)
+    ZMK_MACRO(uc_gbp  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp A &kp N3>, <&kp RET>;)
+    ZMK_MACRO(uc_eur  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N2 &kp N0 &kp A &kp C>, <&kp RET>;)
+    ZMK_MACRO(uc_rup  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N2 &kp N0 &kp B &kp N9>, <&kp RET>;)
     ZMK_MACRO(vi_sav  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp ESC &kp COLON &kp W>, <&kp RET>;)
     ZMK_MACRO(runner  , bindings = <&kp LC(SPACE)>;)
     ZMK_MACRO(find    , bindings = <&kp LC(F)>;)
