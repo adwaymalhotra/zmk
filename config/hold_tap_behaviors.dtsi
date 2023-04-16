@@ -18,10 +18,10 @@
   };
 
 #define HOME_ROW_HOLD_TAP_L(NAME,...) \
-  HOME_ROW_HOLD_TAP(NAME,hold-trigger-key-positions = <RIGHT_KEYS>; __VA_ARGS__)
+  HOME_ROW_HOLD_TAP(NAME,hold-trigger-key-positions = <RIGHT_KEYS>; hold-trigger-on-release; __VA_ARGS__)
 
 #define HOME_ROW_HOLD_TAP_R(NAME,...) \
-  HOME_ROW_HOLD_TAP(NAME,hold-trigger-key-positions = <LEFT_KEYS>; __VA_ARGS__)
+  HOME_ROW_HOLD_TAP(NAME,hold-trigger-key-positions = <LEFT_KEYS>; hold-trigger-on-release; __VA_ARGS__)
 
 #define HOME_ROW_MOD_L(NAME) \
   HOME_ROW_HOLD_TAP_L(NAME, bindings = <&kp>, <&kp>;)

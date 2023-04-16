@@ -25,13 +25,14 @@
 #define SY 5
 #define EX 6
 #define FN 7
-#define ALT 8
 
 #define TRANS_LAST_ROW_HALF &trans &trans &trans
 #define TRANS_LAST_ROW TRANS_LAST_ROW_HALF TRANS_LAST_ROW_HALF
 #define LAG LA(LGUI)
 #define LCG LC(LGUI)
 #define LSG LS(LGUI)
+#define LAC LC(LALT)
+#define LAS LS(LALT)
 
 / {
   macros {
@@ -63,14 +64,14 @@
 // ┏━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┓
 // ┃ FN/-  ┃   Z   ┃   X   ┃   C   ┃   D   ┃   V   ┃   ┃   K   ┃   H   ┃   ,   ┃   .   ┃   /   ┃  FN/' ┃
 // ┗━━━━━━━┻━━━━━━━┻━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┻━━━━━━━┻━━━━━━━┛
-//                         ┃      ┃EX/ESC ┃  SPC  ┃   ┃ LSHFT ┃ SYM/ ┃      ┃
+//                         ┃      ┃  SPC  ┃EX/ESC ┃   ┃ LSHFT ┃ SYM/ ┃      ┃
 //                         ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛   ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       colemak_dh {
         bindings = <
-               &kp Q &kp W       &hml LCG F  &hml LAG P  &hml LSG B   /**/ &hmr LSG J   &hmr LAG L  &hmr LCG U  &kp  Y      &kp SEMI
-               &kp A &hml LGUI R &hml LCTL S &hml LALT T &hml LSHFT G /**/ &hmr LSHFT M &hmr LALT N &hmr LCTL E &hmr LGUI I &kp O
- &hll FN MINUS &kp Z &kp X       &kp C       &kp D       &kp V        /**/ &kp K        &kp H       &kp COMMA   &kp DOT     &kp FSLH    &hlr FN SQT
+               &kp Q &kp W       &hml LCG F  &hml LAG P  &hml LSG B   /**/ &hmr LSG J   &hmr LAG L  &hmr LCG U     &kp  Y      &kp SEMI
+               &kp A &hml LGUI R &hml LCTL S &hml LALT T &hml LSHFT G /**/ &hmr LSHFT M &hmr LALT N &hmr LCTL E    &hmr LGUI I &kp O
+ &hll FN MINUS &kp Z &kp X       &hml LAC C  &kp D       &hml LAS V   /**/ &hmr LAS K   &kp H       &hmr LAC COMMA &kp DOT     &kp FSLH &hlr FN SQT
 
                                         &bsdel &kp SPC &htl EX ESCAPE /**/ &htl SY RET &kp LSHFT &kp TAB
         >;
@@ -95,14 +96,14 @@
 // ┏━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┓
 // ┃ FN/-  ┃   Z   ┃   X   ┃   C   ┃   V   ┃   B   ┃   ┃   N   ┃   M   ┃   ,   ┃   .   ┃   /   ┃  FN/' ┃
 // ┗━━━━━━━┻━━━━━━━┻━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┻━━━━━━━┻━━━━━━━┛
-//                         ┃      ┃EX/ESC ┃  SPC  ┃   ┃  SFT  ┃ SYM/ ┃      ┃
+//                         ┃      ┃  SPC  ┃EX/ESC ┃   ┃ SYM/ ┃ LSHFT ┃      ┃
 //                         ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛   ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       qwerty {
         bindings = <
-          &trans &trans      &hml LCG E  &hml LAG R  &hml LSG T /**/ &hmr LSG Y   &hmr LAG U  &hmr LCG I  &kp O       &kp P
-          &trans &hml LGUI S &hml LCTL D &hml LALT F &trans     /**/ &hml LSHFT H &hmr LALT J &hmr LCTL K &hmr LGUI L &kp SEMI
-   &trans &trans &trans      &trans      &kp V       &kp B      /**/ &kp N        &kp M       &trans      &trans      &kp FSLH &trans
+          &trans &trans      &hml LCG E  &hml LAG R  &hml LSG T /**/ &hmr LSG Y   &hmr LAG U  &hmr LCG I     &kp O       &kp P
+          &trans &hml LGUI S &hml LCTL D &hml LALT F &trans     /**/ &hml LSHFT H &hmr LALT J &hmr LCTL K    &hmr LGUI L &kp SEMI
+   &trans &trans &trans      &hml LAC C  &kp V       &hml LAS B /**/ &hmr LAS N   &kp M       &hmr LAC COMMA &trans      &kp FSLH &trans
 
           TRANS_LAST_ROW
         >;
@@ -147,16 +148,16 @@
 //         ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫
 //         ┃   !   ┃   @   ┃   #   ┃   $   ┃       ┃   ┃      ┃   &   ┃   *   ┃   %   ┃   ^   ┃
 // ┏━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┓
-// ┃       ┃   \   ┃   |   ┃   +   ┃   =   ┃       ┃   ┃      ┃      ┃   ,   ┃   .   ┃   /   ┃  ⌦    ┃
+// ┃       ┃   \   ┃   |   ┃   +   ┃   =   ┃       ┃   ┃      ┃      ┃   ,   ┃   .   ┃   /   ┃       ┃
 // ┗━━━━━━━┻━━━━━━━┻━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┻━━━━━━━┻━━━━━━━┛
 //                         ┃      ┃EX/ESC ┃  SPC  ┃   ┃  SFT  ┃ SYM/ ┃      ┃
 //                         ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛   ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       symbol {
         bindings = <
-           &kp N1   &kp N2   &kp N3   &kp N4   &kp N5 /**/ &kp N6  &kp N7   &kp N8    &kp N9    &kp N0
-           &kp EXCL &kp AT   &kp HASH &kp DLLR &none  /**/ &uc_rup &kp AMPS &kp STAR  &kp PRCNT &kp CARET
-    &trans &kp BSLH &kp PIPE &kp PLUS &kp EQL  &none  /**/ &uc_eur &uc_gbp  &kp COMMA &kp DOT   &kp FSLH  &trans
+           &kp N1   &kp N2   &kp N3   &kp N4   &kp N5    /**/ &kp N6  &kp N7    &kp N8    &kp N9    &kp N0
+           &kp EXCL &kp AT   &kp HASH &kp DLLR &uc_gbp   /**/ &uc_rup &kp AMPS  &kp STAR  &kp PRCNT &kp CARET
+    &trans &kp BSLH &kp PIPE &kp PLUS &kp EQL  &kp TILDE /**/ &uc_eur &kp QMARK &kp COMMA &kp DOT   &kp FSLH  &trans
 
           TRANS_LAST_ROW
           >;
@@ -177,20 +178,10 @@
       fns {
         bindings = <
           &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 /**/ &bt BT_CLR  &kp F1 &kp F2  &kp F3  &kp F4
-          &tog ALT     &tog GAME    &tog CO_MAC  &tog QW_MAC  &reset       /**/ &reset      &kp F5 &kp F6  &kp F7  &kp F8
+          &none        &tog GAME    &tog CO_MAC  &tog QW_MAC  &sys_reset   /**/ &sys_reset  &kp F5 &kp F6  &kp F7  &kp F8
     &none &none        &none        &out OUT_BLE &out OUT_USB &bootloader  /**/ &bootloader &kp F9 &kp F10 &kp F11 &kp F12 &none
 
           TRANS_LAST_ROW
-          >;
-      };
-
-      alt_thumb {
-        bindings = <
-          &trans &trans &trans &trans &trans /**/ &trans &trans &trans &trans &trans
-          &trans &trans &trans &trans &trans /**/ &trans &trans &trans &trans &trans
-   &trans &trans &trans &trans &trans &trans /**/ &trans &trans &trans &trans &trans &trans
-
-               &bsdel &htl EX ESCAPE &kp SPC /**/ &kp LSHFT &htl SY RET &kp TAB
           >;
       };
   };
