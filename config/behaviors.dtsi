@@ -1,0 +1,75 @@
+#include <behaviors.dtsi>
+#include "helper.h"
+
+/* Homerow Mods */
+#define GLOBAL_QUICK_TAP_MS 150
+#define QUICK_TAP_MS 175
+#define TAPPING_TERM 280
+
+#define MAKE_HRM(NAME, HOLD, TAP, TRIGGER_POS) \
+    ZMK_BEHAVIOR(NAME, hold_tap, \
+        flavor = "balanced"; \
+        tapping-term-ms = <TAPPING_TERM>; \
+        quick-tap-ms = <QUICK_TAP_MS>; \
+        bindings = <HOLD>, <TAP>; \
+        global-quick-tap-ms = <GLOBAL_QUICK_TAP_MS>; \
+        hold-trigger-key-positions = <TRIGGER_POS>; \
+        hold-trigger-on-release; \
+    )
+
+// The keys are fetched from the *_keys.h file sourced in the actual keymap before other includes
+MAKE_HRM(hml, &kp, &kp, KEYS_R THUMBS)
+MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS)
+MAKE_HRM(hll, &mo, &kp, KEYS_R THUMBS)
+MAKE_HRM(hlr, &mo, &kp, KEYS_L THUMBS)
+
+/* All Other Behaviors */
+&lt {
+  tapping-term-ms = <200>;
+  quick-tap-ms = <175>;
+  flavor = "hold-preferred";
+};
+
+ZMK_BEHAVIOR(bsdel, mod_morph,
+    bindings = <&kp BACKSPACE>, <&kp DELETE>;
+    mods = <(MOD_LALT)>;
+)
+
+// layer hold tap for the bsdel key
+// the config for this is similar to the home row mods but they are usable for all keys
+// usage: &lt_bsdel NUM
+ZMK_BEHAVIOR(lt_bsdel, hold_tap,
+    flavor = "tap-preferred";
+    tapping-term-ms = <TAPPING_TERM>;
+    quick-tap-ms = <QUICK_TAP_MS>;
+    bindings = <&mo>, <&bsdel>;
+    global-quick-tap-ms = <GLOBAL_QUICK_TAP_MS>;
+    hold-trigger-on-release;
+)
+
+// the following two things don't seem to work at all.
+// tap: left-parenthesis | shft + tap: less-than
+ZMK_BEHAVIOR(lpar_lt, mod_morph,
+    bindings = <&kp LPAR>, <&kp LT>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+// tap: right-parenthesis | shft + tap: greater-than
+ZMK_BEHAVIOR(rpar_gt, mod_morph,
+    bindings = <&kp RPAR>, <&kp GT>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+/* Combos */
+// right side combos
+ZMK_COMBO(lpar, &lpar_lt, RM1 RT1, COMBO_LAYERS, COMBO_TERM)
+ZMK_COMBO(rpar, &rpar_gt, RM1 RB1, COMBO_LAYERS, COMBO_TERM)
+ZMK_COMBO(lbkt, &kp LBKT, RM2 RT2, COMBO_LAYERS, COMBO_TERM)
+ZMK_COMBO(rbkt, &kp RBKT, RM2 RB2, COMBO_LAYERS, COMBO_TERM)
+ZMK_COMBO(sqt, &kp SQT, RT3 RM3, COMBO_LAYERS, COMBO_TERM)
+
+// left side combos
+ZMK_COMBO(tilde, &kp GRAVE, LT1 LM1, COMBO_LAYERS, COMBO_TERM)
+ZMK_COMBO(equal, &kp EQUAL, LT2 LM2, COMBO_LAYERS, COMBO_TERM)
+ZMK_COMBO(at, &kp AT, LT3 LM3, COMBO_LAYERS, COMBO_TERM)
+ZMK_COMBO(minus, &kp MINUS, LB3 LM3, COMBO_LAYERS, COMBO_TERM)
