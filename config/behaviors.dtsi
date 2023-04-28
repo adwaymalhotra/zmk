@@ -85,3 +85,21 @@ DEFAULT_COMBO(hash, &kp HASH, LM2 LB2)
 
 DEFAULT_COMBO(excl, &kp EXCL, LT0 LM0)
 DEFAULT_COMBO(at, &kp AT, LB0 LM0)
+
+/* Macros */
+/ {
+  macros {
+    ZMK_MACRO(uc_gbp  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp A &kp N3>, <&kp RET>;)
+    ZMK_MACRO(uc_eur  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N2 &kp N0 &kp A &kp C>, <&kp RET>;)
+    ZMK_MACRO(uc_rup  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N2 &kp N0 &kp B &kp N9>, <&kp RET>;)
+    ZMK_MACRO(vi_sav  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp ESC &kp COLON &kp W>, <&kp RET>;)
+    ZMK_MACRO(find    , bindings = <&kp LC(F)>;)
+    ZMK_MACRO(pre_tab , bindings = <&kp LC(LS(TAB))>;)
+    ZMK_MACRO(nex_tab , bindings = <&kp LC(TAB)>;)
+    ZMK_MACRO(pre_dsk , bindings = <&kp LC(LG(LEFT))>;)
+    ZMK_MACRO(nex_dsk , bindings = <&kp LC(LG(RIGHT))>;)
+    ZMK_MACRO(cut     , bindings = <&kp LC(X)>;)
+    ZMK_MACRO(copy    , bindings = <&kp LC(C)>;)
+    ZMK_MACRO(paste   , bindings = <&kp LC(V)>;)
+  };
+};
