@@ -51,3 +51,12 @@
 #define RH3 39
 #define RH4 40
 #define RH5 41
+
+#define X_LH &mo SYS &kp UNDER &kp MINUS
+#define X_RH &kp SQT &kp DQT   &mo SYS
+
+#define GAME_LAYER_KEYS\
+         &kp TAB   &kp Q &kp W &kp E &kp R &none &kp N7 &kp N8 &kp N9 &kp N0\
+         &kp LCTL  &kp A &kp S &kp D &kp F &none &kp N4 &kp N5 &kp N6 &none\
+         &kp LSHFT &kp Z &kp X &kp C &kp V &none &kp N1 &kp N2 &kp N3 &tog GAME\
+&mo FN &mo EXT &kp ESC &kp LSHFT &kp SPACE &kp ESC /**/ &kp LSHFT &lt SYM RET &kp SQT &none &none &mo FN

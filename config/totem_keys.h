@@ -1,3 +1,5 @@
+#include <dt-bindings/zmk/keys.h>
+
 #define KEYS_L 0 1 2 3 4 10 11 12 13 14 20 21 22 23 24 25
 #define KEYS_R 5 6 7 8 9 15 16 17 18 19 26 27 28 29 30 31
 #define THUMBS 32 33 34 35 36 37
@@ -47,3 +49,12 @@
 #define RH0 35
 #define RH1 36
 #define RH2 37
+
+#define X_LB &kp MINUS
+#define X_RB &kp SQT
+
+#define GAME_LAYER_KEYS\
+          &kp TAB   &kp Q &kp W &kp E &kp R /**/ &none &kp N7 &kp N8 &kp N9 &kp N0\
+          &kp LCTL  &kp A &kp S &kp D &kp F /**/ &none &kp N4 &kp N5 &kp N6 &none\
+  &kp ESC &kp LSHFT &kp Z &kp X &kp C &kp V /**/ &none &kp N1 &kp N2 &kp N3 &none  &tog GAME\
+                 &kp LALT &kp RET &kp SPACE /**/ &kp LSHFT &lt SYM RET  &kp SQT
