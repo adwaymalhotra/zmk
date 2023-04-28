@@ -16,9 +16,10 @@
 #define GAME 2
 #define SYM 3
 #define NUM 4
-#define EXT 5
-#define SYS 6
-#define COMBO_LAYERS CO QW SYM EXT NUM SYS
+#define FN 5
+#define EXT 6
+#define SYS 7
+#define COMBO_LAYERS CO QW SYM EXT NUM FN SYS
 
 #include "totem_keys.h"
 #include "behaviors.dtsi"
@@ -40,13 +41,11 @@
     ZMK_MACRO(uc_eur  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N2 &kp N0 &kp A &kp C>, <&kp RET>;)
     ZMK_MACRO(uc_rup  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N2 &kp N0 &kp B &kp N9>, <&kp RET>;)
     ZMK_MACRO(vi_sav  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp ESC &kp COLON &kp W>, <&kp RET>;)
-    ZMK_MACRO(runner  , bindings = <&kp LC(SPACE)>;)
     ZMK_MACRO(find    , bindings = <&kp LC(F)>;)
     ZMK_MACRO(pre_tab , bindings = <&kp LC(LS(TAB))>;)
     ZMK_MACRO(nex_tab , bindings = <&kp LC(TAB)>;)
     ZMK_MACRO(pre_dsk , bindings = <&kp LC(LG(LEFT))>;)
     ZMK_MACRO(nex_dsk , bindings = <&kp LC(LG(RIGHT))>;)
-    ZMK_MACRO(tmux    , bindings = <&kp LC(B)>;)
     ZMK_MACRO(cut     , bindings = <&kp LC(X)>;)
     ZMK_MACRO(copy    , bindings = <&kp LC(C)>;)
     ZMK_MACRO(paste   , bindings = <&kp LC(V)>;)
@@ -72,7 +71,7 @@ ZMK_LAYER(colemak_dh,
                  &kp A &hml LGUI R &hml LCTL S &hml LALT T &hml LSHFT G /**/ &hmr LSHFT M &hmr LALT N &hmr LCTL E    &hmr LGUI I &kp O
   &hll NUM MINUS &kp Z &kp X       &hml LAC C  &kp D       &hml LAS V   /**/ &hmr LAS K   &kp H       &hmr LAC COMMA &kp DOT     &kp FSLH &hlr NUM SQT
 
-                                    &lt_bsdel NUM 0 &kp SPC &lt EXT ESC /**/ &lt SYM RET &kp LSHFT &lt NUM TAB
+                                    &lt_bsdel NUM 0 &kp SPC &lt EXT ESC /**/ &lt SYM RET &kp LSHFT &lt FN TAB
 )
 
 // QWERTY Layer
@@ -115,31 +114,28 @@ ZMK_LAYER(game,
                  &kp LALT &kp RET &kp SPACE /**/ &kp LSHFT &lt SYM RET  &kp SQT
 )
 
-// Symbols
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-//         ┏━━━━━━━┳━━━━━━━┳━━━━━━━┳━━━━━━━┳━━━━━━━┓   ┏━━━━━━━┳━━━━━━━┳━━━━━━━┳━━━━━━━┳━━━━━━━┓
-//         ┃   1   ┃   2   ┃   3   ┃   4   ┃   5   ┃   ┃   6   ┃   7   ┃   8   ┃   9   ┃   0   ┃
-//         ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫
-//         ┃   !   ┃   @   ┃   #   ┃   $   ┃      ┃   ┃      ┃   &   ┃   *   ┃   %   ┃   ^   ┃
-// ┏━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┓
-// ┃       ┃   \   ┃   |   ┃   +   ┃   =   ┃   ~   ┃   ┃      ┃   ?   ┃   ,   ┃   .   ┃   /   ┃       ┃
-// ┗━━━━━━━┻━━━━━━━┻━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┫   ┣━━━━━━━╋━━━━━━━╋━━━━━━━╋━━━━━━━┻━━━━━━━┻━━━━━━━┛
-//                         ┃NUM/  ┃  SPC  ┃EXT/ESC┃   ┃ SYM/ ┃ LSHFT ┃ NUM/ ┃
-//                         ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛   ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ZMK_LAYER(symbol,
-         &kp N1   &kp N2   &kp N3   &kp N4   &kp N5    /**/ &kp N6  &kp N7    &kp N8    &kp N9    &kp N0
-         &kp EXCL &kp AT   &kp HASH &kp DLLR &uc_gbp   /**/ &uc_rup &kp AMPS  &kp STAR  &kp PRCNT &kp CARET
-  &trans &kp BSLH &kp PIPE &kp PLUS &kp EQL  &kp TILDE /**/ &uc_eur &kp QMARK &kp COMMA &kp DOT   &kp FSLH  &trans
+         &none    &none    &none    &none    &none   /**/ &none   &none    &none    &none     &none
+         &kp EXCL &kp AT   &kp HASH &kp DLLR &uc_gbp /**/ &uc_rup &kp AMPS &kp STAR &kp PRCNT &kp CARET
+  &trans &kp BSLH &kp PIPE &none    &none    &none   /**/ &uc_eur &none    &none    &none     &none     &trans
 
   TRANS_LAST_ROW
 )
 
-// Numbers and Function Keys
-ZMK_LAYER(numfun,
-         &kp PLUS &kp N7 &kp N8 &kp N9 &kp MINUS /**/ &none &kp F1 &kp F2  &kp F3  &kp F4
-         &kp N0   &kp N4 &kp N5 &kp N6 &kp EQL   /**/ &none &kp F5 &kp F6  &kp F7  &kp F8
-  &trans &kp FSLH &kp N1 &kp N2 &kp N3 &kp STAR  /**/ &none &kp F9 &kp F10 &kp F11 &kp F12  &trans
+// Numpad
+ZMK_LAYER(numbers,
+          &kp PLUS &kp N7 &kp N8 &kp N9 &kp MINUS /**/ &none &none &none &none &none
+          &kp N0   &kp N4 &kp N5 &kp N6 &kp EQL   /**/ &none &none &none &none &none
+  &kp DOT &kp FSLH &kp N1 &kp N2 &kp N3 &kp STAR  /**/ &none &none &none &none &none &trans
+
+  TRANS_LAST_ROW
+)
+
+// Function Keys
+ZMK_LAYER(functionkeys,
+        &none &none &none &none &none /**/ &none &kp F1 &kp F2  &kp F3  &kp F4
+        &none &none &none &none &none /**/ &none &kp F5 &kp F6  &kp F7  &kp F8
+  &none &none &none &none &none &none /**/ &none &kp F9 &kp F10 &kp F11 &kp F12  &trans
 
   TRANS_LAST_ROW
 )
@@ -147,8 +143,8 @@ ZMK_LAYER(numfun,
 // Extend Layer with Macros and Special Keys
 ZMK_LAYER(extend,
         &none   &none     &pre_dsk   &nex_dsk    &kp C_VOL_UP /**/ &kp HOME &kp PG_DN    &kp PG_UP    &kp END   &kp CAPS
-        &vi_sav &find     &pre_tab   &nex_tab    &kp C_MUTE   /**/ &kp LEFT &kp DOWN     &kp UP       &kp RIGHT &runner
-  &none &none   &kp K_CUT &kp K_COPY &kp K_PASTE &kp C_VOL_DN /**/ &none    &kp C_BRI_DN &kp C_BRI_UP &none     &none   &kp DEL
+        &vi_sav &find     &pre_tab   &nex_tab    &kp C_MUTE   /**/ &kp LEFT &kp DOWN     &kp UP       &kp RIGHT &none
+  &none &none   &kp K_CUT &kp K_COPY &kp K_PASTE &kp C_VOL_DN /**/ &none    &kp C_BRI_DN &kp C_BRI_UP &none     &none    &kp DEL
 
   TRANS_LAST_ROW
 )

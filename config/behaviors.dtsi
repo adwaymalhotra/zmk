@@ -17,16 +17,21 @@
         hold-trigger-on-release; \
     )
 
+#define DEFAULT_COMBO(NAME, KEY, COMBO_KEYS) \
+    ZMK_COMBO(NAME, KEY, COMBO_KEYS, COMBO_LAYERS, COMBO_TERM)
+
+
 // The keys are fetched from the *_keys.h file sourced in the actual keymap before other includes
 MAKE_HRM(hml, &kp, &kp, KEYS_R THUMBS)
 MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS)
 MAKE_HRM(hll, &mo, &kp, KEYS_R THUMBS)
 MAKE_HRM(hlr, &mo, &kp, KEYS_L THUMBS)
 
+
 /* All Other Behaviors */
 &lt {
-  tapping-term-ms = <200>;
-  quick-tap-ms = <175>;
+  tapping-term-ms = <TAPPING_TERM>;
+  quick-tap-ms = <QUICK_TAP_MS>;
   flavor = "hold-preferred";
 };
 
@@ -37,9 +42,9 @@ ZMK_BEHAVIOR(bsdel, mod_morph,
 
 // layer hold tap for the bsdel key
 // the config for this is similar to the home row mods but they are usable for all keys
-// usage: &lt_bsdel NUM
+// usage: &lt_bsdel NUM 0
 ZMK_BEHAVIOR(lt_bsdel, hold_tap,
-    flavor = "tap-preferred";
+    flavor = "hold-preferred";
     tapping-term-ms = <TAPPING_TERM>;
     quick-tap-ms = <QUICK_TAP_MS>;
     bindings = <&mo>, <&bsdel>;
@@ -62,14 +67,21 @@ ZMK_BEHAVIOR(rpar_gt, mod_morph,
 
 /* Combos */
 // right side combos
-ZMK_COMBO(lpar, &lpar_lt, RM1 RT1, COMBO_LAYERS, COMBO_TERM)
-ZMK_COMBO(rpar, &rpar_gt, RM1 RB1, COMBO_LAYERS, COMBO_TERM)
-ZMK_COMBO(lbkt, &kp LBKT, RM2 RT2, COMBO_LAYERS, COMBO_TERM)
-ZMK_COMBO(rbkt, &kp RBKT, RM2 RB2, COMBO_LAYERS, COMBO_TERM)
-ZMK_COMBO(sqt, &kp SQT, RT3 RM3, COMBO_LAYERS, COMBO_TERM)
+DEFAULT_COMBO(lpar, &lpar_lt, RM1 RT1)
+DEFAULT_COMBO(rpar, &rpar_gt, RM1 RB1)
+
+DEFAULT_COMBO(lbkt, &kp LBKT, RM2 RT2)
+DEFAULT_COMBO(rbkt, &kp RBKT, RM2 RB2)
+
+DEFAULT_COMBO(amps, &kp AMPS, RM0 RT0)
+DEFAULT_COMBO(star, &kp STAR, RM0 RB0)
 
 // left side combos
-ZMK_COMBO(tilde, &kp GRAVE, LT1 LM1, COMBO_LAYERS, COMBO_TERM)
-ZMK_COMBO(equal, &kp EQUAL, LT2 LM2, COMBO_LAYERS, COMBO_TERM)
-ZMK_COMBO(at, &kp AT, LT3 LM3, COMBO_LAYERS, COMBO_TERM)
-ZMK_COMBO(minus, &kp MINUS, LB3 LM3, COMBO_LAYERS, COMBO_TERM)
+DEFAULT_COMBO(tilde, &kp GRAVE, LT1 LM1)
+DEFAULT_COMBO(dollar, &kp DLLR, LB1 LM1)
+
+DEFAULT_COMBO(equal, &kp EQUAL, LT2 LM2)
+DEFAULT_COMBO(hash, &kp HASH, LM2 LB2)
+
+DEFAULT_COMBO(excl, &kp EXCL, LT0 LM0)
+DEFAULT_COMBO(at, &kp AT, LB0 LM0)
