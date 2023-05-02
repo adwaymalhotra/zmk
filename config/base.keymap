@@ -54,9 +54,9 @@ ZMK_LAYER(symbol,
 
 // Numpad
 ZMK_LAYER(numbers,
-  X_LT &kp PLUS &kp N7 &kp N8 &kp N9 &kp MINUS /**/ &none &none &none &none &none X_RT
-  X_LM &kp N0   &kp N4 &kp N5 &kp N6 &kp EQL   /**/ &none &none &none &none &none X_RM
-  X_LB &kp FSLH &kp N1 &kp N2 &kp N3 &kp STAR  /**/ &none &none &none &none &none X_RB
+  X_LT &kp PLUS &kp N7 &kp N8 &kp N9 &kp DOT  /**/ &none &none &none &none &none X_RT
+  X_LM &kp N0   &kp N4 &kp N5 &kp N6 &kp FSLH /**/ &none &none &none &none &none X_RM
+  X_LB &kp EQL  &kp N1 &kp N2 &kp N3 &kp STAR /**/ &none &none &none &none &none X_RB
 
   DEFAULT_BOTTOM_ROW
 )
@@ -82,7 +82,7 @@ ZMK_LAYER(extend,
 // System Settings
 ZMK_LAYER(system,
   X_LT &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR  /**/ &none       &none &none &none &none X_RT
-  X_LM &tog GAME    &none        &none        &none        &sys_reset  /**/ &sys_reset  &none &none &none &none X_RM
+  X_LM &tog GAME    &tog QW      &none        &none        &sys_reset  /**/ &sys_reset  &none &none &none &none X_RM
   X_LB &none        &none        &none        &none        &bootloader /**/ &bootloader &none &none &none &none X_RB
 
   DEFAULT_BOTTOM_ROW
