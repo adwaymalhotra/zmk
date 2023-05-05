@@ -45,9 +45,9 @@ ZMK_LAYER(qwerty,
 #endif
 
 ZMK_LAYER(symbol,
-  X_LT &none    &none    &none    &none    &none   /**/ &none   &none    &none    &none     &none     X_RT
-  X_LM &kp EXCL &kp AT   &kp HASH &kp DLLR &uc_gbp /**/ &uc_rup &kp AMPS &kp STAR &kp PRCNT &kp CARET X_RM
-  X_LB &kp BSLH &kp PIPE &none    &none    &none   /**/ &uc_eur &none    &none    &none     &none     X_RB
+  X_LT &none &none &none &none &none /**/ &none &kp BSLH &kp PIPE &none     &none     X_RT
+  X_LM &none &none &none &none &none /**/ &none &uc_gbp  &uc_eur  &uc_rup   &none     X_RM
+  X_LB &none &none &none &none &none /**/ &none &kp AMPS &kp STAR &kp PRCNT &kp CARET X_RB
 
   DEFAULT_BOTTOM_ROW
 )
