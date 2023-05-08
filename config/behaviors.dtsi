@@ -104,5 +104,7 @@ DEFAULT_COMBO(equal, &kp EQUAL, LB0 LM0)
     ZMK_MACRO(cut     , bindings = <&kp LC(X)>;)
     ZMK_MACRO(copy    , bindings = <&kp LC(C)>;)
     ZMK_MACRO(paste   , bindings = <&kp LC(V)>;)
+    ZMK_MACRO(zin     , bindings = <&kp LC(PLUS)>;)
+    ZMK_MACRO(zout    , bindings = <&kp LC(MINUS)>;)
   };
 };
