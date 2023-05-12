@@ -89,6 +89,11 @@ DEFAULT_COMBO(hash, &kp HASH, LM2 LB2)
 DEFAULT_COMBO(tilde, &kp GRAVE, LT0 LM0)
 DEFAULT_COMBO(equal, &kp EQUAL, LB0 LM0)
 
+DEFAULT_COMBO(bsps, &kp BACKSPACE, LT3 LM3)
+DEFAULT_COMBO(del, &kp DELETE, LB3 LM3)
+
+DEFAULT_COMBO(tab, &kp TAB, LH0 LH1)
+
 /* Macros */
 / {
   macros {
