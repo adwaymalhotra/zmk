@@ -10,6 +10,12 @@
 #define COMBO_LAYERS CO QW SYM EXT NUM FN SYS
 
 #define DEFAULT_BOTTOM_ROW X_LH &lt_bsdel NUM 0 &kp SPC &lt EXT ESC /**/ &lt SYM RET &kp LSHFT &lt FN TAB X_RH
+#define TRANS_ROW &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+#define TRANS_LAYER \
+    X_LT TRANS_ROW X_RT \
+    X_LM TRANS_ROW X_RM \
+    X_LB TRANS_ROW X_RB \
+    DEFAULT_BOTTOM_ROW
 
 #include "extra_keys.h"
 #include "behaviors.dtsi"
@@ -42,6 +48,8 @@ ZMK_LAYER(qwerty,
 
 #if defined GAME_LAYER_KEYS
   ZMK_LAYER(game, GAME_LAYER_KEYS)
+#else
+  ZMK_LAYER(game, TRANS_LAYER)
 #endif
 
 ZMK_LAYER(symbol,
