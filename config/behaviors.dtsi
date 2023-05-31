@@ -2,8 +2,8 @@
 #include "helper.h"
 
 /* Homerow Mods */
-#define GLOBAL_QUICK_TAP_MS 150
-#define QUICK_TAP_MS 175
+#define GLOBAL_QUICK_TAP_MS 175
+#define QUICK_TAP_MS 220
 #define TAPPING_TERM 280
 
 #define MAKE_HRM(NAME, HOLD, TAP, TRIGGER_POS) \
@@ -73,8 +73,8 @@ DEFAULT_COMBO(rpar, &rpar_gt, RM1 RB1)
 DEFAULT_COMBO(lbkt, &kp LBKT, RM2 RT2)
 DEFAULT_COMBO(rbkt, &kp RBKT, RM2 RB2)
 
-DEFAULT_COMBO(amps, &kp AMPS, RM0 RT0)
-DEFAULT_COMBO(star, &kp STAR, RM0 RB0)
+DEFAULT_COMBO(lbrc, &kp LBRC, RM0 RT0)
+DEFAULT_COMBO(rbrc, &kp RBRC, RM0 RB0)
 
 DEFAULT_COMBO(perc, &kp PRCNT, RM3 RT3)
 DEFAULT_COMBO(caret, &kp CARET, RM3 RB3)
@@ -89,8 +89,11 @@ DEFAULT_COMBO(hash, &kp HASH, LM2 LB2)
 DEFAULT_COMBO(tilde, &kp GRAVE, LT0 LM0)
 DEFAULT_COMBO(equal, &kp EQUAL, LB0 LM0)
 
-DEFAULT_COMBO(bsps, &kp BACKSPACE, LT3 LM3)
-DEFAULT_COMBO(del, &kp DELETE, LB3 LM3)
+DEFAULT_COMBO(amps, &kp AMPS, LT3 LM3)
+DEFAULT_COMBO(star, &kp STAR, LB3 LM3)
+
+DEFAULT_COMBO(delete, &kp DELETE, LT0 LT1)
+DEFAULT_COMBO(backspace, &kp BACKSPACE, LT1 LT2)
 
 DEFAULT_COMBO(tab, &kp TAB, LH0 LH1)
 
@@ -100,7 +103,7 @@ DEFAULT_COMBO(tab, &kp TAB, LH0 LH1)
     ZMK_MACRO(uc_gbp  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp A &kp N3>, <&kp RET>;)
     ZMK_MACRO(uc_eur  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N2 &kp N0 &kp A &kp C>, <&kp RET>;)
     ZMK_MACRO(uc_rup  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N2 &kp N0 &kp B &kp N9>, <&kp RET>;)
-    ZMK_MACRO(vi_sav  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp ESC &kp COLON &kp W>, <&kp RET>;)
+    ZMK_MACRO(vi_sav  , tap-ms=<0>; wait-ms=<10>; bindings = <&kp ESC &kp COLON &kp W>, <&kp RET>;)
     ZMK_MACRO(find    , bindings = <&kp LC(F)>;)
     ZMK_MACRO(pre_tab , bindings = <&kp LC(LS(TAB))>;)
     ZMK_MACRO(nex_tab , bindings = <&kp LC(TAB)>;)

@@ -1,3 +1,5 @@
 #include "pica40_keys.h"
 
 #include "base.keymap"
+
+// vi:ft=dts

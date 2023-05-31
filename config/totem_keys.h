@@ -42,9 +42,9 @@
 #define RB4 30
 #define RB5 31
 
-#define LH0 32
+#define LH0 34
 #define LH1 33
-#define LH2 34
+#define LH2 32
 
 #define RH0 35
 #define RH1 36

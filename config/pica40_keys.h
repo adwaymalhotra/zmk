@@ -44,15 +44,15 @@
 #define RB4 32
 #define RB5 33
 
-#define LH0 34
+#define LH0 36
 #define LH1 35
-#define LH2 36
+#define LH2 34
 
 #define RH0 37
 #define RH1 38
 #define RH2 39
 
-#define X_LM &kp BSPC
+#define X_LM &bsdel
 #define X_RM &kp TAB
 
 #define X_LB &kp MINUS
