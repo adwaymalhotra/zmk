@@ -39,9 +39,9 @@ ZMK_LAYER(colemak_dh,
 )
 
 ZMK_LAYER(qwerty,
-  X_LT &trans &trans      &hml LCG E  &hml LAG R  &hml LSG T /**/ &hmr LSG Y   &hmr LAG U  &hmr LCG I     &kp O       &kp P    X_RT
-  X_LM &trans &hml LGUI S &hml LCTL D &hml LALT F &trans     /**/ &hml LSHFT H &hmr LALT J &hmr LCTL K    &hmr LGUI L &kp SEMI X_RM
-  X_LB &trans &trans      &hml LAC C  &kp V       &hml LAS B /**/ &hmr LAS N   &kp M       &hmr LAC COMMA &trans      &kp FSLH X_RB
+  X_LT &trans &trans      &hml LCG E  &hml LAG R  &hml LSG T /**/ &hmr LSG Y   &hmr LAG U  &hmr LCG I  &kp O       &kp P    X_RT
+  X_LM &trans &hml LGUI S &hml LCTL D &hml LALT F &trans     /**/ &hml LSHFT H &hmr LALT J &hmr LCTL K &hmr LGUI L &kp SEMI X_RM
+  X_LB &trans &trans      &hml LAC C  &kp V       &hml LAS B /**/ &hmr LAS N   &kp M       &trans      &trans      &kp FSLH X_RB
 
   DEFAULT_BOTTOM_ROW
 )

@@ -92,6 +92,7 @@ DEFAULT_COMBO(equal, &kp EQUAL, LB0 LM0)
 DEFAULT_COMBO(amps, &kp AMPS, LT3 LM3)
 DEFAULT_COMBO(star, &kp STAR, LB3 LM3)
 
+// horizontal combos
 DEFAULT_COMBO(delete, &kp DELETE, LT0 LT1)
 DEFAULT_COMBO(backspace, &kp BACKSPACE, LT1 LT2)
 
