@@ -9,7 +9,7 @@
 #define SYS 7
 #define COMBO_LAYERS CO QW SYM EXT NUM FN SYS
 
-#define DEFAULT_BOTTOM_ROW X_LH &lt_bsdel NUM 0 &kp SPC &lt EXT ESC /**/ &lt SYM RET &kp LSHFT &lt FN TAB X_RH
+#define DEFAULT_BOTTOM_ROW X_LH &lt_bsdel NUM 0 &kp SPC &lt EXT ESC X_MH /**/ &lt SYM RET &kp LSHFT &lt FN TAB X_RH
 #define TRANS_ROW &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
 #define TRANS_LAYER \
     X_LT TRANS_ROW X_RT \
