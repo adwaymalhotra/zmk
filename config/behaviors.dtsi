@@ -40,6 +40,12 @@ ZMK_BEHAVIOR(bsdel, mod_morph,
     mods = <(MOD_LALT)>;
 )
 
+ZMK_BEHAVIOR(tabesc, mod_morph,
+    bindings = <&kp ESC>, <&kp TAB>;
+    mods = <(MOD_LALT|MOD_LCTL|MOD_LGUI)>;
+    keep-mods = <(MOD_LALT|MOD_LCTL|MOD_LGUI)>;
+)
+
 // layer hold tap for the bsdel key
 // the config for this is similar to the home row mods but they are usable for all keys
 // usage: &lt_bsdel NUM 0
@@ -48,6 +54,15 @@ ZMK_BEHAVIOR(lt_bsdel, hold_tap,
     tapping-term-ms = <TAPPING_TERM>;
     quick-tap-ms = <QUICK_TAP_MS>;
     bindings = <&mo>, <&bsdel>;
+    global-quick-tap-ms = <GLOBAL_QUICK_TAP_MS>;
+    hold-trigger-on-release;
+)
+
+ZMK_BEHAVIOR(lt_tabesc, hold_tap,
+    flavor = "hold-preferred";
+    tapping-term-ms = <TAPPING_TERM>;
+    quick-tap-ms = <QUICK_TAP_MS>;
+    bindings = <&mo>, <&tabesc>;
     global-quick-tap-ms = <GLOBAL_QUICK_TAP_MS>;
     hold-trigger-on-release;
 )
@@ -96,15 +111,13 @@ DEFAULT_COMBO(star, &kp STAR, LB3 LM3)
 DEFAULT_COMBO(delete, &kp DELETE, LT0 LT1)
 DEFAULT_COMBO(backspace, &kp BACKSPACE, LT1 LT2)
 
-DEFAULT_COMBO(tab, &kp TAB, LH0 LH1)
-
 /* Macros */
 / {
   macros {
     ZMK_MACRO(uc_gbp  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp A &kp N3>, <&kp RET>;)
     ZMK_MACRO(uc_eur  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N2 &kp N0 &kp A &kp C>, <&kp RET>;)
     ZMK_MACRO(uc_rup  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N2 &kp N0 &kp B &kp N9>, <&kp RET>;)
-    ZMK_MACRO(vi_sav  , tap-ms=<20>; wait-ms=<20>; bindings = <&kp ESC &kp COLON &kp W>, <&kp RET>;)
+    ZMK_MACRO(vi_sav  , tap-ms=<40>; wait-ms=<40>; bindings = <&kp ESC &kp COLON &kp W>, <&kp RET>;)
     ZMK_MACRO(find    , bindings = <&kp LC(F)>;)
     ZMK_MACRO(pre_tab , bindings = <&kp LC(LS(TAB))>;)
     ZMK_MACRO(nex_tab , bindings = <&kp LC(TAB)>;)
