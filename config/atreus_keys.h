@@ -52,9 +52,8 @@
 #define RH4 40
 #define RH5 41
 
-#define X_LH &kp UNDER &kp MINUS
-#define X_RH &kp SQT &kp DQT
-#define X_MH &mo FN &mo NUM
+#define X_LH &mo FN &kp UNDER &kp MINUS
+#define X_RH &kp SQT &kp DQT &mo NUM
 
 #define GAME_LAYER_KEYS\
  &kp TAB   &kp Q   &kp W   &kp E     &kp R  /* &            & */      &none       &kp N7  &kp N8  &kp N9 &kp N0\

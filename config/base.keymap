@@ -81,8 +81,8 @@ ZMK_LAYER(functionkeys,
 
 // Extend Layer with Macros and Special Keys
 ZMK_LAYER(extend,
-  X_LT &zout   &zin      &pre_dsk   &nex_dsk    &kp C_VOL_UP /**/ &kp HOME &kp PG_DN    &kp PG_UP    &kp END   &kp CAPS X_RT
-  X_LM &vi_sav &find     &pre_tab   &nex_tab    &kp C_MUTE   /**/ &kp LEFT &kp DOWN     &kp UP       &kp RIGHT &none    X_RM
+  X_LT &zout   &zin      &pre_dsk   &nex_dsk    &kp C_VOL_UP          /**/ &kp HOME &kp PG_DN    &kp PG_UP    &kp END   &kp CAPS X_RT
+  X_LM &vi_sav &find     &pre_tab   &nex_tab    &kp C_MUTE            /**/ &kp LEFT &kp DOWN     &kp UP       &kp RIGHT &none    X_RM
   X_LB &none   &kp C_AC_CUT &kp C_AC_COPY &kp C_AC_PASTE &kp C_VOL_DN /**/ &none    &kp C_BRI_DN &kp C_BRI_UP &none     &none    X_RB
 
   DEFAULT_BOTTOM_ROW
@@ -92,7 +92,7 @@ ZMK_LAYER(extend,
 ZMK_LAYER(system,
   X_LT &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR  /**/ &none       &none &none &none &none X_RT
   X_LM &tog GAME    &tog QW      &none        &none        &sys_reset  /**/ &sys_reset  &none &none &none &none X_RM
-  X_LB &none        &none        &none        &none        &bootloader /**/ &bootloader &none &none &none &none X_RB
+  X_LB &out OUT_BLE &out OUT_USB &none        &none        &bootloader /**/ &bootloader &none &none &none &none X_RB
 
   DEFAULT_BOTTOM_ROW
 )
