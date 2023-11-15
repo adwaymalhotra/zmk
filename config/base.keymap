@@ -3,13 +3,12 @@
 #define QW 1
 #define GAME 2
 #define SYM 3
-#define NUM 4
-#define FN 5
-#define EXT 6
-#define SYS 7
-#define COMBO_LAYERS CO QW SYM EXT NUM FN SYS
+#define NFN 4
+#define EXT 5
+#define SYS 6
+#define COMBO_LAYERS CO QW SYM EXT NFN SYS
 
-#define DEFAULT_BOTTOM_ROW X_LH &lt_bsdel NUM 0 &kp SPC &lt_tabesc EXT 0 X_MH /**/ &lt SYM RET &kp LSHFT &lt FN TAB X_RH
+#define DEFAULT_BOTTOM_ROW X_LH &lt_bsdel NFN 0 &kp SPC &lt_tabesc EXT 0 X_MH /**/ &lt SYM RET &kp LSHFT &lt NFN TAB X_RH
 #define TRANS_ROW &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
 #define TRANS_LAYER \
     X_LT TRANS_ROW X_RT \
@@ -61,20 +60,11 @@ ZMK_LAYER(symbol,
   DEFAULT_BOTTOM_ROW
 )
 
-// Numpad
-ZMK_LAYER(numbers,
-  X_LT &kp PLUS &kp N7 &kp N8 &kp N9 &kp DOT  /**/ &none &none &none &none &none X_RT
-  X_LM &kp N0   &kp N4 &kp N5 &kp N6 &kp FSLH /**/ &none &none &none &none &none X_RM
-  X_LB &kp EQL  &kp N1 &kp N2 &kp N3 &kp STAR /**/ &none &none &none &none &none X_RB
-
-  DEFAULT_BOTTOM_ROW
-)
-
-// Function Keys
-ZMK_LAYER(functionkeys,
-  X_LT &none &none &none &none &none /**/ &none &kp F1 &kp F2  &kp F3  &kp F4  X_RT
-  X_LM &none &none &none &none &none /**/ &none &kp F5 &kp F6  &kp F7  &kp F8  X_RM
-  X_LB &none &none &none &none &none /**/ &none &kp F9 &kp F10 &kp F11 &kp F12 X_RB
+// Numpad & Function Keys
+ZMK_LAYER(nfn,
+  X_LT &kp PLUS &kp N7 &kp N8 &kp N9 &kp DOT  /**/ &none &kp F1 &kp F2  &kp F3  &kp F4  X_RT
+  X_LM &kp N0   &kp N4 &kp N5 &kp N6 &kp FSLH /**/ &none &kp F5 &kp F6  &kp F7  &kp F8  X_RM
+  X_LB &kp EQL  &kp N1 &kp N2 &kp N3 &kp STAR /**/ &none &kp F9 &kp F10 &kp F11 &kp F12 X_RB
 
   DEFAULT_BOTTOM_ROW
 )
