@@ -57,4 +57,4 @@
           &kp TAB   &kp Q &kp W &kp E &kp R /**/ &none &kp N7 &kp N8 &kp N9 &kp N0\
           &kp LCTL  &kp A &kp S &kp D &kp F /**/ &none &kp N4 &kp N5 &kp N6 &none\
   &kp ESC &kp LSHFT &kp Z &kp X &kp C &kp V /**/ &none &kp N1 &kp N2 &kp N3 &none  &tog GAME\
-                 &kp LALT &kp RET &kp SPACE /**/ &kp LSHFT &lt SYM RET  &kp SQT
+                 &kp LALT &kp RET &kp SPACE /**/ &kp LSHFT &kp RET  &kp SQT
