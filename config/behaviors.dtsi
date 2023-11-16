@@ -79,7 +79,33 @@ ZMK_BEHAVIOR(rpar_gt, mod_morph,
     mods = <(MOD_LSFT|MOD_RSFT)>;
 )
 
-/* Combos */
+// tab: dollar | shft + tap: pound (£)
+ZMK_BEHAVIOR(dlr_gbp, mod_morph,
+    bindings = <&kp DLLR>, <&uc_gbp>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+// tab: hash | shft + tap: eur (€)
+ZMK_BEHAVIOR(hash_eur, mod_morph,
+    bindings = <&kp HASH>, <&uc_eur>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+// tab: star | shft + tap: rupee (₹)
+ZMK_BEHAVIOR(star_rup, mod_morph,
+    bindings = <&kp STAR>, <&uc_rup>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+/* Combos
+╭───────┬───────┬───────┬───────┬───────╮   ╭───────┬───────┬───────┬───────┬───────╮
+                      bspc     del
+├───────┼──&────┼───@───┼───!───┼───`───┤   ├───\───┼───(───┼───[───┼───%───┼───────┤
+
+├───────┼──*|₹──┼──#|€──┼─$|£───┼───=───┤   ├───|───┼───)───┼───]───┼───^───┼───────┤
+
+╰───────┼───────┼───────┼───────┼───────┤   ├───────┼───────┼───────┼───────┼───────┤
+) */
 // right side combos
 DEFAULT_COMBO(lpar, &lpar_lt, RM1 RT1)
 DEFAULT_COMBO(rpar, &rpar_gt, RM1 RB1)
@@ -95,16 +121,16 @@ DEFAULT_COMBO(caret, &kp CARET, RM3 RB3)
 
 // left side combos
 DEFAULT_COMBO(excl, &kp EXCL, LT1 LM1)
-DEFAULT_COMBO(dollar, &kp DLLR, LB1 LM1)
+DEFAULT_COMBO(dollar, &dlr_gbp, LB1 LM1)
 
 DEFAULT_COMBO(at, &kp AT, LT2 LM2)
-DEFAULT_COMBO(hash, &kp HASH, LM2 LB2)
+DEFAULT_COMBO(hash, &hash_eur, LM2 LB2)
 
 DEFAULT_COMBO(tilde, &kp GRAVE, LT0 LM0)
 DEFAULT_COMBO(equal, &kp EQUAL, LB0 LM0)
 
 DEFAULT_COMBO(amps, &kp AMPS, LT3 LM3)
-DEFAULT_COMBO(star, &kp STAR, LB3 LM3)
+DEFAULT_COMBO(star, &star_rup, LB3 LM3)
 
 // horizontal combos
 DEFAULT_COMBO(delete, &kp DELETE, LT0 LT1)
