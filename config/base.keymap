@@ -33,7 +33,7 @@ ZMK_CONDITIONAL_LAYER(EXT SYM, SYS)
 ZMK_LAYER(colemak_dh,
   X_LT &kp Q &kp W       &hml LCG F  &hml LAG P  &hml LSG B   /**/ &hmr LSG J   &hmr LAG L  &hmr LCG U     &kp  Y      &kp SEMI X_RT
   X_LM &kp A &hml LGUI R &hml LCTL S &hml LALT T &hml LSHFT G /**/ &hmr LSHFT M &hmr LALT N &hmr LCTL E    &hmr LGUI I &kp O    X_RM
-  X_LB &kp Z &kp X       &hml LAC C  &kp D       &hml LSC V   /**/ &hmr LSC K   &kp H       &hmr LAC COMMA &kp DOT     &kp FSLH X_RB
+  X_LB &kp Z &kp X       &hml LSC C  &kp D       &kp V        /**/ &kp K        &kp H       &hmr LSC COMMA &kp DOT     &kp FSLH X_RB
 
   DEFAULT_BOTTOM_ROW
 )
@@ -71,9 +71,9 @@ ZMK_LAYER(nfn,
 
 // Extend Layer with Macros and Special Keys
 ZMK_LAYER(extend,
-  X_LT &zout   &zin         &pre_dsk      &nex_dsk       &kp C_VOL_UP /**/ &kp HOME &kp PG_DN    &kp PG_UP    &kp END   &kp CAPS X_RT
-  X_LM &vi_sav &find        &pre_tab      &nex_tab       &kp C_MUTE   /**/ &kp LEFT &kp DOWN     &kp UP       &kp RIGHT &kp INS  X_RM
-  X_LB &none   &kp C_AC_CUT &kp C_AC_COPY &kp C_AC_PASTE &kp C_VOL_DN /**/ &none    &kp C_BRI_DN &kp C_BRI_UP &none     &none    X_RB
+  X_LT &zout   &zin  &pre_dsk &nex_dsk &kp C_VOL_UP /**/ &kp HOME &kp PG_DN    &kp PG_UP    &kp END   &kp CAPS X_RT
+  X_LM &vi_sav &find &pre_tab &nex_tab &kp C_MUTE   /**/ &kp LEFT &kp DOWN     &kp UP       &kp RIGHT &kp INS  X_RM
+  X_LB &none   &cut  &copy    &paste   &kp C_VOL_DN /**/ &none    &kp C_BRI_DN &kp C_BRI_UP &none     &none    X_RB
 
   DEFAULT_BOTTOM_ROW
 )

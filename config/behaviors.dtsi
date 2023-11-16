@@ -67,7 +67,6 @@ ZMK_BEHAVIOR(lt_tabesc, hold_tap,
     hold-trigger-on-release;
 )
 
-// the following two things don't seem to work at all.
 // tap: left-parenthesis | shft + tap: less-than
 ZMK_BEHAVIOR(lpar_lt, mod_morph,
     bindings = <&kp LPAR>, <&kp LT>;
