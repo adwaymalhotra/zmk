@@ -32,7 +32,7 @@ ZMK_CONDITIONAL_LAYER(EXT NFN, SYS)
 ZMK_LAYER(colemak_dh,
   X_LT &kp Q        &kp W       &hml LCG F  &hml LAG P  &kp B /**/ &kp J &hmr LAG L  &hmr LCG U     &kp  Y       &kp SEMI     X_RT
   X_LM &hml LSHFT A &hml LGUI R &hml LCTL S &hml LALT T &kp G /**/ &kp M &hmr LALT N &hmr LCTL E    &hmr LGUI I  &hmr LSHFT O X_RM
-  X_LB &kp Z        &hml LSG X  &hml LSC C  &kp D       &kp V /**/ &kp K &kp H       &hmr LSC COMMA &hmr LSG DOT &kp FSLH     X_RB
+  X_LB &kp Z        &hml LSG X  &hml LSC C  &hml LAS D  &kp V /**/ &kp K &hmr LAS H  &hmr LSC COMMA &hmr LSG DOT &kp FSLH     X_RB
 
   DEFAULT_BOTTOM_ROW
 )
@@ -40,7 +40,7 @@ ZMK_LAYER(colemak_dh,
 ZMK_LAYER(qwerty,
   X_LT &trans &trans      &hml LCG E  &hml LAG R  &kp T  /**/ &kp Y &hmr LAG U  &hmr LCG I  &kp O       &kp P           X_RT
   X_LM &trans &hml LGUI S &hml LCTL D &hml LALT F &trans /**/ &kp H &hmr LALT J &hmr LCTL K &hmr LGUI L &hmr LSHFT SEMI X_RM
-  X_LB &trans &trans      &trans      &kp V       &kp B  /**/ &kp N &kp M       &trans      &trans      &kp FSLH        X_RB
+  X_LB &trans &trans      &trans      &hml LAS V  &kp B  /**/ &kp N &hmr LAS M  &trans      &trans      &kp FSLH        X_RB
 
   DEFAULT_BOTTOM_ROW
 )
