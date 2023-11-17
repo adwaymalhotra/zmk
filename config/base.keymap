@@ -8,6 +8,7 @@
 #define COMBO_LAYERS CO QW EXT NFN SYS
 
 #define DEFAULT_BOTTOM_ROW X_LH &lt_bsdel NFN 0 &kp SPC &lt_tabesc EXT 0 X_MH /**/ &lt EXT RET &kp LSHFT &lt NFN TAB X_RH
+
 #define TRANS_ROW &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
 #define TRANS_LAYER \
     X_LT TRANS_ROW X_RT \
@@ -26,8 +27,6 @@
 #define LAC LC(LALT)
 #define LAS LS(LALT)
 #define LSC LC(LSFT)
-
-ZMK_CONDITIONAL_LAYER(EXT NFN, SYS)
 
 ZMK_LAYER(colemak_dh,
   X_LT &kp Q        &kp W       &hml LCG F  &hml LAG P  &kp B /**/ &kp J &hmr LAG L  &hmr LCG U     &kp  Y       &kp SEMI     X_RT
