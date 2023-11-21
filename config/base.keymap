@@ -7,7 +7,7 @@
 #define SYS 5
 #define COMBO_LAYERS CO QW EXT NFN SYS
 
-#define DEFAULT_BOTTOM_ROW X_LH &lt_bsdel NFN 0 &kp SPC &lt_tabesc EXT 0 X_MH /**/ &lt EXT RET &kp LSHFT &lt NFN TAB X_RH
+#define DEFAULT_BOTTOM_ROW X_LH &lt_bsdel NFN 0 &kp SPC &lth EXT ESC X_MH /**/ &lth EXT RET &kp LSHFT &lth NFN TAB X_RH
 
 #define TRANS_ROW &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
 #define TRANS_LAYER \
