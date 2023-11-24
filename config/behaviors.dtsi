@@ -35,11 +35,26 @@ MAKE_HRM(hlr, &mo, &kp, KEYS_L THUMBS)
   flavor = "tap-preferred";
 };
 
+&mt {
+  tapping-term-ms = <TAPPING_TERM>;
+  quick-tap-ms = <QUICK_TAP_MS>;
+  flavor = "tap-preferred";
+};
+
 ZMK_BEHAVIOR(lth, hold_tap,
     flavor = "hold-preferred";
     tapping-term-ms = <TAPPING_TERM>;
     quick-tap-ms = <QUICK_TAP_MS>;
     bindings = <&mo>, <&kp>;
+    global-quick-tap-ms = <GLOBAL_QUICK_TAP_MS>;
+    hold-trigger-on-release;
+)
+
+ZMK_BEHAVIOR(mth, hold_tap,
+    flavor = "hold-preferred";
+    tapping-term-ms = <TAPPING_TERM>;
+    quick-tap-ms = <QUICK_TAP_MS>;
+    bindings = <&kp>, <&kp>;
     global-quick-tap-ms = <GLOBAL_QUICK_TAP_MS>;
     hold-trigger-on-release;
 )
@@ -108,9 +123,9 @@ ZMK_BEHAVIOR(star_rup, mod_morph,
 
 /* Combos
 ╭───────┬───────┬───────┬───────┬───────╮   ╭───────┬───────┬───────┬───────┬───────╮
-                      bspc     del
+               del    bspc                                 tab
 ├───────┼──&────┼───@───┼───!───┼───`───┤   ├───\───┼───(───┼───[───┼───%───┼───────┤
-
+               del    bspc                                 tab
 ├───────┼──*|₹──┼──#|€──┼─$|£───┼───=───┤   ├───|───┼───)───┼───]───┼───^───┼───────┤
 
 ╰───────┼───────┼───────┼───────┼───────┤   ├───────┼───────┼───────┼───────┼───────┤
@@ -142,7 +157,6 @@ DEFAULT_COMBO(amps, &kp AMPS, LT3 LM3)
 DEFAULT_COMBO(star, &star_rup, LB3 LM3)
 
 // horizontal combos
-DEFAULT_COMBO(delete, &kp DELETE, LT0 LT1)
 DEFAULT_COMBO(backspace, &kp BACKSPACE, LT1 LT2)
 DEFAULT_COMBO(delete, &kp DELETE, LT2 LT3)
 DEFAULT_COMBO(backspace, &kp BACKSPACE, LM1 LM2)
