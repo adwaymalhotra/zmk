@@ -144,6 +144,12 @@ DEFAULT_COMBO(star, &star_rup, LB3 LM3)
 // horizontal combos
 DEFAULT_COMBO(delete, &kp DELETE, LT0 LT1)
 DEFAULT_COMBO(backspace, &kp BACKSPACE, LT1 LT2)
+DEFAULT_COMBO(delete, &kp DELETE, LT2 LT3)
+DEFAULT_COMBO(backspace, &kp BACKSPACE, LM1 LM2)
+DEFAULT_COMBO(delete, &kp DELETE, LM2 LM3)
+
+DEFAULT_COMBO(tab, &kp TAB, RT1 RT2)
+DEFAULT_COMBO(tab, &kp TAB, RM1 RM2)
 
 /* Macros */
 / {
@@ -162,5 +168,7 @@ DEFAULT_COMBO(backspace, &kp BACKSPACE, LT1 LT2)
     ZMK_MACRO(paste   , bindings = <&kp LC(V)>;)
     ZMK_MACRO(zin     , bindings = <&kp LC(PLUS)>;)
     ZMK_MACRO(zout    , bindings = <&kp LC(MINUS)>;)
+    ZMK_MACRO(half_dn , bindings = <&kp LC(D)>;)
+    ZMK_MACRO(half_up , bindings = <&kp LC(U)>;)
   };
 };
