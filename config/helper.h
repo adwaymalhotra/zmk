@@ -61,7 +61,7 @@
 
 #define ALL 0xff
 #if !defined COMBO_TERM
-    #define COMBO_TERM 60
+    #define COMBO_TERM 30
 #endif
 #if !defined COMBO_HOOK
     #define COMBO_HOOK
