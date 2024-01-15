@@ -121,6 +121,12 @@ ZMK_BEHAVIOR(star_rup, mod_morph,
     mods = <(MOD_LSFT|MOD_RSFT)>;
 )
 
+// alt-tab tri-state
+ZMK_BEHAVIOR(alt_tab, tri_state,
+    bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
+    ignored-key-positions = <LT2>;
+)
+
 /* Combos
 ╭───────┬───────┬───────┬───────┬───────╮   ╭───────┬───────┬───────┬───────┬───────╮
 
