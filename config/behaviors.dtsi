@@ -3,8 +3,9 @@
 
 /* Homerow Mods */
 #define GLOBAL_QUICK_TAP_MS 175
+#define PRIOR_QUICK_TAP_MS 175
 #define QUICK_TAP_MS 220
-#define TAPPING_TERM 280
+#define TAPPING_TERM 220
 
 #define MAKE_HRM(NAME, HOLD, TAP, TRIGGER_POS) \
     ZMK_BEHAVIOR(NAME, hold_tap, \
@@ -12,7 +13,7 @@
         tapping-term-ms = <TAPPING_TERM>; \
         quick-tap-ms = <QUICK_TAP_MS>; \
         bindings = <HOLD>, <TAP>; \
-        global-quick-tap-ms = <GLOBAL_QUICK_TAP_MS>; \
+        require-prior-idle-ms = <PRIOR_QUICK_TAP_MS>; \
         hold-trigger-key-positions = <TRIGGER_POS>; \
         hold-trigger-on-release; \
     )
@@ -46,7 +47,7 @@ ZMK_BEHAVIOR(lth, hold_tap,
     tapping-term-ms = <TAPPING_TERM>;
     quick-tap-ms = <QUICK_TAP_MS>;
     bindings = <&mo>, <&kp>;
-    global-quick-tap-ms = <GLOBAL_QUICK_TAP_MS>;
+    require-prior-idle-ms = <PRIOR_QUICK_TAP_MS>;
     hold-trigger-on-release;
 )
 
@@ -55,7 +56,28 @@ ZMK_BEHAVIOR(mth, hold_tap,
     tapping-term-ms = <TAPPING_TERM>;
     quick-tap-ms = <QUICK_TAP_MS>;
     bindings = <&kp>, <&kp>;
-    global-quick-tap-ms = <GLOBAL_QUICK_TAP_MS>;
+    require-prior-idle-ms = <PRIOR_QUICK_TAP_MS>;
+    hold-trigger-on-release;
+)
+
+// layer hold tap for the bsdel key
+// the config for this is similar to the home row mods but they are usable for all keys
+// usage: &lt_bsdel NUM 0
+ZMK_BEHAVIOR(lt_bsdel, hold_tap,
+    flavor = "hold-preferred";
+    tapping-term-ms = <TAPPING_TERM>;
+    quick-tap-ms = <QUICK_TAP_MS>;
+    bindings = <&mo>, <&bsdel>;
+    require-prior-idle-ms = <PRIOR_QUICK_TAP_MS>;
+    hold-trigger-on-release;
+)
+
+ZMK_BEHAVIOR(lt_tabesc, hold_tap,
+    flavor = "hold-preferred";
+    tapping-term-ms = <TAPPING_TERM>;
+    quick-tap-ms = <QUICK_TAP_MS>;
+    bindings = <&mo>, <&tabesc>;
+    require-prior-idle-ms = <PRIOR_QUICK_TAP_MS>;
     hold-trigger-on-release;
 )
 
@@ -68,27 +90,6 @@ ZMK_BEHAVIOR(tabesc, mod_morph,
     bindings = <&kp ESC>, <&kp TAB>;
     mods = <(MOD_LALT|MOD_LCTL|MOD_LGUI)>;
     keep-mods = <(MOD_LALT|MOD_LCTL|MOD_LGUI)>;
-)
-
-// layer hold tap for the bsdel key
-// the config for this is similar to the home row mods but they are usable for all keys
-// usage: &lt_bsdel NUM 0
-ZMK_BEHAVIOR(lt_bsdel, hold_tap,
-    flavor = "hold-preferred";
-    tapping-term-ms = <TAPPING_TERM>;
-    quick-tap-ms = <QUICK_TAP_MS>;
-    bindings = <&mo>, <&bsdel>;
-    global-quick-tap-ms = <GLOBAL_QUICK_TAP_MS>;
-    hold-trigger-on-release;
-)
-
-ZMK_BEHAVIOR(lt_tabesc, hold_tap,
-    flavor = "hold-preferred";
-    tapping-term-ms = <TAPPING_TERM>;
-    quick-tap-ms = <QUICK_TAP_MS>;
-    bindings = <&mo>, <&tabesc>;
-    global-quick-tap-ms = <GLOBAL_QUICK_TAP_MS>;
-    hold-trigger-on-release;
 )
 
 // tap: left-parenthesis | shft + tap: less-than
@@ -122,10 +123,10 @@ ZMK_BEHAVIOR(star_rup, mod_morph,
 )
 
 // alt-tab tri-state
-ZMK_BEHAVIOR(alt_tab, tri_state,
-    bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
-    ignored-key-positions = <LT2>;
-)
+// ZMK_BEHAVIOR(alt_tab, tri_state,
+//     bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
+//     ignored-key-positions = <LT2>;
+// )
 
 /* Combos
 ╭───────┬───────┬───────┬───────┬───────╮   ╭───────┬───────┬───────┬───────┬───────╮
