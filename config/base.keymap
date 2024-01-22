@@ -65,7 +65,7 @@ ZMK_LAYER(nfn,
 ZMK_LAYER(extend,
   X_LT &zout    &zin  &pre_dsk &nex_dsk &kp C_VOL_UP /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp CAPS  X_RT
   X_LM &vi_sav  &find &pre_tab &nex_tab &kp C_MUTE   /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp INS   X_RM
-  X_LB &none &none &half_up &half_dn &kp C_VOL_DN /**/ &none    &half_dn  &half_up  &none     &kp PSCRN X_RB
+  X_LB &alt_tab &none &half_up &half_dn &kp C_VOL_DN /**/ &none    &half_dn  &half_up  &none     &kp PSCRN X_RB
 
   DEFAULT_THUMBS
 )
