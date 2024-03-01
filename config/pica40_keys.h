@@ -52,11 +52,11 @@
 #define RH1 38
 #define RH2 39
 
-#define X_LM &bsdel
-#define X_RM &kp TAB
+#define X_LB &kp TAB
+#define X_RB &bsdel
 
-#define X_LB &lt SYS MINUS
-#define X_RB &lt SYS SQT
+#define X_LM &kp MINUS
+#define X_RM &kp SQT
 
 #define GAME_LAYER_KEYS\
            &kp TAB   &kp Q &kp W &kp E &kp R /**/ &none &kp N7 &kp N8 &kp N9 &kp N0\

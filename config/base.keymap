@@ -7,8 +7,8 @@
 #define SYS 5
 #define COMBO_LAYERS CO QW EXT NFN SYS
 
-#define LEFT_THUMBS &lth NFN MINUS &kp SPC &lth EXT ESC
-#define RIGHT_THUMBS &mth LCTL RET &kp LSHFT &mth LALT SQT
+#define LEFT_THUMBS &mo NFN &kp SPC &lth EXT ESC
+#define RIGHT_THUMBS &lt SYS RET &kp LSHFT &kp LCTL
 #define DEFAULT_THUMBS X_LH LEFT_THUMBS X_MH RIGHT_THUMBS X_RH
 
 #define TRANS_ROW &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
@@ -23,12 +23,12 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
 
-#define LAG LA(LGUI)
-#define LCG LC(LGUI)
-#define LSG LS(LGUI)
+#define LAG LG(LALT)
+#define LCG LG(LCTL)
+#define LSG LG(LSHFT)
 #define LAC LC(LALT)
+#define LSC LC(LSHFT)
 #define LAS LS(LALT)
-#define LSC LC(LSFT)
 
 ZMK_LAYER(colemak_dh,
   X_LT &kp Q        &kp W       &hml LCG F  &hml LAG P  &kp B /**/ &kp J &hmr LAG L  &hmr LCG U     &kp  Y       &kp SEMI     X_RT
@@ -54,18 +54,18 @@ ZMK_LAYER(qwerty,
 
 // Numpad & Function Keys
 ZMK_LAYER(nfn,
-  X_LT &kp PLUS &kp N7 &kp N8 &kp N9 &kp DOT  /**/ &none &kp F1 &kp F2  &kp F3  &kp F4  X_RT
-  X_LM &kp N0   &kp N4 &kp N5 &kp N6 &kp FSLH /**/ &none &kp F5 &kp F6  &kp F7  &kp F8  X_RM
-  X_LB &kp EQL  &kp N1 &kp N2 &kp N3 &kp STAR /**/ &none &kp F9 &kp F10 &kp F11 &kp F12 X_RB
+  X_LT &kp PLUS  &kp N7 &kp N8 &kp N9 &kp DOT  /**/ &bt BT_CLR_ALL &kp F1 &kp F2  &kp F3  &kp F4  X_RT
+  X_LM &kp N0    &kp N4 &kp N5 &kp N6 &kp FSLH /**/ &none          &kp F5 &kp F6  &kp F7  &kp F8  X_RM
+  X_LB &kp MINUS &kp N1 &kp N2 &kp N3 &kp STAR /**/ &none          &kp F9 &kp F10 &kp F11 &kp F12 X_RB
 
   DEFAULT_THUMBS
 )
 
 // Extend Layer with Macros and Special Keys
 ZMK_LAYER(extend,
-  X_LT &zout    &zin  &pre_dsk &nex_dsk &kp C_VOL_UP /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp CAPS  X_RT
-  X_LM &vi_sav  &find &pre_tab &nex_tab &kp C_MUTE   /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp INS   X_RM
-  X_LB &alt_tab &none &half_up &half_dn &kp C_VOL_DN /**/ &none    &half_dn  &half_up  &none     &kp PSCRN X_RB
+  X_LT &zout    &zin    &pre_dsk &nex_dsk &kp C_VOL_UP /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp CAPS  X_RT
+  X_LM &vi_sav  &find   &pre_tab &nex_tab &kp C_MUTE   /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp INS   X_RM
+  X_LB &alt_tab &mo SYS &half_up &half_dn &kp C_VOL_DN /**/ &kp RALT &half_dn  &half_up  &none     &kp PSCRN X_RB
 
   DEFAULT_THUMBS
 )

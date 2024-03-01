@@ -50,8 +50,8 @@
 #define RH1 36
 #define RH2 37
 
-#define X_LB &lt SYS TAB
-#define X_RB &lt_bsdel SYS 0
+#define X_LB &kp TAB
+#define X_RB &bsdel
 
 #define GAME_LAYER_KEYS\
           &kp TAB   &kp Q &kp W &kp E &kp R /**/ &none &kp N7 &kp N8 &kp N9 &kp N0\

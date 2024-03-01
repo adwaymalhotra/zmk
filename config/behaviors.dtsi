@@ -27,6 +27,10 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS)
 MAKE_HRM(hll, &mo, &kp, KEYS_R THUMBS)
 MAKE_HRM(hlr, &mo, &kp, KEYS_L THUMBS)
 
+&sk {
+    release-after-ms = <500>;
+    quick-release;
+};
 
 /* All Other Behaviors */
 &lt {
@@ -142,40 +146,40 @@ ZMK_BEHAVIOR(alt_tab, macro,
 ╰───────┼───────┼───────┼───────┼───────┤   ├───────┼───────┼───────┼───────┼───────┤
 ) */
 // right side combos
-DEFAULT_COMBO(lpar, &lpar_lt, RM1 RT1)
-DEFAULT_COMBO(rpar, &rpar_gt, RM1 RB1)
-
-DEFAULT_COMBO(lbkt, &kp LBKT, RM2 RT2)
-DEFAULT_COMBO(rbkt, &kp RBKT, RM2 RB2)
-
 DEFAULT_COMBO(backslash, &kp BSLH, RM0 RT0)
 DEFAULT_COMBO(pipe, &kp PIPE, RM0 RB0)
 
-DEFAULT_COMBO(perc, &kp PRCNT, RM3 RT3)
-DEFAULT_COMBO(caret, &kp CARET, RM3 RB3)
+DEFAULT_COMBO(sqt, &kp SQT, RT1 RM1)
+DEFAULT_COMBO(rpar, &rpar_gt, RM1 RB1)
+
+DEFAULT_COMBO(minus, &kp MINUS, RT2 RM2)
+DEFAULT_COMBO(rbkt, &kp RBKT, RM2 RB2)
+
+DEFAULT_COMBO(dollar, &dlr_gbp,  RT3 RM3)
+DEFAULT_COMBO(hash,   &hash_eur, RM3 RB3)
+
+DEFAULT_COMBO(perc, &kp PRCNT, RM4 RT4)
+DEFAULT_COMBO(caret, &kp CARET, RM4 RB4)
 
 // left side combos
-DEFAULT_COMBO(excl, &kp EXCL, LT1 LM1)
-DEFAULT_COMBO(dollar, &dlr_gbp, LB1 LM1)
-
-DEFAULT_COMBO(at, &kp AT, LT2 LM2)
-DEFAULT_COMBO(hash, &hash_eur, LM2 LB2)
-
 DEFAULT_COMBO(tilde, &kp GRAVE, LT0 LM0)
 DEFAULT_COMBO(equal, &kp EQUAL, LB0 LM0)
+
+DEFAULT_COMBO(excl, &kp EXCL, LT1 LM1)
+DEFAULT_COMBO(lpar, &lpar_lt, LM1 LB1)
+
+DEFAULT_COMBO(at, &kp AT, LT2 LM2)
+DEFAULT_COMBO(lbkt, &kp LBKT, LM2 LB2)
 
 DEFAULT_COMBO(amps, &kp AMPS, LT3 LM3)
 DEFAULT_COMBO(star, &star_rup, LB3 LM3)
 
-// horizontal combos
-DEFAULT_COMBO(backspace, &kp BACKSPACE, LM1 LM2)
-DEFAULT_COMBO(delete, &kp DELETE, LM2 LM3)
-
-DEFAULT_COMBO(tab, &kp TAB, RM1 RM2)
+DEFAULT_COMBO(degree, &uc_deg, LT4 LM4)
 
 /* Macros */
 / {
   macros {
+    ZMK_MACRO(uc_deg  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp B &kp N0>, <&kp RET>;)
     ZMK_MACRO(uc_gbp  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp A &kp N3>, <&kp RET>;)
     ZMK_MACRO(uc_eur  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N2 &kp N0 &kp A &kp C>, <&kp RET>;)
     ZMK_MACRO(uc_rup  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N2 &kp N0 &kp B &kp N9>, <&kp RET>;)
