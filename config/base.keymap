@@ -10,16 +10,15 @@
 #define LEFT_THUMBS &mo NFN &kp SPC &lth EXT ESC
 #define RIGHT_THUMBS &lt SYS RET &sk LSHFT &kp LCTL
 #define DEFAULT_THUMBS X_LH LEFT_THUMBS X_MH RIGHT_THUMBS X_RH
-
 #define TRANS_ROW &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-#define TRANS_LAYER \
-    X_LT TRANS_ROW X_RT \
-    X_LM TRANS_ROW X_RM \
-    X_LB TRANS_ROW X_RB \
-    DEFAULT_THUMBS
 
 #define ZLAYER(NAME, TOP, MIDDLE, BOTTOM, ...) \
-  ZMK_LAYER(NAME, X_LT TOP X_RT X_LM MIDDLE X_RM X_LB BOTTOM X_RB DEFAULT_THUMBS)
+  ZMK_LAYER(NAME, \
+    X_LT TOP X_RT \
+    X_LM MIDDLE X_RM \
+    X_LB BOTTOM X_RB \
+    DEFAULT_THUMBS)
+#define TRANS_LAYER(NAME) ZLAYER(NAME, TRANS_ROW, TRANS_ROW, TRANS_ROW)
 
 #include "extra_keys.h"
 #include "behaviors.dtsi"
@@ -32,23 +31,25 @@
 #define LAC LC(LALT)
 #define LSC LC(LSHFT)
 #define LAS LS(LALT)
+#define LSH LSHFT
+#define RSH RSHFT
 
 ZLAYER(colemak_dh,
-  &kp Q        &kp W       &hml LCG F  &hml LAG P  &kp B /**/ &kp J &hmr LAG L  &hmr LCG U     &kp  Y       &kp SEMI    ,
-  &hml LSHFT A &hml LGUI R &hml LCTL S &hml LALT T &kp G /**/ &kp M &hmr LALT N &hmr LCTL E    &hmr LGUI I  &hmr LSHFT O,
-  &kp Z        &hml LSG X  &hml LSC C  &hml LAS D  &kp V /**/ &kp K &hmr LAS H  &hmr LSC COMMA &hmr LSG DOT &kp FSLH    ,
+  &kp Q      &kp W       &hml LCG F  &hml LAG P  &lt SYS B /**/ &kp J &hmr LAG L  &hmr LCG U     &kp  Y       &kp SEMI  ,
+  &hml LSH A &hml LGUI R &hml LCTL S &hml LALT T &kp G /**/     &kp M &hmr LALT N &hmr LCTL E    &hmr LGUI I  &hmr LSH O,
+  &kp Z      &hml LSG X  &hml LSC C  &hml LAS D  &kp V /**/     &kp K &hmr LAS H  &hmr LSC COMMA &hmr LSG DOT &kp FSLH  ,
 )
 
 ZLAYER(qwerty,
  &trans &trans      &hml LCG E  &hml LAG R  &kp T  /**/ &kp Y &hmr LAG U  &hmr LCG I  &kp O       &kp P          ,
- &trans &hml LGUI S &hml LCTL D &hml LALT F &trans /**/ &kp H &hmr LALT J &hmr LCTL K &hmr LGUI L &hmr LSHFT SEMI,
- &trans &trans      &trans      &hml LAS V  &kp B  /**/ &kp N &hmr LAS M  &trans      &trans      &kp FSLH,
+ &trans &hml LGUI S &hml LCTL D &hml LALT F &trans /**/ &kp H &hmr LALT J &hmr LCTL K &hmr LGUI L &hmr LSH SEMI,
+ &trans &trans      &trans      &hml LAS V  &kp B  /**/ &kp N &hmr LAS M  &trans      &trans      &kp FSLH       ,
 )
 
 #if defined GAME_LAYER_KEYS
   ZMK_LAYER(game, GAME_LAYER_KEYS)
 #else
-  ZMK_LAYER(game, TRANS_LAYER)
+  TRANS_LAYER(game)
 #endif
 
 // Numpad & Function Keys
@@ -60,16 +61,16 @@ ZLAYER(nfn,
 
 // Extend Layer with Macros and Special Keys
 ZLAYER(extend,
-  &none    &vi_sav &pre_dsk &nex_dsk &kp C_VOL_UP /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp CAPS ,
-  &alt_tab &find   &pre_tab &nex_tab &kp C_MUTE   /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp INS  ,
-  &none    &mo SYS &half_up &half_dn &kp C_VOL_DN /**/ &kp RALT &half_dn  &half_up  &none     &kp PSCRN,
+  &find    &vi_sav &pre_dsk &nex_dsk &kp C_VOL_UP /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp CAPS ,
+  &alt_tab &none   &pre_tab &nex_tab &kp C_MUTE   /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp INS  ,
+  &none    &none   &half_up &half_dn &kp C_VOL_DN /**/ &kp RALT &none     &none     &none     &kp PSCRN,
 )
 
 // System Settings
 ZLAYER(system,
-  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR  /**/ &none       &none &none &none &none,
+  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &none       /**/ &none       &none &none &none &none,
   &tog GAME    &tog QW      &kp C_BRI_UP &kp C_BRI_DN &sys_reset  /**/ &sys_reset  &none &none &none &none,
-  &out OUT_BLE &out OUT_USB &none        &none        &bootloader /**/ &bootloader &none &none &none &none,
+  &out OUT_BLE &out OUT_USB &none        &bt BT_CLR   &bootloader /**/ &bootloader &none &none &none &none,
 )
 
 // vi:ft=dts

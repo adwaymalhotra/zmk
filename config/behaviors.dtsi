@@ -191,8 +191,6 @@ DEFAULT_COMBO(degree, &uc_deg, LT4 LM4)
     ZMK_MACRO(cut     , bindings = <&kp LC(X)>;)
     ZMK_MACRO(copy    , bindings = <&kp LC(C)>;)
     ZMK_MACRO(paste   , bindings = <&kp LC(V)>;)
-    ZMK_MACRO(zin     , bindings = <&kp LC(PLUS)>;)
-    ZMK_MACRO(zout    , bindings = <&kp LC(MINUS)>;)
     ZMK_MACRO(half_dn , bindings = <&kp LC(D)>;)
     ZMK_MACRO(half_up , bindings = <&kp LC(U)>;)
   };
