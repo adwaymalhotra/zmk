@@ -18,6 +18,9 @@
     X_LB TRANS_ROW X_RB \
     DEFAULT_THUMBS
 
+#define ZLAYER(NAME, TOP, MIDDLE, BOTTOM, ...) \
+  ZMK_LAYER(NAME, X_LT TOP X_RT X_LM MIDDLE X_RM X_LB BOTTOM X_RB DEFAULT_THUMBS)
+
 #include "extra_keys.h"
 #include "behaviors.dtsi"
 #include <dt-bindings/zmk/bt.h>
@@ -30,20 +33,16 @@
 #define LSC LC(LSHFT)
 #define LAS LS(LALT)
 
-ZMK_LAYER(colemak_dh,
-  X_LT &kp Q        &kp W       &hml LCG F  &hml LAG P  &kp B /**/ &kp J &hmr LAG L  &hmr LCG U     &kp  Y       &kp SEMI     X_RT
-  X_LM &hml LSHFT A &hml LGUI R &hml LCTL S &hml LALT T &kp G /**/ &kp M &hmr LALT N &hmr LCTL E    &hmr LGUI I  &hmr LSHFT O X_RM
-  X_LB &kp Z        &hml LSG X  &hml LSC C  &hml LAS D  &kp V /**/ &kp K &hmr LAS H  &hmr LSC COMMA &hmr LSG DOT &kp FSLH     X_RB
-
-  DEFAULT_THUMBS
+ZLAYER(colemak_dh,
+  &kp Q        &kp W       &hml LCG F  &hml LAG P  &kp B /**/ &kp J &hmr LAG L  &hmr LCG U     &kp  Y       &kp SEMI    ,
+  &hml LSHFT A &hml LGUI R &hml LCTL S &hml LALT T &kp G /**/ &kp M &hmr LALT N &hmr LCTL E    &hmr LGUI I  &hmr LSHFT O,
+  &kp Z        &hml LSG X  &hml LSC C  &hml LAS D  &kp V /**/ &kp K &hmr LAS H  &hmr LSC COMMA &hmr LSG DOT &kp FSLH    ,
 )
 
-ZMK_LAYER(qwerty,
-  X_LT &trans &trans      &hml LCG E  &hml LAG R  &kp T  /**/ &kp Y &hmr LAG U  &hmr LCG I  &kp O       &kp P           X_RT
-  X_LM &trans &hml LGUI S &hml LCTL D &hml LALT F &trans /**/ &kp H &hmr LALT J &hmr LCTL K &hmr LGUI L &hmr LSHFT SEMI X_RM
-  X_LB &trans &trans      &trans      &hml LAS V  &kp B  /**/ &kp N &hmr LAS M  &trans      &trans      &kp FSLH        X_RB
-
-  DEFAULT_THUMBS
+ZLAYER(qwerty,
+ &trans &trans      &hml LCG E  &hml LAG R  &kp T  /**/ &kp Y &hmr LAG U  &hmr LCG I  &kp O       &kp P          ,
+ &trans &hml LGUI S &hml LCTL D &hml LALT F &trans /**/ &kp H &hmr LALT J &hmr LCTL K &hmr LGUI L &hmr LSHFT SEMI,
+ &trans &trans      &trans      &hml LAS V  &kp B  /**/ &kp N &hmr LAS M  &trans      &trans      &kp FSLH,
 )
 
 #if defined GAME_LAYER_KEYS
@@ -53,30 +52,24 @@ ZMK_LAYER(qwerty,
 #endif
 
 // Numpad & Function Keys
-ZMK_LAYER(nfn,
-  X_LT &kp PLUS  &kp N7 &kp N8 &kp N9 &kp DOT  /**/ &bt BT_CLR_ALL &kp F1 &kp F2  &kp F3  &kp F4  X_RT
-  X_LM &kp N0    &kp N4 &kp N5 &kp N6 &kp FSLH /**/ &none          &kp F5 &kp F6  &kp F7  &kp F8  X_RM
-  X_LB &kp MINUS &kp N1 &kp N2 &kp N3 &kp STAR /**/ &none          &kp F9 &kp F10 &kp F11 &kp F12 X_RB
-
-  DEFAULT_THUMBS
+ZLAYER(nfn,
+  &kp PLUS  &kp N7 &kp N8 &kp N9 &kp DOT  /**/ &bt BT_CLR_ALL &kp F1 &kp F2  &kp F3  &kp F4 ,
+  &kp N0    &kp N4 &kp N5 &kp N6 &kp FSLH /**/ &none          &kp F5 &kp F6  &kp F7  &kp F8 ,
+  &kp MINUS &kp N1 &kp N2 &kp N3 &kp STAR /**/ &none          &kp F9 &kp F10 &kp F11 &kp F12,
 )
 
 // Extend Layer with Macros and Special Keys
-ZMK_LAYER(extend,
-  X_LT &zout    &zin    &pre_dsk &nex_dsk &kp C_VOL_UP /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp CAPS  X_RT
-  X_LM &vi_sav  &find   &pre_tab &nex_tab &kp C_MUTE   /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp INS   X_RM
-  X_LB &alt_tab &mo SYS &half_up &half_dn &kp C_VOL_DN /**/ &kp RALT &half_dn  &half_up  &none     &kp PSCRN X_RB
-
-  DEFAULT_THUMBS
+ZLAYER(extend,
+  &none    &vi_sav &pre_dsk &nex_dsk &kp C_VOL_UP /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp CAPS ,
+  &alt_tab &find   &pre_tab &nex_tab &kp C_MUTE   /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp INS  ,
+  &none    &mo SYS &half_up &half_dn &kp C_VOL_DN /**/ &kp RALT &half_dn  &half_up  &none     &kp PSCRN,
 )
 
 // System Settings
-ZMK_LAYER(system,
-  X_LT &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR  /**/ &none       &none &none &none &none X_RT
-  X_LM &tog GAME    &tog QW      &kp C_BRI_UP &kp C_BRI_DN &sys_reset  /**/ &sys_reset  &none &none &none &none X_RM
-  X_LB &out OUT_BLE &out OUT_USB &none        &none        &bootloader /**/ &bootloader &none &none &none &none X_RB
-
-  DEFAULT_THUMBS
+ZLAYER(system,
+  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR  /**/ &none       &none &none &none &none,
+  &tog GAME    &tog QW      &kp C_BRI_UP &kp C_BRI_DN &sys_reset  /**/ &sys_reset  &none &none &none &none,
+  &out OUT_BLE &out OUT_USB &none        &none        &bootloader /**/ &bootloader &none &none &none &none,
 )
 
 // vi:ft=dts

@@ -20,7 +20,6 @@
 #define DEFAULT_COMBO(NAME, KEY, COMBO_KEYS) \
     ZMK_COMBO(NAME, KEY, COMBO_KEYS, COMBO_LAYERS, COMBO_TERM)
 
-
 // The keys are fetched from the *_keys.h file sourced in the actual keymap before other includes
 MAKE_HRM(hml, &kp, &kp, KEYS_R THUMBS)
 MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS)
@@ -179,10 +178,10 @@ DEFAULT_COMBO(degree, &uc_deg, LT4 LM4)
 /* Macros */
 / {
   macros {
-    ZMK_MACRO(uc_deg  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp B &kp N0>, <&kp RET>;)
-    ZMK_MACRO(uc_gbp  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp A &kp N3>, <&kp RET>;)
-    ZMK_MACRO(uc_eur  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N2 &kp N0 &kp A &kp C>, <&kp RET>;)
-    ZMK_MACRO(uc_rup  , tap-ms=<0>; wait-ms=<0>; bindings = <&kp LC(LS(U))>, <&kp N2 &kp N0 &kp B &kp N9>, <&kp RET>;)
+    ZMK_MACRO(uc_deg, tap-ms=<0>; wait-ms=<0>; bindings = <&kp RALT>, <&kp O>, <&kp O>;)
+    ZMK_MACRO(uc_gbp, tap-ms=<0>; wait-ms=<0>; bindings = <&kp RALT>, <&kp LS(L)>, <&kp EQL>;)
+    ZMK_MACRO(uc_eur, tap-ms=<0>; wait-ms=<0>; bindings = <&kp RALT>, <&kp C>, <&kp EQL>;)
+    ZMK_MACRO(uc_rup, tap-ms=<0>; wait-ms=<0>; bindings = <&kp RALT>, <&kp R>, <&kp EQL>;)
     ZMK_MACRO(vi_sav  , tap-ms=<40>; wait-ms=<40>; bindings = <&kp ESC &kp COLON &kp W>, <&kp RET>;)
     ZMK_MACRO(find    , bindings = <&kp LC(F)>;)
     ZMK_MACRO(pre_tab , bindings = <&kp LC(LS(TAB))>;)
