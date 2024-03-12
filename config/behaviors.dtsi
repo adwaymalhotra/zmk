@@ -124,7 +124,7 @@ ZMK_BEHAVIOR(star_rup, mod_morph,
     mods = <(MOD_LSFT|MOD_RSFT)>;
 )
 
-// alt-tab tri-state from PR #1366. doesn't work any more
+// alt-tab macro-pause from PR #1804. #1366 doesn't work any more
 ZMK_BEHAVIOR(alt_tab, macro,
 	        wait-ms = <0>;
           tap-ms = <0>;
