@@ -41,9 +41,9 @@ ZLAYER(colemak_dh,
 )
 
 ZLAYER(qwerty,
- &trans &trans      &hml LCG E  &hml LAG R  &kp T  /**/ &kp Y &hmr LAG U  &hmr LCG I  &kp O       &kp P          ,
+ &trans &trans      &hml LCG E  &hml LAG R  &kp T  /**/ &kp Y &hmr LAG U  &hmr LCG I  &kp O       &kp P        ,
  &trans &hml LGUI S &hml LCTL D &hml LALT F &trans /**/ &kp H &hmr LALT J &hmr LCTL K &hmr LGUI L &hmr LSH SEMI,
- &trans &trans      &trans      &hml LAS V  &kp B  /**/ &kp N &hmr LAS M  &trans      &trans      &kp FSLH       ,
+ &trans &trans      &trans      &hml LAS V  &kp B  /**/ &kp N &hmr LAS M  &trans      &trans      &kp FSLH     ,
 )
 
 #if defined GAME_LAYER_KEYS
