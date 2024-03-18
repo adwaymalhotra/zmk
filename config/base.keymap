@@ -7,9 +7,13 @@
 #define SYS 5
 #define COMBO_LAYERS CO QW EXT NFN SYS
 
-#define LEFT_THUMBS &mo NFN &kp SPC &lth EXT ESC
-#define RIGHT_THUMBS &lt SYS RET &sk LSHFT &kp LCTL
-#define DEFAULT_THUMBS X_LH LEFT_THUMBS X_MH RIGHT_THUMBS X_RH
+#if defined THUMBS_OVERRIDE
+  #define DEFAULT_THUMBS THUMBS_OVERRIDE
+#else
+  #define LEFT_THUMBS &mo NFN &kp SPC &lth EXT ESC
+  #define RIGHT_THUMBS &lt SYS RET &sk LSHFT &kp LCTL
+  #define DEFAULT_THUMBS X_LH LEFT_THUMBS X_MH RIGHT_THUMBS X_RH
+#endif
 #define TRANS_ROW &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
 
 #define ZLAYER(NAME, TOP, MIDDLE, BOTTOM, ...) \
