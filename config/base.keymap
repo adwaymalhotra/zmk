@@ -1,11 +1,10 @@
 // Layers
-#define CO 0
-#define QW 1
-#define GAME 2
-#define NFN 3
-#define EXT 4
-#define SYS 5
-#define COMBO_LAYERS CO QW EXT NFN SYS
+#define QW 0
+#define GAME 1
+#define NFN 2
+#define EXT 3
+#define SYS 4
+#define COMBO_LAYERS QW EXT NFN SYS
 
 #if defined THUMBS_OVERRIDE
   #define DEFAULT_THUMBS THUMBS_OVERRIDE
@@ -38,16 +37,10 @@
 #define LSH LSHFT
 #define RSH RSHFT
 
-ZLAYER(colemak_dh,
-  &kp Q      &kp W       &hml LCG F  &hml LAG P  &lt SYS B /**/ &kp J &hmr LAG L  &hmr LCG U     &kp  Y       &kp SEMI  ,
-  &hml LSH A &hml LGUI R &hml LCTL S &hml LALT T &kp G /**/     &kp M &hmr LALT N &hmr LCTL E    &hmr LGUI I  &hmr LSH O,
-  &kp Z      &hml LSG X  &hml LSC C  &hml LAS D  &kp V /**/     &kp K &hmr LAS H  &hmr LSC COMMA &hmr LSG DOT &kp FSLH  ,
-)
-
 ZLAYER(qwerty,
- &trans &trans      &hml LCG E  &hml LAG R  &kp T  /**/ &kp Y &hmr LAG U  &hmr LCG I  &kp O       &kp P        ,
- &trans &hml LGUI S &hml LCTL D &hml LALT F &trans /**/ &kp H &hmr LALT J &hmr LCTL K &hmr LGUI L &hmr LSH SEMI,
- &trans &trans      &trans      &hml LAS V  &kp B  /**/ &kp N &hmr LAS M  &trans      &trans      &kp FSLH     ,
+  &kp Q      &kp W       &hml LCG E  &hml LAG R  &lt SYS T /**/ &kp Y &hmr LAG U  &hmr LCG I     &kp O       &kp P        ,
+  &hml LSH A &hml LGUI S &hml LCTL D &hml LALT F &trans    /**/ &kp H &hmr LALT J &hmr LCTL K    &hmr LGUI L &hmr LSH SEMI,
+  &kp Z      &hml LSG X  &hml LSC C  &hml LAS V  &kp B     /**/ &kp N &hmr LAS M  &hmr LSC COMMA &hmr LSG DOT &kp FSLH    ,
 )
 
 #if defined GAME_LAYER_KEYS
