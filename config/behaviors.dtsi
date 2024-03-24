@@ -2,8 +2,8 @@
 #include "helper.h"
 
 /* Homerow Mods */
-#define PRIOR_IDLE_MS 175
-#define QUICK_TAP_MS 250
+#define PRIOR_IDLE_MS 150
+#define QUICK_TAP_MS 175
 #define TAPPING_TERM 250
 
 #define MAKE_HRM(NAME, HOLD, TAP, TRIGGER_POS) \
