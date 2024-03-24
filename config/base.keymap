@@ -10,8 +10,8 @@
 #if defined THUMBS_OVERRIDE
   #define DEFAULT_THUMBS THUMBS_OVERRIDE
 #else
-  #define LEFT_THUMBS &mo NFN &kp SPC &lth EXT ESC
-  #define RIGHT_THUMBS &lt SYS RET &sk LSHFT &kp LCTL
+  #define LEFT_THUMBS &mo SYS &kp SPC &lt EXT ESC
+  #define RIGHT_THUMBS &lt NFN RET &sk LSHFT &kp LCTL
   #define DEFAULT_THUMBS X_LH LEFT_THUMBS X_MH RIGHT_THUMBS X_RH
 #endif
 #define TRANS_ROW &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
@@ -39,9 +39,9 @@
 #define RSH RSHFT
 
 ZLAYER(colemak_dh,
-  &kp Q      &kp W       &hml LCG F  &hml LAG P  &lt SYS B /**/ &kp J &hmr LAG L  &hmr LCG U     &kp  Y       &kp SEMI  ,
-  &hml LSH A &hml LGUI R &hml LCTL S &hml LALT T &kp G /**/     &kp M &hmr LALT N &hmr LCTL E    &hmr LGUI I  &hmr LSH O,
-  &kp Z      &hml LSG X  &hml LSC C  &hml LAS D  &kp V /**/     &kp K &hmr LAS H  &hmr LSC COMMA &hmr LSG DOT &kp FSLH  ,
+  &kp Q      &kp W       &hml LCG F  &hml LAG P  &kp B /**/ &kp J &hmr LAG L  &hmr LCG U     &kp  Y       &kp SEMI  ,
+  &hml LSH A &hml LGUI R &hml LCTL S &hml LALT T &kp G /**/ &kp M &hmr LALT N &hmr LCTL E    &hmr LGUI I  &hmr LSH O,
+  &kp Z      &hml LSG X  &hml LSC C  &hml LAS D  &kp V /**/ &kp K &hmr LAS H  &hmr LSC COMMA &hmr LSG DOT &kp FSLH  ,
 )
 
 ZLAYER(qwerty,
@@ -58,9 +58,9 @@ ZLAYER(qwerty,
 
 // Numpad & Function Keys
 ZLAYER(nfn,
-  &kp PLUS  &kp N7 &kp N8 &kp N9 &kp DOT  /**/ &bt BT_CLR_ALL &kp F1 &kp F2  &kp F3  &kp F4 ,
-  &kp N0    &kp N4 &kp N5 &kp N6 &kp FSLH /**/ &none          &kp F5 &kp F6  &kp F7  &kp F8 ,
-  &kp MINUS &kp N1 &kp N2 &kp N3 &kp STAR /**/ &none          &kp F9 &kp F10 &kp F11 &kp F12,
+  &kp F1 &kp F2  &kp F3  &kp F4  &none /**/ &kp PLUS  &kp N7 &kp N8 &kp N9 &kp DOT ,
+  &kp F5 &kp F6  &kp F7  &kp F8  &none /**/ &kp N0    &kp N4 &kp N5 &kp N6 &kp FSLH,
+  &kp F9 &kp F10 &kp F11 &kp F12 &none /**/ &kp MINUS &kp N1 &kp N2 &kp N3 &kp STAR,
 )
 
 // Extend Layer with Macros and Special Keys
@@ -72,9 +72,9 @@ ZLAYER(extend,
 
 // System Settings
 ZLAYER(system,
-  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &none       /**/ &none       &none &none &none &none,
-  &tog GAME    &tog QW      &kp C_BRI_UP &kp C_BRI_DN &sys_reset  /**/ &sys_reset  &none &none &none &none,
-  &out OUT_BLE &out OUT_USB &none        &bt BT_CLR   &bootloader /**/ &bootloader &none &none &none &none,
+  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2   &bt BT_SEL 3 &none       /**/ &none       &none &none &none &none,
+  &tog GAME    &tog QW      &kp C_BRI_UP   &kp C_BRI_DN &sys_reset  /**/ &sys_reset  &none &none &none &none,
+  &out OUT_BLE &out OUT_USB &bt BT_CLR_ALL &bt BT_CLR   &bootloader /**/ &bootloader &none &none &none &none,
 )
 
 // vi:ft=dts
