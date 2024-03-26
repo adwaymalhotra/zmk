@@ -44,24 +44,6 @@ MAKE_HRM(hlr, &mo, &kp, KEYS_L THUMBS)
   flavor = "hold-preferred";
 };
 
-ZMK_BEHAVIOR(lth, hold_tap,
-    flavor = "hold-preferred";
-    tapping-term-ms = <TAPPING_TERM>;
-    quick-tap-ms = <QUICK_TAP_MS>;
-    bindings = <&mo>, <&kp>;
-    require-prior-idle-ms = <PRIOR_IDLE_MS>;
-    hold-trigger-on-release;
-)
-
-ZMK_BEHAVIOR(mth, hold_tap,
-    flavor = "hold-preferred";
-    tapping-term-ms = <TAPPING_TERM>;
-    quick-tap-ms = <QUICK_TAP_MS>;
-    bindings = <&kp>, <&kp>;
-    require-prior-idle-ms = <PRIOR_IDLE_MS>;
-    hold-trigger-on-release;
-)
-
 // layer hold tap for the bsdel key
 // the config for this is similar to the home row mods but they are usable for all keys
 // usage: &lt_bsdel NUM 0

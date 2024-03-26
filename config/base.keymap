@@ -10,7 +10,7 @@
 #if defined THUMBS_OVERRIDE
   #define DEFAULT_THUMBS THUMBS_OVERRIDE
 #else
-  #define LEFT_THUMBS &mo SYS &kp SPC &lt EXT ESC
+  #define LEFT_THUMBS &kp LGUI &kp SPC &lt EXT ESC
   #define RIGHT_THUMBS &lt NFN RET &sk LSHFT &kp LCTL
   #define DEFAULT_THUMBS X_LH LEFT_THUMBS X_MH RIGHT_THUMBS X_RH
 #endif
@@ -37,6 +37,8 @@
 #define LAS LS(LALT)
 #define LSH LSHFT
 #define RSH RSHFT
+
+ZMK_CONDITIONAL_LAYER(EXT NFN, SYS)
 
 ZLAYER(colemak_dh,
   &kp Q      &kp W       &kp F       &kp P       &kp B /**/ &kp J &kp L       &kp U       &kp  Y      &kp SEMI  ,
