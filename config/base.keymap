@@ -39,9 +39,9 @@
 #define RSH RSHFT
 
 ZLAYER(colemak_dh,
-  &kp Q      &kp W       &hml LCG F  &hml LAG P  &kp B /**/ &kp J &hmr LAG L  &hmr LCG U     &kp  Y       &kp SEMI  ,
-  &hml LSH A &hml LGUI R &hml LCTL S &hml LALT T &kp G /**/ &kp M &hmr LALT N &hmr LCTL E    &hmr LGUI I  &hmr LSH O,
-  &kp Z      &hml LSG X  &hml LSC C  &hml LAS D  &kp V /**/ &kp K &hmr LAS H  &hmr LSC COMMA &hmr LSG DOT &kp FSLH  ,
+  &kp Q      &kp W       &kp F       &kp P       &kp B /**/ &kp J &kp L       &kp U       &kp  Y      &kp SEMI  ,
+  &hml LSH A &hml LGUI R &hml LCTL S &hml LALT T &kp G /**/ &kp M &hmr LALT N &hmr LCTL E &hmr LGUI I &hmr LSH O,
+  &kp Z      &kp X       &kp C       &kp D       &kp V /**/ &kp K &kp H       &kp COMMA   &kp DOT     &kp FSLH  ,
 )
 
 ZLAYER(qwerty,
