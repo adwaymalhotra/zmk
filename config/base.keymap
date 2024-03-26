@@ -8,11 +8,11 @@
 #define COMBO_LAYERS CO QW EXT NFN SYS
 
 #if defined THUMBS_OVERRIDE
-  #define DEFAULT_THUMBS THUMBS_OVERRIDE
+  #define THUMB_ROW THUMBS_OVERRIDE
 #else
-  #define LEFT_THUMBS &kp LGUI &kp SPC &lt EXT ESC
-  #define RIGHT_THUMBS &lt NFN RET &sk LSHFT &kp LCTL
-  #define DEFAULT_THUMBS X_LH LEFT_THUMBS X_MH RIGHT_THUMBS X_RH
+  #define LEFT_THUMBS &mo MDL &kp SPC &lt EXT ESC
+  #define RIGHT_THUMBS &lt NFN RET &sk LSHFT &mo MDR
+  #define THUMB_ROW X_LH LEFT_THUMBS X_MH RIGHT_THUMBS X_RH
 #endif
 #define TRANS_ROW &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
 
@@ -21,7 +21,7 @@
     X_LT TOP X_RT \
     X_LM MIDDLE X_RM \
     X_LB BOTTOM X_RB \
-    DEFAULT_THUMBS)
+    THUMB_ROW)
 #define TRANS_LAYER(NAME) ZLAYER(NAME, TRANS_ROW, TRANS_ROW, TRANS_ROW)
 
 #include "extra_keys.h"
@@ -29,27 +29,23 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
 
-#define LAG LG(LALT)
-#define LCG LG(LCTL)
-#define LSG LG(LSHFT)
-#define LAC LC(LALT)
-#define LSC LC(LSHFT)
-#define LAS LS(LALT)
-#define LSH LSHFT
-#define RSH RSHFT
+#define ALT LALT
+#define GUI LGUI
+#define SFT LSHFT
+#define CTL LCTL
 
 ZMK_CONDITIONAL_LAYER(EXT NFN, SYS)
 
 ZLAYER(colemak_dh,
-  &kp Q      &kp W       &kp F       &kp P       &kp B /**/ &kp J &kp L       &kp U       &kp  Y      &kp SEMI  ,
-  &hml LSH A &hml LGUI R &hml LCTL S &hml LALT T &kp G /**/ &kp M &hmr LALT N &hmr LCTL E &hmr LGUI I &hmr LSH O,
-  &kp Z      &kp X       &kp C       &kp D       &kp V /**/ &kp K &kp H       &kp COMMA   &kp DOT     &kp FSLH  ,
+  &kp Q      &kp W      &kp F      &kp P      &kp B /**/ &kp J &kp L      &kp U      &kp  Y     &kp SEMI  ,
+  &hml SFT A &hml GUI R &hml CTL S &hml ALT T &kp G /**/ &kp M &hmr ALT N &hmr CTL E &hmr GUI I &hmr SFT O,
+  &kp Z      &kp X      &kp C      &kp D      &kp V /**/ &kp K &kp H      &kp COMMA  &kp DOT    &kp FSLH  ,
 )
 
 ZLAYER(qwerty,
- &trans &trans      &hml LCG E  &hml LAG R  &kp T  /**/ &kp Y &hmr LAG U  &hmr LCG I  &kp O       &kp P        ,
- &trans &hml LGUI S &hml LCTL D &hml LALT F &trans /**/ &kp H &hmr LALT J &hmr LCTL K &hmr LGUI L &hmr LSH SEMI,
- &trans &trans      &trans      &hml LAS V  &kp B  /**/ &kp N &hmr LAS M  &trans      &trans      &kp FSLH     ,
+ &trans &trans     &kp E      &kp R      &kp T  /**/ &kp Y &kp U      &kp I      &kp O      &kp P        ,
+ &trans &hml GUI S &hml CTL D &hml ALT F &trans /**/ &kp H &hmr ALT J &hmr CTL K &hmr GUI L &hmr SFT SEMI,
+ &trans &trans     &trans     &kp V      &kp B  /**/ &kp N &kp M      &trans     &trans     &kp FSLH     ,
 )
 
 #if defined GAME_LAYER_KEYS
@@ -60,9 +56,9 @@ ZLAYER(qwerty,
 
 // Numpad & Function Keys
 ZLAYER(nfn,
-  &kp F1 &kp F2  &kp F3  &kp F4  &none /**/ &kp PLUS  &kp N7 &kp N8 &kp N9 &kp DOT ,
-  &kp F5 &kp F6  &kp F7  &kp F8  &none /**/ &kp N0    &kp N4 &kp N5 &kp N6 &kp FSLH,
-  &kp F9 &kp F10 &kp F11 &kp F12 &none /**/ &kp MINUS &kp N1 &kp N2 &kp N3 &kp STAR,
+  &kp F1 &kp F2  &kp F3  &kp F4  &none /**/ &kp DOT  &kp N7 &kp N8 &kp N9 &kp PLUS ,
+  &kp F5 &kp F6  &kp F7  &kp F8  &none /**/ &kp FSLH &kp N4 &kp N5 &kp N6 &kp N0   ,
+  &kp F9 &kp F10 &kp F11 &kp F12 &none /**/ &kp STAR &kp N1 &kp N2 &kp N3 &kp MINUS,
 )
 
 // Extend Layer with Macros and Special Keys
