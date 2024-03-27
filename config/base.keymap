@@ -10,8 +10,8 @@
 #if defined THUMBS_OVERRIDE
   #define THUMB_ROW THUMBS_OVERRIDE
 #else
-  #define LEFT_THUMBS &mo MDL &kp SPC &lt EXT ESC
-  #define RIGHT_THUMBS &lt NFN RET &sk LSHFT &mo MDR
+  #define LEFT_THUMBS &sk CTL &kp SPC &lt EXT ESC
+  #define RIGHT_THUMBS &lt NFN RET &sk LSHFT &sk ALT
   #define THUMB_ROW X_LH LEFT_THUMBS X_MH RIGHT_THUMBS X_RH
 #endif
 #define TRANS_ROW &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
@@ -30,7 +30,7 @@
 #include <dt-bindings/zmk/outputs.h>
 
 #define ALT LALT
-#define GUI LGUI
+#define MET LGUI
 #define SFT LSHFT
 #define CTL LCTL
 
@@ -38,13 +38,13 @@ ZMK_CONDITIONAL_LAYER(EXT NFN, SYS)
 
 ZLAYER(colemak_dh,
   &kp Q      &kp W      &kp F      &kp P      &kp B /**/ &kp J &kp L      &kp U      &kp  Y     &kp SEMI  ,
-  &hml SFT A &hml GUI R &hml CTL S &hml ALT T &kp G /**/ &kp M &hmr ALT N &hmr CTL E &hmr GUI I &hmr SFT O,
+  &hml SFT A &hml MET R &hml CTL S &hml ALT T &kp G /**/ &kp M &hmr ALT N &hmr CTL E &hmr MET I &hmr SFT O,
   &kp Z      &kp X      &kp C      &kp D      &kp V /**/ &kp K &kp H      &kp COMMA  &kp DOT    &kp FSLH  ,
 )
 
 ZLAYER(qwerty,
  &trans &trans     &kp E      &kp R      &kp T  /**/ &kp Y &kp U      &kp I      &kp O      &kp P        ,
- &trans &hml GUI S &hml CTL D &hml ALT F &trans /**/ &kp H &hmr ALT J &hmr CTL K &hmr GUI L &hmr SFT SEMI,
+ &trans &hml MET S &hml CTL D &hml ALT F &trans /**/ &kp H &hmr ALT J &hmr CTL K &hmr MET L &hmr SFT SEMI,
  &trans &trans     &trans     &kp V      &kp B  /**/ &kp N &kp M      &trans     &trans     &kp FSLH     ,
 )
 
