@@ -2,13 +2,13 @@
 #include "helper.h"
 
 /* Homerow Mods */
-#define PRIOR_IDLE_MS 180
-#define QUICK_TAP_MS 200
-#define TAPPING_TERM 275
+#define PRIOR_IDLE_MS 150
+#define QUICK_TAP_MS 150
+#define TAPPING_TERM 200
 
 #define MAKE_HRM(NAME, HOLD, TAP, TRIGGER_POS) \
     ZMK_BEHAVIOR(NAME, hold_tap, \
-        flavor = "balanced"; \
+        flavor = "tap-preferred"; \
         tapping-term-ms = <TAPPING_TERM>; \
         quick-tap-ms = <QUICK_TAP_MS>; \
         bindings = <HOLD>, <TAP>; \
