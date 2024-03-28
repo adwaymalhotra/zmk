@@ -63,9 +63,9 @@ ZLAYER(nfn,
 
 // Extend Layer with Macros and Special Keys
 ZLAYER(extend,
-  &find    &vi_sav &pre_dsk &nex_dsk &kp C_VOL_UP /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp CAPS ,
-  &alt_tab &none   &pre_tab &nex_tab &kp C_MUTE   /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp INS  ,
-  &none    &none   &half_up &half_dn &kp C_VOL_DN /**/ &kp RALT &none     &none     &none     &kp PSCRN,
+  &find    &vi_sav   &pre_dsk &nex_dsk &kp C_VOL_UP /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp CAPS ,
+  &alt_tab &kp LC(B) &pre_tab &nex_tab &kp C_MUTE   /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp INS  ,
+  &none    &none     &half_up &half_dn &kp C_VOL_DN /**/ &kp RALT &none     &none     &none     &kp PSCRN,
 )
 
 // System Settings
