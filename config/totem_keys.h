@@ -50,11 +50,11 @@
 #define RH1 36
 #define RH2 37
 
-#define X_LB &kp TAB
+#define X_LB &mt ALT TAB
 #define X_RB &bsdel
 
 #define GAME_LAYER_KEYS\
-          &kp TAB   &kp Q &kp W &kp E &kp R /**/ &none &kp N7 &kp N8 &kp N9 &kp N0\
-          &kp LCTL  &kp A &kp S &kp D &kp F /**/ &none &kp N4 &kp N5 &kp N6 &none\
-  &kp ESC &kp LSHFT &kp Z &kp X &kp C &kp V /**/ &none &kp N1 &kp N2 &kp N3 &none  &tog GAME\
-                 &kp LALT &kp RET &kp SPACE /**/ &kp LSHFT &kp RET  &kp SQT
+          &kp TAB &kp Q &kp W &kp E &kp R /**/ &kp T &kp Y &kp U &kp I &kp O\
+          &kp CTL &kp A &kp S &kp D &kp F /**/ &kp G &kp H &kp J &kp K &kp L\
+  &kp ESC &kp SFT &kp Z &kp X &kp C &kp V /**/ &kp B &kp M &kp N &kp P &kp SEMI &tog GAME\
+                &mo NFN &kp RET &kp SPACE /**/ &kp ALT &mo EXT &kp SQT

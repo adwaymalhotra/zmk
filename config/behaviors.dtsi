@@ -2,13 +2,13 @@
 #include "helper.h"
 
 /* Homerow Mods */
-#define PRIOR_IDLE_MS 150
-#define QUICK_TAP_MS 150
-#define TAPPING_TERM 200
+#define PRIOR_IDLE_MS 180
+#define QUICK_TAP_MS 250
+#define TAPPING_TERM 300
 
-#define MAKE_HRM(NAME, HOLD, TAP, TRIGGER_POS) \
+#define MAKE_HT(NAME, MODE, HOLD, TAP, TRIGGER_POS) \
     ZMK_BEHAVIOR(NAME, hold_tap, \
-        flavor = "tap-preferred"; \
+        flavor = MODE; \
         tapping-term-ms = <TAPPING_TERM>; \
         quick-tap-ms = <QUICK_TAP_MS>; \
         bindings = <HOLD>, <TAP>; \
@@ -16,6 +16,10 @@
         hold-trigger-key-positions = <TRIGGER_POS>; \
         hold-trigger-on-release; \
     )
+
+
+#define MAKE_HRM(NAME, HOLD, TAP, TRIGGER_POS) \
+    MAKE_HT(NAME, "balanced", HOLD, TAP, TRIGGER_POS)
 
 #define DEFAULT_COMBO(NAME, KEY, COMBO_KEYS) \
     ZMK_COMBO(NAME, KEY, COMBO_KEYS, COMBO_LAYERS, COMBO_TERM)
@@ -26,8 +30,15 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS)
 MAKE_HRM(hll, &mo, &kp, KEYS_R THUMBS)
 MAKE_HRM(hlr, &mo, &kp, KEYS_L THUMBS)
 
+MAKE_HRM(mts, &sk, &caps_word, KEYS_L KEYS_R)
+MAKE_HRM(mtb, &sk, &bsdel, KEYS_L KEYS_R)
+MAKE_HRM(lts, &mo, &caps_word, KEYS_L KEYS_R)
+
+MAKE_HT(thl, "tap-preferred", &mo, &kp, KEYS_L KEYS_R)
+MAKE_HT(thm, "tap-preferred", &kp, &kp, KEYS_L KEYS_R)
+
 &sk {
-    release-after-ms = <500>;
+    release-after-ms = <1000>;
     quick-release;
 };
 
@@ -44,24 +55,28 @@ MAKE_HRM(hlr, &mo, &kp, KEYS_L THUMBS)
   flavor = "hold-preferred";
 };
 
+&caps_word {
+  continue-list = <UNDERSCORE MINUS BACKSPACE DELETE>;
+};
+
 ZMK_BEHAVIOR(bsdel, mod_morph,
     bindings = <&kp BACKSPACE>, <&kp DELETE>;
     mods = <(MOD_LALT)>;
 )
 
-// tab: dollar | shft + tap: pound (£)
+// tap: dollar | shft + tap: pound (£)
 ZMK_BEHAVIOR(dlr_gbp, mod_morph,
     bindings = <&kp DLLR>, <&uc_gbp>;
     mods = <(MOD_LSFT|MOD_RSFT)>;
 )
 
-// tab: hash | shft + tap: eur (€)
+// tap: hash | shft + tap: eur (€)
 ZMK_BEHAVIOR(hash_eur, mod_morph,
     bindings = <&kp HASH>, <&uc_eur>;
     mods = <(MOD_LSFT|MOD_RSFT)>;
 )
 
-// tab: star | shft + tap: rupee (₹)
+// tap: star | shft + tap: rupee (₹)
 ZMK_BEHAVIOR(star_rup, mod_morph,
     bindings = <&kp STAR>, <&uc_rup>;
     mods = <(MOD_LSFT|MOD_RSFT)>;
@@ -117,6 +132,10 @@ DEFAULT_COMBO(amps, &kp AMPS, LT3 LM3)
 DEFAULT_COMBO(star, &star_rup, LB3 LM3)
 
 DEFAULT_COMBO(degree, &uc_deg, LT4 LM4)
+
+// horizontal combos
+DEFAULT_COMBO(altl, &kp LALT, LB1 LB2)
+DEFAULT_COMBO(altr, &kp LALT, RB1 RB2)
 
 /* Macros */
 / {

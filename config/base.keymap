@@ -1,51 +1,41 @@
 // Layers
 #define CO 0
-#define QW 1
-#define GAME 2
-#define NFN 3
-#define EXT 4
-#define SYS 5
-#define COMBO_LAYERS CO QW EXT NFN SYS
+#define COH 1
+#define QW 2
+#define GAME 3
+#define NFN 4
+#define EXT 5
+#define SYS 6
+#define COMBO_LAYERS CO COH QW EXT NFN SYS
 
-#if defined THUMBS_OVERRIDE
-  #define THUMB_ROW THUMBS_OVERRIDE
-#else
-  #define LEFT_THUMBS &sk CTL &kp SPC &lt EXT ESC
-  #define RIGHT_THUMBS &lt NFN RET &sk LSHFT &sk ALT
-  #define THUMB_ROW X_LH LEFT_THUMBS X_MH RIGHT_THUMBS X_RH
-#endif
-#define TRANS_ROW &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-
-#define ZLAYER(NAME, TOP, MIDDLE, BOTTOM, ...) \
-  ZMK_LAYER(NAME, \
-    X_LT TOP X_RT \
-    X_LM MIDDLE X_RM \
-    X_LB BOTTOM X_RB \
-    THUMB_ROW)
-#define TRANS_LAYER(NAME) ZLAYER(NAME, TRANS_ROW, TRANS_ROW, TRANS_ROW)
+#define LEFT_THUMBS &mt MET BSPC &thm ALT SPC &mt CTL ESC
+#define RIGHT_THUMBS &lt EXT RET &sk SFT &lts NFN 0
 
 #include "extra_keys.h"
 #include "behaviors.dtsi"
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
 
-#define ALT LALT
-#define MET LGUI
-#define SFT LSHFT
-#define CTL LCTL
-
 ZMK_CONDITIONAL_LAYER(EXT NFN, SYS)
 
 ZLAYER(colemak_dh,
+  &kp Q &kp W &kp F &kp P &kp B /**/ &kp J &kp L &kp U     &kp Y   &kp SEMI,
+  &kp A &kp R &kp S &kp T &kp G /**/ &kp M &kp N &kp E     &kp I   &kp O   ,
+  &kp Z &kp X &kp C &kp D &kp V /**/ &kp K &kp H &kp COMMA &kp DOT &kp FSLH,
+)
+
+ZTLAYER(colemak_dh_hrm,
   &kp Q      &kp W      &kp F      &kp P      &kp B /**/ &kp J &kp L      &kp U      &kp  Y     &kp SEMI  ,
   &hml SFT A &hml MET R &hml CTL S &hml ALT T &kp G /**/ &kp M &hmr ALT N &hmr CTL E &hmr MET I &hmr SFT O,
   &kp Z      &kp X      &kp C      &kp D      &kp V /**/ &kp K &kp H      &kp COMMA  &kp DOT    &kp FSLH  ,
+
+  &sk CTL &kp SPC &lt EXT ESC, /**/ &lt NFN RET &sk SFT &mts MET 0
 )
 
 ZLAYER(qwerty,
- &trans &trans     &kp E      &kp R      &kp T  /**/ &kp Y &kp U      &kp I      &kp O      &kp P        ,
- &trans &hml MET S &hml CTL D &hml ALT F &trans /**/ &kp H &hmr ALT J &hmr CTL K &hmr MET L &hmr SFT SEMI,
- &trans &trans     &trans     &kp V      &kp B  /**/ &kp N &kp M      &trans     &trans     &kp FSLH     ,
+  &kp Q &kp W &kp E &kp R &kp T /**/ &kp Y &kp U &kp I     &kp O   &kp P   ,
+  &kp A &kp S &kp D &kp F &kp G /**/ &kp H &kp J &kp K     &kp L   &kp SEMI,
+  &kp Z &kp X &kp C &kp V &kp B /**/ &kp M &kp N &kp COMMA &kp DOT &kp FSLH,
 )
 
 #if defined GAME_LAYER_KEYS
@@ -63,16 +53,16 @@ ZLAYER(nfn,
 
 // Extend Layer with Macros and Special Keys
 ZLAYER(extend,
-  &find    &vi_sav   &pre_dsk &nex_dsk &kp C_VOL_UP /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp CAPS ,
-  &alt_tab &kp LC(B) &pre_tab &nex_tab &kp C_MUTE   /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp INS  ,
-  &none    &none     &half_up &half_dn &kp C_VOL_DN /**/ &kp RALT &none     &none     &none     &kp PSCRN,
+  &find    &vi_sav   &pre_dsk &nex_dsk &tog COH /**/ &kp HOME &kp PG_DN    &kp PG_UP    &kp END    &kp CAPS ,
+  &alt_tab &kp LC(B) &pre_tab &nex_tab &none    /**/ &kp LEFT &kp DOWN     &kp UP       &kp RIGHT  &kp INS  ,
+  &kp RALT &none     &half_up &half_dn &none    /**/ &none    &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &kp PSCRN,
 )
 
 // System Settings
 ZLAYER(system,
-  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2   &bt BT_SEL 3 &none       /**/ &none       &none &none &none &none,
-  &tog GAME    &tog QW      &kp C_BRI_UP   &kp C_BRI_DN &sys_reset  /**/ &sys_reset  &none &none &none &none,
-  &out OUT_BLE &out OUT_USB &bt BT_CLR_ALL &bt BT_CLR   &bootloader /**/ &bootloader &none &none &none &none,
+  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2   &bt BT_SEL 3 &none       /**/ &none       &none &none &none &tog GAME,
+  &none        &none        &kp C_BRI_UP   &kp C_BRI_DN &sys_reset  /**/ &sys_reset  &none &none &none &tog COH ,
+  &out OUT_BLE &out OUT_USB &bt BT_CLR_ALL &bt BT_CLR   &bootloader /**/ &bootloader &none &none &none &none    ,
 )
 
 // vi:ft=dts
