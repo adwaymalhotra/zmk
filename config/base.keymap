@@ -8,8 +8,8 @@
 #define SYS 6
 #define COMBO_LAYERS CO COH QW EXT NFN SYS
 
-#define LEFT_THUMBS &mt MET BSPC &thm ALT SPC &mt CTL ESC
-#define RIGHT_THUMBS &lt EXT RET &sk SFT &lts NFN 0
+#define LEFT_THUMBS &mt MET TAB &thm ALT SPC &mt CTL ESC
+#define RIGHT_THUMBS &lt EXT RET &smart_sft &lt_bsdel NFN 0
 
 #include "extra_keys.h"
 #include "behaviors.dtsi"

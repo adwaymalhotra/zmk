@@ -37,6 +37,8 @@ MAKE_HRM(lts, &mo, &caps_word, KEYS_L KEYS_R)
 MAKE_HT(thl, "tap-preferred", &mo, &kp, KEYS_L KEYS_R)
 MAKE_HT(thm, "tap-preferred", &kp, &kp, KEYS_L KEYS_R)
 
+MAKE_HT(lt_bsdel, "hold-preferred", &mo, &bsdel, KEYS_L KEYS_R)
+
 &sk {
     release-after-ms = <1000>;
     quick-release;
@@ -58,6 +60,12 @@ MAKE_HT(thm, "tap-preferred", &kp, &kp, KEYS_L KEYS_R)
 &caps_word {
   continue-list = <UNDERSCORE MINUS BACKSPACE DELETE>;
 };
+
+/* This actually enables us to double tap the shift key to trigger caps_word. */
+ZMK_BEHAVIOR(smart_sft, mod_morph,
+    bindings = <&sk SFT>, <&caps_word>;
+    mods = <(MOD_LSFT)>;
+)
 
 ZMK_BEHAVIOR(bsdel, mod_morph,
     bindings = <&kp BACKSPACE>, <&kp DELETE>;
