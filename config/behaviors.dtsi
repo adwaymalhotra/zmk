@@ -1,5 +1,6 @@
 #include <behaviors.dtsi>
 #include "helper.h"
+#include "keys_en_gb_extended.h"
 
 /* Homerow Mods */
 #define PRIOR_IDLE_MS 180
@@ -72,19 +73,19 @@ ZMK_BEHAVIOR(bsdel, mod_morph,
     mods = <(MOD_LALT)>;
 )
 
-// tap: dollar | shft + tap: pound (£)
+// tap: dollar ($) | shft + tap: pound (£)
 ZMK_BEHAVIOR(dlr_gbp, mod_morph,
     bindings = <&kp DLLR>, <&uc_gbp>;
     mods = <(MOD_LSFT|MOD_RSFT)>;
 )
 
-// tap: hash | shft + tap: eur (€)
+// tap: hash (#) | shft + tap: eur (€)
 ZMK_BEHAVIOR(hash_eur, mod_morph,
-    bindings = <&kp HASH>, <&uc_eur>;
+    bindings = <&kp GB_HASH>, <&uc_eur>;
     mods = <(MOD_LSFT|MOD_RSFT)>;
 )
 
-// tap: star | shft + tap: rupee (₹)
+// tap: star (*) | shft + tap: rupee (₹)
 ZMK_BEHAVIOR(star_rup, mod_morph,
     bindings = <&kp STAR>, <&uc_rup>;
     mods = <(MOD_LSFT|MOD_RSFT)>;
@@ -111,8 +112,8 @@ ZMK_BEHAVIOR(alt_tab, macro,
 ╰───────┼───────┼───────┼───────┼───────┤   ├───────┼───────┼───────┼───────┼───────┤
 ) */
 // right side combos
-DEFAULT_COMBO(backslash, &kp BSLH, RM0 RT0)
-DEFAULT_COMBO(pipe, &kp PIPE, RM0 RB0)
+DEFAULT_COMBO(backslash, &kp GB_DQT, RM0 RT0)
+DEFAULT_COMBO(pipe, &kp GB_BSLH, RM0 RB0)
 
 DEFAULT_COMBO(sqt, &kp SQT, RT1 RM1)
 DEFAULT_COMBO(rpar, &kp RPAR, RM1 RB1)
@@ -133,7 +134,7 @@ DEFAULT_COMBO(equal, &kp EQUAL, LB0 LM0)
 DEFAULT_COMBO(excl, &kp EXCL, LT1 LM1)
 DEFAULT_COMBO(lpar, &kp LPAR, LM1 LB1)
 
-DEFAULT_COMBO(at, &kp AT, LT2 LM2)
+DEFAULT_COMBO(at, &kp GB_AT, LT2 LM2)
 DEFAULT_COMBO(lbkt, &kp LBKT, LM2 LB2)
 
 DEFAULT_COMBO(amps, &kp AMPS, LT3 LM3)
