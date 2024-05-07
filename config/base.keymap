@@ -24,12 +24,10 @@ ZLAYER(colemak_dh,
   &kp Z &kp X &kp C &kp D &kp V /**/ &kp K &kp H &kp COMMA &kp DOT &kp FSLH,
 )
 
-ZTLAYER(colemak_dh_hrm,
+ZLAYER(colemak_dh_hrm,
   &kp Q      &kp W      &kp F      &kp P      &kp B /**/ &kp J &kp L      &kp U      &kp  Y     &kp SEMI  ,
   &hml SFT A &hml MET R &hml CTL S &hml ALT T &kp G /**/ &kp M &hmr ALT N &hmr CTL E &hmr MET I &hmr SFT O,
   &kp Z      &kp X      &kp C      &kp D      &kp V /**/ &kp K &kp H      &kp COMMA  &kp DOT    &kp FSLH  ,
-
-  &sk CTL &kp SPC &lt EXT ESC, /**/ &lt NFN RET &sk SFT &mts MET 0
 )
 
 ZLAYER(qwerty,
