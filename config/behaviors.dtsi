@@ -79,9 +79,9 @@ ZMK_BEHAVIOR(dlr_gbp, mod_morph,
     mods = <(MOD_LSFT|MOD_RSFT)>;
 )
 
-// tap: hash (#) | shft + tap: eur (€)
-ZMK_BEHAVIOR(hash_eur, mod_morph,
-    bindings = <&kp GB_HASH>, <&uc_eur>;
+// tap: hash (&) | shft + tap: eur (€)
+ZMK_BEHAVIOR(amps_eur, mod_morph,
+    bindings = <&kp AMPS>, <&uc_eur>;
     mods = <(MOD_LSFT|MOD_RSFT)>;
 )
 
@@ -105,9 +105,9 @@ ZMK_BEHAVIOR(alt_tab, macro,
 /* Combos
 ╭───────┬───────┬───────┬───────┬───────╮   ╭───────┬───────┬───────┬───────┬───────╮
 
-├── ° ──┼── & ──┼── @ ──┼── ! ──┼── ` ──┤   ├── \ ──┼── ' ──┼── - ──┼─ $|£ ─┼── % ──┤
+├── ° ──┼─ &|€ ─┼── @ ──┼── ! ──┼── ` ──┤   ├── " ──┼── ' ──┼── - ──┼─ $|£ ─┼── % ──┤
 
-├───────┼─ *|₹ ─┼── [ ──┼── ( ──┼── = ──┤   ├── | ──┼── ) ──┼── ] ──┼─ #|€ ─┼── ^ ──┤
+├───────┼─ *|₹ ─┼── [ ──┼── ( ──┼── = ──┤   ├── \ ──┼── ) ──┼── ] ──┼─ #|~ ─┼── ^ ──┤
 
 ╰───────┼───────┼───────┼───────┼───────┤   ├───────┼───────┼───────┼───────┼───────┤
 ) */
@@ -121,8 +121,8 @@ DEFAULT_COMBO(rpar, &kp RPAR, RM1 RB1)
 DEFAULT_COMBO(minus, &kp MINUS, RT2 RM2)
 DEFAULT_COMBO(rbkt, &kp RBKT, RM2 RB2)
 
-DEFAULT_COMBO(dollar, &dlr_gbp,  RT3 RM3)
-DEFAULT_COMBO(hash,   &hash_eur, RM3 RB3)
+DEFAULT_COMBO(dollar, &dlr_gbp, RT3 RM3)
+DEFAULT_COMBO(hash, &kp GB_HASH, RM3 RB3)
 
 DEFAULT_COMBO(perc, &kp PRCNT, RM4 RT4)
 DEFAULT_COMBO(caret, &kp CARET, RM4 RB4)
@@ -137,7 +137,7 @@ DEFAULT_COMBO(lpar, &kp LPAR, LM1 LB1)
 DEFAULT_COMBO(at, &kp GB_AT, LT2 LM2)
 DEFAULT_COMBO(lbkt, &kp LBKT, LM2 LB2)
 
-DEFAULT_COMBO(amps, &kp AMPS, LT3 LM3)
+DEFAULT_COMBO(amps, &amps_eur, LT3 LM3)
 DEFAULT_COMBO(star, &star_rup, LB3 LM3)
 
 DEFAULT_COMBO(degree, &uc_deg, LT4 LM4)
