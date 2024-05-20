@@ -1,0 +1,9 @@
+#include "corne_keys.h"
+#include "base.keymap"
+
+// We need to choose the 5 column transform since we only have 5 columns instead of the 6 on the corne.
+/ {
+  chosen {
+    zmk,matrix_transform = &five_column_transform;
+  };
+};
