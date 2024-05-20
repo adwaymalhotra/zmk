@@ -70,7 +70,7 @@ ZMK_BEHAVIOR(smart_sft, mod_morph,
 
 ZMK_BEHAVIOR(bsdel, mod_morph,
     bindings = <&kp BACKSPACE>, <&kp DELETE>;
-    mods = <(MOD_LALT)>;
+    mods = <(MOD_LALT|MOD_LGUI|MOD_LSFT)>;
 )
 
 // tap: dollar ($) | shft + tap: pound (£)
