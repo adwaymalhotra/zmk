@@ -18,12 +18,11 @@
         hold-trigger-on-release; \
     )
 
-
 #define MAKE_HRM(NAME, HOLD, TAP, TRIGGER_POS) \
     MAKE_HT(NAME, "balanced", HOLD, TAP, TRIGGER_POS)
 
 #define DEFAULT_COMBO(NAME, KEY, COMBO_KEYS) \
-    ZMK_COMBO(NAME, KEY, COMBO_KEYS, COMBO_LAYERS, COMBO_TERM)
+    ZMK_COMBO(NAME, KEY, COMBO_KEYS, COMBO_LAYERS, COMBO_TERM, COMBO_TERM)
 
 // The keys are fetched from the *_keys.h file sourced in the actual keymap before other includes
 MAKE_HRM(hml, &kp, &kp, KEYS_R THUMBS)
@@ -38,6 +37,7 @@ MAKE_HRM(lts, &mo, &caps_word, KEYS_L KEYS_R)
 MAKE_HT(thl, "tap-preferred", &mo, &kp, KEYS_L KEYS_R)
 MAKE_HT(thm, "tap-preferred", &kp, &kp, KEYS_L KEYS_R)
 
+MAKE_HT(mt_bsdel, "hold-preferred", &kp, &bsdel, KEYS_L KEYS_R)
 MAKE_HT(lt_bsdel, "hold-preferred", &mo, &bsdel, KEYS_L KEYS_R)
 
 &sk {
@@ -111,40 +111,51 @@ ZMK_BEHAVIOR(alt_tab, macro,
 
 ╰───────┼───────┼───────┼───────┼───────┤   ├───────┼───────┼───────┼───────┼───────┤
 ) */
-// right side combos
-DEFAULT_COMBO(backslash, &kp GB_DQT, RM0 RT0)
-DEFAULT_COMBO(pipe, &kp GB_BSLH, RM0 RB0)
 
-DEFAULT_COMBO(sqt, &kp SQT, RT1 RM1)
-DEFAULT_COMBO(rpar, &kp RPAR, RM1 RB1)
+/* right side combos */
+DEFAULT_COMBO(backslash, &kp GB_DQT,   RM0 RT0)
+DEFAULT_COMBO(pipe,      &kp GB_BSLH,  RM0 RB0)
 
-DEFAULT_COMBO(minus, &kp MINUS, RT2 RM2)
-DEFAULT_COMBO(rbkt, &kp RBKT, RM2 RB2)
+DEFAULT_COMBO(sqt,    &kp SQT,      RT1 RM1)
+DEFAULT_COMBO(rpar,   &kp RPAR,     RM1 RB1)
 
-DEFAULT_COMBO(dollar, &dlr_gbp, RT3 RM3)
-DEFAULT_COMBO(hash, &kp GB_HASH, RM3 RB3)
+DEFAULT_COMBO(minus,  &kp MINUS,    RT2 RM2)
+DEFAULT_COMBO(rbkt,   &kp RBKT,     RM2 RB2)
 
-DEFAULT_COMBO(perc, &kp PRCNT, RM4 RT4)
-DEFAULT_COMBO(caret, &kp CARET, RM4 RB4)
+DEFAULT_COMBO(dollar, &dlr_gbp,     RT3 RM3)
+DEFAULT_COMBO(hash,   &kp GB_HASH,  RM3 RB3)
 
-// left side combos
-DEFAULT_COMBO(tilde, &kp GRAVE, LT0 LM0)
-DEFAULT_COMBO(equal, &kp EQUAL, LB0 LM0)
+DEFAULT_COMBO(perc,   &kp PRCNT,    RM4 RT4)
+DEFAULT_COMBO(caret,  &kp CARET,    RM4 RB4)
 
-DEFAULT_COMBO(excl, &kp EXCL, LT1 LM1)
-DEFAULT_COMBO(lpar, &kp LPAR, LM1 LB1)
+/* left side combos */
+DEFAULT_COMBO(grave,  &kp GRAVE,    LT0 LM0)
+DEFAULT_COMBO(equal,  &kp EQUAL,    LB0 LM0)
 
-DEFAULT_COMBO(at, &kp GB_AT, LT2 LM2)
-DEFAULT_COMBO(lbkt, &kp LBKT, LM2 LB2)
+DEFAULT_COMBO(excl,   &kp EXCL,     LT1 LM1)
+DEFAULT_COMBO(lpar,   &kp LPAR,     LM1 LB1)
 
-DEFAULT_COMBO(amps, &amps_eur, LT3 LM3)
-DEFAULT_COMBO(star, &star_rup, LB3 LM3)
+DEFAULT_COMBO(at,     &kp GB_AT,    LT2 LM2)
+DEFAULT_COMBO(lbkt,   &kp LBKT,     LM2 LB2)
 
-DEFAULT_COMBO(degree, &uc_deg, LT4 LM4)
+DEFAULT_COMBO(amps,   &amps_eur,    LT3 LM3)
+DEFAULT_COMBO(star,   &star_rup,    LB3 LM3)
 
-// horizontal combos
-DEFAULT_COMBO(altl, &kp LALT, LB1 LB2)
-DEFAULT_COMBO(altr, &kp LALT, RB1 RB2)
+DEFAULT_COMBO(degree, &uc_deg,      LT4 LM4)
+DEFAULT_COMBO(tilde,  &kp GB_TILDE, LB4 LM4)
+
+/* horizontal combos */
+DEFAULT_COMBO(nfnl, &mo NFN, LB1 LB2)
+DEFAULT_COMBO(nfnr, &mo NFN, RB1 RB2)
+
+DEFAULT_COMBO(extl, &mo EXT, LB0 LB1)
+DEFAULT_COMBO(extr, &mo EXT, RB0 RB1)
+
+DEFAULT_COMBO(ret1, &kp RET, RM2 RM3)
+DEFAULT_COMBO(tab1, &kp TAB, LM2 LM3)
+
+DEFAULT_COMBO(ret,  &kp RET, RB2 RB3)
+DEFAULT_COMBO(tab,  &kp TAB, LB2 LB3)
 
 /* Macros */
 / {

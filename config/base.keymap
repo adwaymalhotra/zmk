@@ -3,13 +3,13 @@
 #define COH 1
 #define QW 2
 #define GAME 3
-#define NFN 4
-#define EXT 5
+#define EXT 4
+#define NFN 5
 #define SYS 6
 #define COMBO_LAYERS CO COH QW EXT NFN SYS
 
-#define LEFT_THUMBS &mt MET TAB &thm ALT SPC &mt CTL ESC
-#define RIGHT_THUMBS &lt EXT RET &smart_sft &lt_bsdel NFN 0
+#define LEFT_THUMBS &mt MET TAB &smart_sft &lt EXT ESC
+#define RIGHT_THUMBS &thm ALT SPC &mt_bsdel CTL 0 &lt NFN RET
 
 #include "extra_keys.h"
 #include "keys_en_gb_extended.h"
@@ -25,10 +25,9 @@ ZLAYER(colemak_dh,
   &kp Z &kp X &kp C &kp D &kp V /**/ &kp K &kp H &kp COMMA &kp DOT &kp FSLH,
 )
 
-ZLAYER(colemak_dh_hrm,
-  &kp Q      &kp W      &kp F      &kp P      &kp B /**/ &kp J &kp L      &kp U      &kp  Y     &kp SEMI  ,
-  &hml SFT A &hml MET R &hml CTL S &hml ALT T &kp G /**/ &kp M &hmr ALT N &hmr CTL E &hmr MET I &hmr SFT O,
-  &kp Z      &kp X      &kp C      &kp D      &kp V /**/ &kp K &kp H      &kp COMMA  &kp DOT    &kp FSLH  ,
+ZTLAYER(colemak_dh_hrm,
+  TRANS_ROW, TRANS_ROW, TRANS_ROW,
+  &mt MET ESC &smart_sft &lt EXT TAB, /**/ &thm ALT SPC &mt CTL RET &lt_bsdel NFN 0
 )
 
 ZLAYER(qwerty,
@@ -43,20 +42,18 @@ ZLAYER(qwerty,
   TRANS_LAYER(game)
 #endif
 
+// Extend Layer with Macros and Special Keys
+ZLAYER(extend,
+  &none    &vi_sav      &pre_dsk     &nex_dsk     &kp LC(SPC) /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp CAPS ,
+  &alt_tab &kp LC(BSPC) &pre_tab     &nex_tab     &none       /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp INS  ,
+  &kp RALT &kp SFT      &kp C_VOL_UP &kp C_VOL_DN &kp C_MUTE  /**/ &none    &half_dn  &half_up  &none     &kp PSCRN,
+)
+
 // Numpad & Function Keys
 ZLAYER(nfn,
   &kp F1 &kp F2  &kp F3  &kp F4  &none /**/ &kp DOT  &kp N7 &kp N8 &kp N9 &kp PLUS ,
   &kp F5 &kp F6  &kp F7  &kp F8  &none /**/ &kp FSLH &kp N4 &kp N5 &kp N6 &kp N0   ,
   &kp F9 &kp F10 &kp F11 &kp F12 &none /**/ &kp STAR &kp N1 &kp N2 &kp N3 &kp MINUS,
-)
-
-// Extend Layer with Macros and Special Keys
-ZTLAYER(extend,
-  &find    &vi_sav     &pre_dsk     &nex_dsk     &kp LC(ESC) /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp CAPS ,
-  &alt_tab &kp LC(SPC) &pre_tab     &nex_tab     &none       /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp INS  ,
-  &kp RALT &kp LA(SPC) &kp C_VOL_UP &kp C_VOL_DN &kp C_MUTE  /**/ &none    &half_dn  &half_up  &none     &kp PSCRN,
-
-  &trans &kp SFT &trans, &none &trans &trans
 )
 
 // System Settings
