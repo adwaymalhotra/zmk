@@ -9,6 +9,12 @@
 
 #define ZMK_HELPER_STRINGIFY(x) #x
 
+// Preprocessor mechanism to overload macros, cf. https://stackoverflow.com/a/27051616/6114651
+#define VARGS_(_10, _9, _8, _7, _6, _5, _4, _3, _2, _1, N, ...) N
+#define VARGS(...) VARGS_(__VA_ARGS__, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
+#define CONCAT_(a, b) a##b
+#define CONCAT(a, b) CONCAT_(a, b)
+
 /* ZMK_BEHAVIOR */
 
 #define ZMK_BEHAVIOR_CORE_caps_word       compatible = "zmk,behavior-caps-word";       #binding-cells = <0>
@@ -64,17 +70,19 @@
 
 #define ALL 0xff
 #if !defined COMBO_TERM
-    #define COMBO_TERM 30
-#endif
-#if !defined COMBO_HOOK
-    #define COMBO_HOOK
+    #define COMBO_TERM 60
 #endif
 
-#define MACRO_CHOOSER5(_1, _2, _3, _4, _5, FUNC, ...) FUNC
-#define ZMK_COMBO(...) MACRO_CHOOSER5(__VA_ARGS__, ZMK_COMBO_5_ARGS, ZMK_COMBO_4_ARGS)(__VA_ARGS__)
-#define ZMK_COMBO_4_ARGS(name, combo_bindings, keypos, combo_layers) \
-    ZMK_COMBO_5_ARGS(name, combo_bindings, keypos, combo_layers, COMBO_TERM)
-#define ZMK_COMBO_5_ARGS(name, combo_bindings, keypos, combo_layers, combo_timeout) \
+#define ZMK_COMBO(...) CONCAT(ZMK_COMBO_, VARGS(__VA_ARGS__))(__VA_ARGS__)
+#define ZMK_COMBO_3(name, combo_bindings, keypos) \
+    ZMK_COMBO_4(name, combo_bindings, keypos, ALL)
+#define ZMK_COMBO_4(name, combo_bindings, keypos, combo_layers) \
+    ZMK_COMBO_5(name, combo_bindings, keypos, combo_layers, COMBO_TERM)
+#define ZMK_COMBO_5(name, combo_bindings, keypos, combo_layers, combo_timeout) \
+    ZMK_COMBO_6(name, combo_bindings, keypos, combo_layers, combo_timeout, 0)
+#define ZMK_COMBO_6(name, combo_bindings, keypos, combo_layers, combo_timeout, combo_idle) \
+    ZMK_COMBO_7(name, combo_bindings, keypos, combo_layers, combo_timeout, combo_idle, )
+#define ZMK_COMBO_7(name, combo_bindings, keypos, combo_layers, combo_timeout, combo_idle, combo_vaargs) \
     / { \
         combos { \
             compatible = "zmk,combos"; \
@@ -83,7 +91,8 @@
                 bindings = <combo_bindings>; \
                 key-positions = <keypos>; \
                 layers = <combo_layers>; \
-                COMBO_HOOK \
+                require-prior-idle-ms = <combo_idle>; \
+                combo_vaargs \
             }; \
         }; \
     };
