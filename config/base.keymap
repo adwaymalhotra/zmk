@@ -1,15 +1,20 @@
 // Layers
-#define CO 0
-#define COH 1
-#define QW 2
-#define GAME 3
-#define EXT 4
-#define NFN 5
-#define SYS 6
-#define COMBO_LAYERS CO COH QW EXT NFN SYS
+#define GR          0
+#define QW          1
+#define GAME        2
+#define EXT         3
+#define NFN         4
+#define SYS         5
+#define COMBO_LAYERS GR QW
+
+#define PRE_DSK LC(LG(LEFT))
+#define NEX_DSK LC(LG(RIGHT))
+
+#define ALT_LT &mt MET TAB &smart_sft &lt EXT ESC
+#define ALT_RT &thm ALT SPC &mt_bsdel CTL 0 &lt NFN RET
 
 #define LEFT_THUMBS &mt MET TAB &smart_sft &lt EXT ESC
-#define RIGHT_THUMBS &thm ALT SPC &mt_bsdel CTL 0 &lt NFN RET
+#define RIGHT_THUMBS &thl NFN SPC &mt_bsdel CTL 0 &mt ALT RET
 
 #include "extra_keys.h"
 #include "keys_en_gb_extended.h"
@@ -17,23 +22,16 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
 
-ZMK_CONDITIONAL_LAYER(EXT NFN, SYS)
-
-ZLAYER(colemak_dh,
-  &kp Q &kp W &kp F &kp P &kp B /**/ &kp J &kp L &kp U     &kp Y   &kp SEMI,
-  &kp A &kp R &kp S &kp T &kp G /**/ &kp M &kp N &kp E     &kp I   &kp O   ,
-  &kp Z &kp X &kp C &kp D &kp V /**/ &kp K &kp H &kp COMMA &kp DOT &kp FSLH,
-)
-
-ZTLAYER(colemak_dh_hrm,
-  TRANS_ROW, TRANS_ROW, TRANS_ROW,
-  &mt MET ESC &smart_sft &lt EXT TAB, /**/ &thm ALT SPC &mt CTL RET &lt_bsdel NFN 0
+ZLAYER(graphite,
+  &kp B &kp L &kp D &kp W &kp Z /**/ &sqt_dqt &kp F &kp O    &kp U     &kp J,
+  &kp N AL(R) ML(T) CL(S) SL(G) /**/ SR(Y)    CR(H) MR(A)    AR(E)     &kp I,
+  &kp Q &kp X &kp M &kp C &kp V /**/ &kp K    &kp P &dot_col &kp MINUS &com_sem,
 )
 
 ZLAYER(qwerty,
-  &kp Q &kp W &kp E &kp R &kp T /**/ &kp Y &kp U &kp I     &kp O   &kp P   ,
-  &kp A &kp S &kp D &kp F &kp G /**/ &kp H &kp J &kp K     &kp L   &kp SEMI,
-  &kp Z &kp X &kp C &kp V &kp B /**/ &kp M &kp N &kp COMMA &kp DOT &kp FSLH,
+  &kp Q &kp W &kp E &kp R &kp T /**/ &kp Y &kp U &kp I   &kp O     &kp P,
+  &kp A AL(S) ML(D) CL(F) SL(G) /**/ SR(H) CR(J) MR(K)   AR(L)     &kp SEMI,
+  &kp Z &kp X &kp C &kp V &kp B /**/ &kp M &kp N &kp DOT &kp COMMA &kp FSLH,
 )
 
 #if defined GAME_LAYER_KEYS
@@ -44,9 +42,9 @@ ZLAYER(qwerty,
 
 // Extend Layer with Macros and Special Keys
 ZLAYER(extend,
-  &none    &vi_sav      &pre_dsk     &nex_dsk     &kp LC(SPC) /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp CAPS ,
-  &alt_tab &kp LC(BSPC) &pre_tab     &nex_tab     &none       /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp INS  ,
-  &kp RALT &kp SFT      &kp C_VOL_UP &kp C_VOL_DN &kp C_MUTE  /**/ &none    &half_dn  &half_up  &none     &kp PSCRN,
+  &kp SFT  &kp MET      CL(PRE_DSK)  AL(NEX_DSK)   &sk RALT /**/ &kp HOME   AR(PG_DN)    CR(PG_UP)    MR(END)   SR(CAPS) ,
+  &alt_tab &kp LC(BSPC) &pre_tab     &nex_tab      &vi_sav  /**/ &kp LEFT   &kp DOWN     &kp UP       &kp RIGHT &kp INS  ,
+  &none    &none        &kp LC(LEFT) &kp LC(RIGHT) &none    /**/ &kp C_MUTE &kp C_VOL_DN &kp C_VOL_UP &kp DEL   &kp PSCRN,
 )
 
 // Numpad & Function Keys
@@ -58,9 +56,9 @@ ZLAYER(nfn,
 
 // System Settings
 ZLAYER(system,
-  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2   &bt BT_SEL 3 &bt BT_CLR  /**/ &bt BT_CLR_ALL &none &none &none &tog GAME,
-  &none        &none        &kp C_BRI_UP   &kp C_BRI_DN &sys_reset  /**/ &sys_reset     &none &none &none &tog COH ,
-  &out OUT_BLE &out OUT_USB &none          &none        &bootloader /**/ &bootloader    &none &none &none &none    ,
+  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR  /**/ &bt BT_CLR_ALL &none &none &none &tog GAME,
+  &none        &none        &kp C_BRI_UP &kp C_BRI_DN &sys_reset  /**/ &sys_reset     &none &none &none &tog QW,
+  &out OUT_BLE &out OUT_USB &none        &none        &bootloader /**/ &bootloader    &none &none &none &none,
 )
 
 // vi:ft=dts
