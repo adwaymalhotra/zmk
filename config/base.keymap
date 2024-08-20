@@ -5,7 +5,7 @@
 #define EXT         3
 #define NFN         4
 #define SYS         5
-#define COMBO_LAYERS GR QW
+#define COMBO_LAYERS GR QW NFN
 
 #define PRE_DSK LC(LG(LEFT))
 #define NEX_DSK LC(LG(RIGHT))
@@ -14,7 +14,7 @@
 #define ALT_RT &thm ALT SPC &mt_bsdel CTL 0 &lt NFN RET
 
 #define LEFT_THUMBS &mt MET TAB &smart_sft &lt EXT ESC
-#define RIGHT_THUMBS &thl NFN SPC &mt_bsdel CTL 0 &mt ALT RET
+#define RIGHT_THUMBS &thl NFN SPC &mt_bsdel CTL 0 &mt ALT FSLH
 
 #include "extra_keys.h"
 #include "keys_en_gb_extended.h"
@@ -42,7 +42,7 @@ ZLAYER(qwerty,
 
 // Extend Layer with Macros and Special Keys
 ZLAYER(extend,
-  &kp SFT  &kp MET      CL(PRE_DSK)  AL(NEX_DSK)   &sk RALT /**/ &kp HOME   AR(PG_DN)    CR(PG_UP)    MR(END)   SR(CAPS) ,
+  &kp SFT  &kp MET      CL(PRE_DSK)  AL(NEX_DSK)   &sk RALT /**/ SR(HOME)   CR(PG_DN)    MR(PG_UP)    AR(END)   &kp CAPS ,
   &alt_tab &kp LC(BSPC) &pre_tab     &nex_tab      &vi_sav  /**/ &kp LEFT   &kp DOWN     &kp UP       &kp RIGHT &kp INS  ,
   &none    &none        &kp LC(LEFT) &kp LC(RIGHT) &none    /**/ &kp C_MUTE &kp C_VOL_DN &kp C_VOL_UP &kp DEL   &kp PSCRN,
 )
