@@ -1,12 +1,13 @@
+#define PRIOR_IDLE_MS 150
+#define QUICK_TAP_MS 175
+#define TAPPING_TERM 280
+#define COMBO_TERM 50
+
 #include <behaviors.dtsi>
 #include "helper.h"
 #include "keys_en_gb_extended.h"
 
 /* Homerow Mods */
-#define PRIOR_IDLE_MS 180
-#define QUICK_TAP_MS 250
-#define TAPPING_TERM 300
-
 #define MAKE_HT(NAME, MODE, HOLD, TAP, TRIGGER_POS) \
     ZMK_BEHAVIOR(NAME, hold_tap, \
         flavor = MODE; \
@@ -19,26 +20,29 @@
     )
 
 #define MAKE_HRM(NAME, HOLD, TAP, TRIGGER_POS) \
-    MAKE_HT(NAME, "tap-preferred", HOLD, TAP, TRIGGER_POS)
+    MAKE_HT(NAME, "balanced", HOLD, TAP, TRIGGER_POS)
 
 #define DEFAULT_COMBO(NAME, KEY, COMBO_KEYS) \
     ZMK_COMBO(NAME, KEY, COMBO_KEYS, COMBO_LAYERS, COMBO_TERM, COMBO_TERM)
 
 // The keys are fetched from the *_keys.h file sourced in the actual keymap before other includes
-MAKE_HRM(hml, &kp, &kp, KEYS_R THUMBS)
-MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS)
-MAKE_HRM(hll, &mo, &kp, KEYS_R THUMBS)
-MAKE_HRM(hlr, &mo, &kp, KEYS_L THUMBS)
+MAKE_HRM(hrm_left, &kp, &kp, KEYS_R THUMBS)
+MAKE_HRM(hrm_right, &kp, &kp, KEYS_L THUMBS)
+MAKE_HRM(hrl_left, &mo, &kp, KEYS_R THUMBS)
+MAKE_HRM(hrl_right, &mo, &kp, KEYS_L THUMBS)
 
-#define SL(KEY) &hml SFT KEY
-#define CL(KEY) &hml CTL KEY
-#define AL(KEY) &hml ALT KEY
-#define ML(KEY) &hml MET KEY
+#define SL(KEY) &hrm_left SFT KEY
+#define CL(KEY) &hrm_left CTL KEY
+#define AL(KEY) &hrm_left ALT KEY
+#define ML(KEY) &hrm_left MET KEY
 
-#define SR(KEY) &hmr SFT KEY
-#define CR(KEY) &hmr CTL KEY
-#define AR(KEY) &hmr ALT KEY
-#define MR(KEY) &hmr MET KEY
+#define SR(KEY) &hrm_right SFT KEY
+#define CR(KEY) &hrm_right CTL KEY
+#define AR(KEY) &hrm_right ALT KEY
+#define MR(KEY) &hrm_right MET KEY
+
+#define NFL(KEY) &hrl_left NFN KEY
+#define NFR(KEY) &hrl_right NFN KEY
 
 MAKE_HRM(mts, &sk, &caps_word, KEYS_L KEYS_R)
 MAKE_HRM(mtb, &sk, &bsdel, KEYS_L KEYS_R)
@@ -51,7 +55,6 @@ MAKE_HT(mt_bsdel, "hold-preferred", &kp, &bsdel, KEYS_L KEYS_R)
 MAKE_HT(lt_bsdel, "hold-preferred", &mo, &bsdel, KEYS_L KEYS_R)
 
 &sk {
-    release-after-ms = <1000>;
     quick-release;
 };
 
@@ -139,11 +142,11 @@ ZMK_BEHAVIOR(alt_tab, macro,
 
 /* Combos
 ╭───────┬───────┬───────┬───────┬───────╮   ╭───────┬───────┬───────┬───────┬───────╮
-
+                <       {                                   }       >
 ├── ° ──┼─ &|€ ─┼── @ ──┼── ! ──┼── ` ──┤   ├── ~ ──┼── / ──┼── ? ──┼─ $|£ ─┼── % ──┤
 
 ├───────┼─ *|₹ ─┼── [ ──┼── ( ──┼── = ──┤   ├── \ ──┼── ) ──┼── ] ──┼─ #|~ ─┼── ^ ──┤
-
+       SYS-----SYS     TAB                                 RET     SYS-----SYS
 ╰───────┼───────┼───────┼───────┼───────┤   ├───────┼───────┼───────┼───────┼───────┤
 ) */
 
@@ -179,11 +182,11 @@ DEFAULT_COMBO(star, &star_rup, LB3 LM3)
 DEFAULT_COMBO(degree, &uc_deg, LT4 LM4)
 
 /* horizontal combos */
-DEFAULT_COMBO(nfnl, &mo NFN, LB1 LB2)
-DEFAULT_COMBO(nfnr, &mo NFN, RB1 RB2)
+DEFAULT_COMBO(lt, &kp LT, LT3 LT2)
+DEFAULT_COMBO(gt, &kp GT, RT3 RT2)
 
-DEFAULT_COMBO(extl, &mo EXT, LB0 LB1)
-DEFAULT_COMBO(extr, &mo EXT, RB0 RB1)
+DEFAULT_COMBO(lbrc, &kp LBRC, LT1 LT2)
+DEFAULT_COMBO(rbrc, &kp RBRC, RT1 RT2)
 
 DEFAULT_COMBO(ret, &kp RET, RB2 RB3)
 DEFAULT_COMBO(tab, &kp TAB, LB2 LB3)

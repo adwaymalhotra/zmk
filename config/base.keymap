@@ -4,14 +4,12 @@
 #define GAME        2
 #define EXT         3
 #define NFN         4
-#define SYS         5
+#define SYM         5
+#define SYS         6
 #define COMBO_LAYERS GR QW NFN
 
 #define PRE_DSK LC(LG(LEFT))
 #define NEX_DSK LC(LG(RIGHT))
-
-#define ALT_LT &mt MET TAB &smart_sft &lt EXT ESC
-#define ALT_RT &thm ALT SPC &mt_bsdel CTL 0 &lt NFN RET
 
 #define LEFT_THUMBS &mt MET TAB &smart_sft &lt EXT ESC
 #define RIGHT_THUMBS &thl NFN SPC &mt_bsdel CTL 0 &mt ALT FSLH
@@ -23,15 +21,15 @@
 #include <dt-bindings/zmk/outputs.h>
 
 ZLAYER(graphite,
-  &kp B &kp L &kp D &kp W &kp Z /**/ &sqt_dqt &kp F &kp O    &kp U     &kp J,
-  &kp N AL(R) ML(T) CL(S) SL(G) /**/ SR(Y)    CR(H) MR(A)    AR(E)     &kp I,
-  &kp Q &kp X &kp M &kp C &kp V /**/ &kp K    &kp P &dot_col &kp MINUS &com_sem,
+  &kp B &kp L &kp D &kp W  &kp Z /**/ &sqt_dqt &kp F  &kp O    &kp U     &kp J,
+  &kp N AL(R) ML(T) CL(S)  SL(G) /**/ SR(Y)    CR(H)  MR(A)    AR(E)     &kp I,
+  &kp Q &kp X &kp M NFL(C) &kp V /**/ &kp K    NFR(P) &dot_col &kp MINUS &com_sem,
 )
 
 ZLAYER(qwerty,
-  &kp Q &kp W &kp E &kp R &kp T /**/ &kp Y &kp U &kp I   &kp O     &kp P,
-  &kp A AL(S) ML(D) CL(F) SL(G) /**/ SR(H) CR(J) MR(K)   AR(L)     &kp SEMI,
-  &kp Z &kp X &kp C &kp V &kp B /**/ &kp M &kp N &kp DOT &kp COMMA &kp FSLH,
+  &kp Q &kp W &kp E &kp R  &kp T /**/ &kp Y &kp U  &kp I   &kp O     &kp P,
+  &kp A AL(S) ML(D) CL(F)  SL(G) /**/ SR(H) CR(J)  MR(K)   AR(L)     &kp SEMI,
+  &kp Z &kp X &kp C NFL(V) &kp B /**/ &kp M NFR(N) &kp DOT &kp COMMA &kp FSLH,
 )
 
 #if defined GAME_LAYER_KEYS
@@ -42,9 +40,9 @@ ZLAYER(qwerty,
 
 // Extend Layer with Macros and Special Keys
 ZLAYER(extend,
-  &kp SFT  &kp MET      CL(PRE_DSK)  AL(NEX_DSK)   &sk RALT /**/ SR(HOME)   CR(PG_DN)    MR(PG_UP)    AR(END)   &kp CAPS ,
-  &alt_tab &kp LC(BSPC) &pre_tab     &nex_tab      &vi_sav  /**/ &kp LEFT   &kp DOWN     &kp UP       &kp RIGHT &kp INS  ,
-  &none    &none        &kp LC(LEFT) &kp LC(RIGHT) &none    /**/ &kp C_MUTE &kp C_VOL_DN &kp C_VOL_UP &kp DEL   &kp PSCRN,
+  &kp CAPS &kp PSCRN    &kp PRE_DSK  &kp NEX_DSK  &kp DEL    /**/ &kp HOME &kp PG_DN    &kp PG_UP     &kp END   &none,
+  &alt_tab &kp LC(BSPC) &pre_tab     &nex_tab     &vi_sav    /**/ &kp LEFT &kp DOWN     &kp UP        &kp RIGHT &kp INS,
+  &none    &sk RALT     &kp C_VOL_UP &kp C_VOL_DN &kp C_MUTE /**/ &none    &kp LC(LEFT) &kp LC(RIGHT) &none     &none,
 )
 
 // Numpad & Function Keys
@@ -52,6 +50,13 @@ ZLAYER(nfn,
   &kp F1 &kp F2  &kp F3  &kp F4  &none /**/ &kp DOT  &kp N7 &kp N8 &kp N9 &kp PLUS ,
   &kp F5 &kp F6  &kp F7  &kp F8  &none /**/ &kp FSLH &kp N4 &kp N5 &kp N6 &kp N0   ,
   &kp F9 &kp F10 &kp F11 &kp F12 &none /**/ &kp STAR &kp N1 &kp N2 &kp N3 &kp MINUS,
+)
+
+// Symbols layer; alternatives to the combos.
+ZLAYER(sym,
+  &none &none &kp LBKT &kp RBKT &none /**/ &kp GRAVE &kp AMPS &kp STAR  &uc_rup   &uc_eur,
+  &none &none &kp LPAR &kp RPAR &none /**/ &kp EQUAL &kp DLLR &kp PRCNT &kp CARET &kp GB_HASH,
+  &none &none &kp LBRC &kp RBRC &none /**/ &none     &kp EXCL &kp GB_AT &uc_gbp   &kp FSLH,
 )
 
 // System Settings
