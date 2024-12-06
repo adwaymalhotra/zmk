@@ -12,7 +12,7 @@
 #define NEX_DSK LC(LG(RIGHT))
 
 #define LEFT_THUMBS &mt MET TAB &smart_sft &lt EXT ESC
-#define RIGHT_THUMBS &thl NFN SPC &mt_bsdel CTL 0 &mt ALT FSLH
+#define RIGHT_THUMBS &thm CTL SPC &lt_bsdel NFN 0 &mt ALT FSLH
 
 #include "extra_keys.h"
 #include "keys_en_gb_extended.h"
@@ -21,15 +21,15 @@
 #include <dt-bindings/zmk/outputs.h>
 
 ZLAYER(graphite,
-  &kp B &kp L &kp D &kp W  &kp Z /**/ &sqt_dqt &kp F  &kp O    &kp U     &kp J,
-  &kp N AL(R) ML(T) CL(S)  SL(G) /**/ SR(Y)    CR(H)  MR(A)    AR(E)     &kp I,
-  &kp Q &kp X &kp M NFL(C) &kp V /**/ &kp K    NFR(P) &dot_col &kp MINUS &com_sem,
+  NFL(B) &kp L &kp D &kp W  &kp Z /**/ &sqt_dqt &kp F  &kp O    &kp U     NFR(J),
+  &kp N  AL(R) ML(T) CL(S)  SL(G) /**/ SR(Y)    CR(H)  MR(A)    AR(E)     &kp I,
+  &kp Q  &kp X &kp M NFL(C) &kp V /**/ &kp K    NFR(P) &dot_col &kp MINUS &com_sem,
 )
 
 ZLAYER(qwerty,
-  &kp Q &kp W &kp E &kp R  &kp T /**/ &kp Y &kp U  &kp I   &kp O     &kp P,
-  &kp A AL(S) ML(D) CL(F)  SL(G) /**/ SR(H) CR(J)  MR(K)   AR(L)     &kp SEMI,
-  &kp Z &kp X &kp C NFL(V) &kp B /**/ &kp M NFR(N) &kp DOT &kp COMMA &kp FSLH,
+  NFL(Q) &kp W &kp E &kp R  &kp T /**/ &kp Y &kp U  &kp I   &kp O     NFR(P),
+  &kp A  AL(S) ML(D) CL(F)  SL(G) /**/ SR(H) CR(J)  MR(K)   AR(L)     &kp SEMI,
+  &kp Z  &kp X &kp C NFL(V) &kp B /**/ &kp M NFR(N) &kp DOT &kp COMMA &kp FSLH,
 )
 
 #if defined GAME_LAYER_KEYS

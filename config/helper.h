@@ -39,6 +39,7 @@
             }; \
         }; \
     };
+#define ZMK_TRI_STATE(name, ...) ZMK_BEHAVIOR(name, tri_state, __VA_ARGS__)
 
 /* ZMK_LAYER */
 
