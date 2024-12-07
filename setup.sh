@@ -8,6 +8,10 @@ pip install west
 
 west init -l config
 west update
-west zephyr-export
 
+python3 -m venv zmk/.venv
+source zmk/.venv/bin/activate
+
+pip install west
+west zephyr-export
 pip install -r zephyr/scripts/requirements-base.txt
