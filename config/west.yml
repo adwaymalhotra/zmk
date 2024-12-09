@@ -14,5 +14,7 @@ manifest:
       import: app/west.yml
     - name: zmk-tri-state
       path: modules/tri-state
+    - name: zmk-helpers
+      path: modules/helpers
   self:
     path: config

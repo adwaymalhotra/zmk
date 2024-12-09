@@ -21,15 +21,15 @@
 #include <dt-bindings/zmk/outputs.h>
 
 ZLAYER(graphite,
-  NFL(B) &kp L &kp D &kp W  &kp Z /**/ &sqt_dqt &kp F  &kp O    &kp U     NFR(J),
+  &kp B  &kp L &kp D &kp W  &kp Z /**/ &sqt_dqt &kp F  &kp O    &kp U     &kp J,
   &kp N  AL(R) ML(T) CL(S)  SL(G) /**/ SR(Y)    CR(H)  MR(A)    AR(E)     &kp I,
-  &kp Q  &kp X &kp M NFL(C) &kp V /**/ &kp K    NFR(P) &dot_col &kp MINUS &com_sem,
+  &kp Q  &kp X &kp M &kp C  &kp V /**/ &kp K    &kp P  &dot_col &kp MINUS &com_sem,
 )
 
 ZLAYER(qwerty,
-  NFL(Q) &kp W &kp E &kp R  &kp T /**/ &kp Y &kp U  &kp I   &kp O     NFR(P),
+  &kp Q  &kp W &kp E &kp R  &kp T /**/ &kp Y &kp U  &kp I   &kp O     &kp P,
   &kp A  AL(S) ML(D) CL(F)  SL(G) /**/ SR(H) CR(J)  MR(K)   AR(L)     &kp SEMI,
-  &kp Z  &kp X &kp C NFL(V) &kp B /**/ &kp M NFR(N) &kp DOT &kp COMMA &kp FSLH,
+  &kp Z  &kp X &kp C &kp V  &kp B /**/ &kp M &kp N  &kp DOT &kp COMMA &kp FSLH,
 )
 
 #if defined GAME_LAYER_KEYS
