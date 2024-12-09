@@ -12,16 +12,20 @@ west zephyr-export
 
 pip install -r zephyr/scripts/requirements-base.txt
 
-cd /tmp
-wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.3/zephyr-sdk-0.16.3_linux-x86_64.tar.xz
-wget -O - https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.3/sha256.sum | shasum --check --ignore-missing
+zephyr_sdk_version="0.16.3"
+zephyr_sdk_name="zephyr-sdk-${zephyr_sdk_version}"
+if [ ! -d "$HOME/.local/lib/${zephyr_sdk_name}" ]; then
+  cd /tmp
+  wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v${zephyr_sdk_version}/${zephyr_sdk_name}_linux-x86_64.tar.xz
+  wget -O - https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v${zephyr_sdk_version}/sha256.sum | shasum --check --ignore-missing
 
-tar xvf zephyr-sdk-0.16.3_linux-x86_64.tar.xz
-mv zephyr-sdk-0.16.3 ~/.local/lib/zephyr-sdk-0.16.3
-cd ~/.local/lib/zephyr-sdk-0.16.3
-./setup.sh
+  tar xvf ${zephyr_sdk_name}_linux-x86_64.tar.xz
+  mv ${zephyr_sdk_name} $HOME/.local/lib/${zephyr_sdk_name}
+  cd $HOME/.local/lib/${zephyr_sdk_name}
+  ./setup.sh
 
-sudo cp ~/.local/lib/zephyr-sdk-0.16.3/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d
-sudo udevadm control --reload
+  sudo cp sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d
+  sudo udevadm control --reload
+fi
 
 cd $start_dir
