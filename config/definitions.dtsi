@@ -1,13 +1,19 @@
-#define PRIOR_IDLE_MS 150
-#define QUICK_TAP_MS 175
-#define TAPPING_TERM 280
-#define COMBO_TERM 50
+#define ZTHUMB(THUMB_L, THUMB_R) \
+  X_LH THUMB_L X_MH THUMB_R X_RH
 
-#include <behaviors.dtsi>
-#include "helper.h"
-#include "keys_en_gb_extended.h"
+#define ZTLAYER(NAME, TOP, MIDDLE, BOTTOM, THUMB_L, THUMB_R, ...) \
+  ZMK_LAYER(NAME, \
+    X_LT TOP X_RT \
+    X_LM MIDDLE X_RM \
+    X_LB BOTTOM X_RB \
+    ZTHUMB(THUMB_L, THUMB_R))
 
-/* Homerow Mods */
+#define ZLAYER(NAME, TOP, MIDDLE, BOTTOM, ...) \
+  ZTLAYER(NAME, TOP, MIDDLE, BOTTOM, LEFT_THUMBS, RIGHT_THUMBS)
+
+#define TRANS_ROW &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+#define TRANS_LAYER(NAME) ZLAYER(NAME, TRANS_ROW, TRANS_ROW, TRANS_ROW)
+
 #define MAKE_HT(NAME, MODE, HOLD, TAP, TRIGGER_POS) \
     ZMK_BEHAVIOR(NAME, hold_tap, \
         flavor = MODE; \
@@ -25,7 +31,18 @@
 #define DEFAULT_COMBO(NAME, KEY, COMBO_KEYS) \
     ZMK_COMBO(NAME, KEY, COMBO_KEYS, COMBO_LAYERS, COMBO_TERM, COMBO_TERM)
 
-// The keys are fetched from the *_keys.h file sourced in the actual keymap before other includes
+#define PRIOR_IDLE_MS 150
+#define QUICK_TAP_MS 175
+#define TAPPING_TERM 280
+#undef COMBO_TERM
+#define COMBO_TERM 50
+
+#define ALT LALT
+#define MET LGUI
+#define SFT LSHFT
+#define CTL LCTL
+
+/* Homerow Mods */
 MAKE_HRM(hrm_left, &kp, &kp, KEYS_R THUMBS)
 MAKE_HRM(hrm_right, &kp, &kp, KEYS_L THUMBS)
 MAKE_HRM(hrl_left, &mo, &kp, KEYS_R THUMBS)

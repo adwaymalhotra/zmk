@@ -14,11 +14,16 @@
 #define LEFT_THUMBS &mt MET TAB &smart_sft &lt EXT ESC
 #define RIGHT_THUMBS &thm CTL SPC &lt_bsdel NFN 0 &mt ALT FSLH
 
-#include "extra_keys.h"
-#include "keys_en_gb_extended.h"
-#include "behaviors.dtsi"
+/* ZMK Headers */
+#include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
+/* urob's helper */
+#include <zmk-helpers/helper.h>
+/* my definitions */
+#include "extra_keys.h"
+#include "keys_en_gb_extended.h"
+#include "definitions.dtsi"
 
 ZLAYER(graphite,
   &kp B  &kp L &kp D &kp W  &kp Z /**/ &sqt_dqt &kp F  &kp O    &kp U     &kp J,
