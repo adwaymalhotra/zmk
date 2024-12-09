@@ -18,7 +18,7 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
-/* urob's helper */
+/* urob's helper (must be after including behaviors.dtsi) */
 #include <zmk-helpers/helper.h>
 /* my definitions */
 #include "extra_keys.h"
