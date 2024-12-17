@@ -31,7 +31,7 @@
 #define DEFAULT_COMBO(NAME, KEY, COMBO_KEYS) \
     ZMK_COMBO(NAME, KEY, COMBO_KEYS, COMBO_LAYERS, COMBO_TERM, COMBO_TERM)
 
-#define PRIOR_IDLE_MS 150
+#define PRIOR_IDLE_MS 160
 #define QUICK_TAP_MS 175
 #define TAPPING_TERM 280
 #undef COMBO_TERM
@@ -61,6 +61,9 @@ MAKE_HRM(hrl_right, &mo, &kp, KEYS_L THUMBS)
 #define NFL(KEY) &hrl_left NFN KEY
 #define NFR(KEY) &hrl_right NFN KEY
 
+#define SYL(KEY) &hrl_left SYS KEY
+#define SYR(KEY) &hrl_right SYS KEY
+
 #define EXL(KEY) &hrl_left EXT KEY
 #define EXR(KEY) &hrl_right EXT KEY
 
@@ -73,6 +76,8 @@ MAKE_HT(thm, "tap-preferred", &kp, &kp, KEYS_L KEYS_R)
 
 MAKE_HT(mt_bsdel, "hold-preferred", &kp, &bsdel, KEYS_L KEYS_R)
 MAKE_HT(lt_bsdel, "hold-preferred", &mo, &bsdel, KEYS_L KEYS_R)
+
+MAKE_HT(lt_comm, "tap-preferred", &mo, &com_sem, KEYS_R)
 
 &sk {
     release-after-ms = <900>;
@@ -194,12 +199,6 @@ DEFAULT_COMBO(star, &star_rup, LB3 LM3)
 DEFAULT_COMBO(degree, &uc_deg, LT4 LM4)
 
 /* horizontal combos */
-DEFAULT_COMBO(lt, &kp LT, LT3 LT2)
-DEFAULT_COMBO(gt, &kp GT, RT3 RT2)
-
-DEFAULT_COMBO(lbrc, &kp LBRC, LT1 LT2)
-DEFAULT_COMBO(rbrc, &kp RBRC, RT1 RT2)
-
 DEFAULT_COMBO(ret, &kp RET, RB2 RB3)
 DEFAULT_COMBO(tab, &kp TAB, LB2 LB3)
 
