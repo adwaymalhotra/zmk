@@ -4,8 +4,7 @@
 #define GAME        2
 #define EXT         3
 #define NFN         4
-#define SYM         5
-#define SYS         6
+#define SYS         5
 #define COMBO_LAYERS GR QW NFN
 
 #define PRE_DSK LC(LG(LEFT))
@@ -55,13 +54,6 @@ ZLAYER(nfn,
   &kp F1 &kp F2  &kp F3  &kp F4  &none /**/ &kp DOT  &kp N7 &kp N8 &kp N9 &kp PLUS ,
   &kp F5 AL(F6)  ML(F7)  CL(F8)  SL(0) /**/ SR(FSLH) CR(N4) MR(N5) AR(N6) &kp N0   ,
   &kp F9 &kp F10 &kp F11 &kp F12 &none /**/ &kp STAR &kp N1 &kp N2 &kp N3 &kp MINUS,
-)
-
-// Symbols layer; alternatives to the combos.
-ZLAYER(sym,
-  &none &none &kp LBKT &kp RBKT &none /**/ &kp GRAVE &kp AMPS &kp STAR  &uc_rup   &uc_eur,
-  &none &none &kp LPAR &kp RPAR &none /**/ &kp EQUAL &kp DLLR &kp PRCNT &kp CARET &kp GB_HASH,
-  &none &none &kp LBRC &kp RBRC &none /**/ &none     &kp EXCL &kp GB_AT &uc_gbp   &kp FSLH,
 )
 
 // System Settings
