@@ -199,11 +199,8 @@ DEFAULT_COMBO(star, &star_rup, LB3 LM3)
 DEFAULT_COMBO(degree, &uc_deg, LT4 LM4)
 
 /* horizontal combos */
-DEFAULT_COMBO(ret, &kp RET, RB2 RB3)
-DEFAULT_COMBO(tab, &kp TAB, LB2 LB3)
-
-DEFAULT_COMBO(sysl, &mo SYS, LB2 LB3 LB4)
-DEFAULT_COMBO(sysr, &mo SYS, RB2 RB3 RB4)
+DEFAULT_COMBO(ret, &kp RET, RB3 RB4)
+DEFAULT_COMBO(tab, &kp TAB, LB3 LB4)
 
 /* Macros */
 ZMK_MACRO(uc_deg,  bindings = <&kp RALT>, <&kp O>,           <&kp O>   ;tap-ms=<0>; wait-ms=<0>;)
