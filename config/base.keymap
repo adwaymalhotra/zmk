@@ -22,8 +22,231 @@
 /* my definitions */
 #include "extra_keys.h"
 #include "keys_en_gb_extended.h"
-#include "definitions.dtsi"
 
+#define PRIOR_IDLE_MS 160
+#define QUICK_TAP_MS 175
+#define TAPPING_TERM 280
+#undef COMBO_TERM
+#define COMBO_TERM 50
+
+#define ALT LALT
+#define MET LGUI
+#define SFT LSHFT
+#define CTL LCTL
+
+#define ZTHUMB(THUMB_L, THUMB_R) \
+  X_LH THUMB_L X_MH THUMB_R X_RH
+
+#define ZTLAYER(NAME, TOP, MIDDLE, BOTTOM, THUMB_L, THUMB_R, ...) \
+  ZMK_LAYER(NAME, \
+    X_LT TOP X_RT \
+    X_LM MIDDLE X_RM \
+    X_LB BOTTOM X_RB \
+    ZTHUMB(THUMB_L, THUMB_R))
+
+#define ZLAYER(NAME, TOP, MIDDLE, BOTTOM, ...) \
+  ZTLAYER(NAME, TOP, MIDDLE, BOTTOM, LEFT_THUMBS, RIGHT_THUMBS)
+
+#define TRANS_ROW &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+#define TRANS_LAYER(NAME) ZLAYER(NAME, TRANS_ROW, TRANS_ROW, TRANS_ROW)
+
+/* Homerow Mods */
+#define MAKE_HT(NAME, MODE, HOLD, TAP, TRIGGER_POS) \
+    ZMK_BEHAVIOR(NAME, hold_tap, \
+        flavor = MODE; \
+        tapping-term-ms = <TAPPING_TERM>; \
+        quick-tap-ms = <QUICK_TAP_MS>; \
+        bindings = <HOLD>, <TAP>; \
+        require-prior-idle-ms = <PRIOR_IDLE_MS>; \
+        hold-trigger-key-positions = <TRIGGER_POS>; \
+        hold-trigger-on-release; \
+    )
+
+#define MAKE_HRM(NAME, HOLD, TAP, TRIGGER_POS) \
+    MAKE_HT(NAME, "balanced", HOLD, TAP, TRIGGER_POS)
+
+#define SIMPLE_COMBO(NAME, KEY, COMBO_KEYS) \
+    ZMK_COMBO(NAME, KEY, COMBO_KEYS, COMBO_LAYERS, COMBO_TERM, COMBO_TERM)
+
+MAKE_HRM(hrm_left, &kp, &kp, KEYS_R THUMBS)
+MAKE_HRM(hrm_right, &kp, &kp, KEYS_L THUMBS)
+MAKE_HRM(hrl_left, &mo, &kp, KEYS_R THUMBS)
+MAKE_HRM(hrl_right, &mo, &kp, KEYS_L THUMBS)
+
+#define SL(KEY) &hrm_left SFT KEY
+#define CL(KEY) &hrm_left CTL KEY
+#define AL(KEY) &hrm_left ALT KEY
+#define ML(KEY) &hrm_left MET KEY
+
+#define SR(KEY) &hrm_right SFT KEY
+#define CR(KEY) &hrm_right CTL KEY
+#define AR(KEY) &hrm_right ALT KEY
+#define MR(KEY) &hrm_right MET KEY
+
+#define NFL(KEY) &hrl_left NFN KEY
+#define NFR(KEY) &hrl_right NFN KEY
+
+#define SYL(KEY) &hrl_left SYS KEY
+#define SYR(KEY) &hrl_right SYS KEY
+
+#define EXL(KEY) &hrl_left EXT KEY
+#define EXR(KEY) &hrl_right EXT KEY
+
+MAKE_HRM(mts, &sk, &caps_word, KEYS_L KEYS_R)
+MAKE_HRM(mtb, &sk, &bsdel, KEYS_L KEYS_R)
+MAKE_HRM(lts, &mo, &caps_word, KEYS_L KEYS_R)
+
+MAKE_HT(thl, "tap-preferred", &mo, &kp, KEYS_L KEYS_R)
+MAKE_HT(thm, "tap-preferred", &kp, &kp, KEYS_L KEYS_R)
+
+MAKE_HT(mt_bsdel, "hold-preferred", &kp, &bsdel, KEYS_L KEYS_R)
+MAKE_HT(lt_bsdel, "hold-preferred", &mo, &bsdel, KEYS_L KEYS_R)
+
+MAKE_HT(lt_comm, "tap-preferred", &mo, &com_sem, KEYS_R)
+
+/* All Other Behaviors */
+&sk {
+    release-after-ms = <900>;
+    quick-release;
+    /delete-property/ ignore-modifiers;
+};
+
+&lt {
+  tapping-term-ms = <TAPPING_TERM>;
+  quick-tap-ms = <QUICK_TAP_MS>;
+  flavor = "hold-preferred";
+};
+
+&mt {
+  tapping-term-ms = <TAPPING_TERM>;
+  quick-tap-ms = <QUICK_TAP_MS>;
+  flavor = "hold-preferred";
+};
+
+&caps_word {
+  continue-list = <UNDERSCORE MINUS BACKSPACE DELETE>;
+  /delete-property/ ignore-modifiers;
+};
+
+/* Morphs */
+ZMK_MOD_MORPH(smart_sft,
+    bindings = <&sk SFT>, <&caps_word>;
+    mods = <(MOD_LSFT)>;
+)
+
+ZMK_MOD_MORPH(bsdel,
+    bindings = <&kp BACKSPACE>, <&kp DELETE>;
+    mods = <(MOD_LALT|MOD_LGUI|MOD_LSFT)>;
+)
+
+ZMK_MOD_MORPH(dlr_gbp,
+    bindings = <&kp DLLR>, <&uc_gbp>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+ZMK_MOD_MORPH(amps_eur,
+    bindings = <&kp AMPS>, <&uc_eur>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+ZMK_MOD_MORPH(star_rup,
+    bindings = <&kp STAR>, <&uc_rup>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+ZMK_MOD_MORPH(dot_col,
+    bindings = <&kp DOT>, <&kp COLON>;
+    mods = <(MOD_LSFT)>;
+)
+
+ZMK_MOD_MORPH(com_sem,
+    bindings = <&kp COMMA>, <&kp SEMICOLON>;
+    mods = <(MOD_LSFT)>;
+)
+
+ZMK_MOD_MORPH(sqt_dqt,
+    bindings = <&kp SQT>, <&kp GB_DQT>;
+    mods = <(MOD_LSFT)>;
+)
+
+ZMK_MOD_MORPH(lpar_lt,
+    bindings = <&kp LPAR>, <&kp LT>;
+    mods = <(MOD_LSFT)>;
+)
+
+ZMK_MOD_MORPH(rpar_gt,
+    bindings = <&kp RPAR>, <&kp GT>;
+    mods = <(MOD_LSFT)>;
+)
+
+/* Tri State for Alt-Tab in a layer. */
+ZMK_TRI_STATE(alt_tab,
+    bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
+)
+
+/* Combos
+╭───────┬───────┬───────┬───────┬───────╮ ╭───────┬───────┬───────┬───────┬───────╮
+│       │       │       │       │       │ │       │       │       │       │       │
+├── ° ──┼─ &|€ ─┼── @ ──┼── ! ──┼── ` ──┤ ├── ~ ──┼── / ──┼── ? ──┼─ $|£ ─┼── % ──┤
+│       │       │       │       │       │ │       │       │       │       │       │
+├───────┼─ *|₹ ─┼── [ ──┼─ (|< ─┼── = ──┤ ├── \ ──┼─ )|> ─┼── ] ──┼─ #|~ ─┼── ^ ──┤
+│      TAB      │       │       │       │ │       │       │       │      RET      │
+╰───────┴───────┴───────┴───────┴───────╯ ╰───────┴───────┴───────┴───────┴───────╯
+) */
+
+/* right side combos */
+SIMPLE_COMBO(tilde, &kp LS(GB_HASH), RM0 RT0)
+SIMPLE_COMBO(pipe,  &kp GB_BSLH,     RM0 RB0)
+
+SIMPLE_COMBO(slash, &kp FSLH, RT1 RM1)
+SIMPLE_COMBO(rpar,  &rpar_gt, RM1 RB1)
+
+SIMPLE_COMBO(ques, &kp QUESTION, RT2 RM2)
+SIMPLE_COMBO(rbkt, &kp RBKT,     RM2 RB2)
+
+SIMPLE_COMBO(dollar, &dlr_gbp,     RT3 RM3)
+SIMPLE_COMBO(hash,   &kp GB_HASH,  RM3 RB3)
+
+SIMPLE_COMBO(perc,  &kp PRCNT, RM4 RT4)
+SIMPLE_COMBO(caret, &kp CARET, RM4 RB4)
+
+/* left side combos */
+SIMPLE_COMBO(grave, &kp GRAVE, LT0 LM0)
+SIMPLE_COMBO(equal, &kp EQUAL, LB0 LM0)
+
+SIMPLE_COMBO(excl, &kp EXCL, LT1 LM1)
+SIMPLE_COMBO(lpar, &lpar_lt, LM1 LB1)
+
+SIMPLE_COMBO(at,   &kp GB_AT, LT2 LM2)
+SIMPLE_COMBO(lbkt, &kp LBKT,  LM2 LB2)
+
+SIMPLE_COMBO(amps, &amps_eur, LT3 LM3)
+SIMPLE_COMBO(star, &star_rup, LB3 LM3)
+
+SIMPLE_COMBO(degree, &uc_deg, LT4 LM4)
+
+/* horizontal combos */
+SIMPLE_COMBO(ret, &kp RET, RB3 RB4)
+SIMPLE_COMBO(tab, &kp TAB, LB3 LB4)
+
+/* Macros */
+ZMK_MACRO(uc_deg,  bindings = <&kp RALT>, <&kp O>,           <&kp O>   ;tap-ms=<0>; wait-ms=<0>;)
+ZMK_MACRO(uc_gbp,  bindings = <&kp RALT>, <&kp LS(L)>,       <&kp EQL> ;tap-ms=<0>; wait-ms=<0>;)
+ZMK_MACRO(uc_eur,  bindings = <&kp RALT>, <&kp C>,           <&kp EQL> ;tap-ms=<0>; wait-ms=<0>;)
+ZMK_MACRO(uc_rup,  bindings = <&kp RALT>, <&kp R>,           <&kp EQL> ;tap-ms=<0>; wait-ms=<0>;)
+ZMK_MACRO(vi_sav,  bindings = <&kp ESC>,  <&kp COLON &kp W>, <&kp RET> ;tap-ms=<0>; wait-ms=<20>;)
+ZMK_MACRO(find,    bindings = <&kp LC(F)>;)
+ZMK_MACRO(pre_tab, bindings = <&kp LC(LS(TAB))>;)
+ZMK_MACRO(nex_tab, bindings = <&kp LC(TAB)>;)
+ZMK_MACRO(pre_dsk, bindings = <&kp LC(LG(LEFT))>;)
+ZMK_MACRO(nex_dsk, bindings = <&kp LC(LG(RIGHT))>;)
+ZMK_MACRO(cut,     bindings = <&kp LC(X)>;)
+ZMK_MACRO(copy,    bindings = <&kp LC(C)>;)
+ZMK_MACRO(paste,   bindings = <&kp LC(V)>;)
+ZMK_MACRO(half_dn, bindings = <&kp LC(D)>;)
+ZMK_MACRO(half_up, bindings = <&kp LC(U)>;)
+
+/* Keymap */
 ZLAYER(graphite,
   &kp B  &kp L &kp D &kp W &kp Z /**/ &sqt_dqt &kp F &kp O    &kp U     &kp J,
   &kp N  AL(R) ML(T) CL(S) SL(G) /**/ SR(Y)    CR(H) MR(A)    AR(E)     &kp I,
