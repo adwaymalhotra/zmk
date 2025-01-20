@@ -7,12 +7,6 @@
 #define SYS         5
 #define COMBO_LAYERS GR QW NFN
 
-#define PRE_DSK LC(LG(LEFT))
-#define NEX_DSK LC(LG(RIGHT))
-
-#define LEFT_THUMBS &kp TAB &kp SFT &lt EXT ESC
-#define RIGHT_THUMBS &thm CTL SPC &lt_bsdel NFN 0 &kp RET
-
 /* ZMK Headers */
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
@@ -23,32 +17,33 @@
 #include "extra_keys.h"
 #include "keys_en_gb_extended.h"
 
+#define LEFT_THUMBS &kp TAB &kp SFT &lt EXT ESC
+#define RIGHT_THUMBS &thm CTL SPC &lt_bsdel NFN 0 &kp RET
+
+#define _LAYER(NAME, LT, RT, LM, RM, LB, RB, LH, RH) \
+  ZMK_LAYER(NAME, \
+    X_LT LT RT X_RT \
+    X_LM LM RM X_RM \
+    X_LB LB RB X_RB \
+    X_LH LH X_MH RH X_RH \
+  )
+
+#define LAYER(NAME, LT, RT, LM, RM, LB, RB) _LAYER(NAME, LT, RT, LM, RM, LB, RB, LEFT_THUMBS, RIGHT_THUMBS)
+#define TRANS_5 &trans &trans &trans &trans &trans
+#define TRANS_LAYER(NAME) LAYER(NAME, TRANS_5, TRANS_5, TRANS_5, TRANS_5, TRANS_5, TRANS_5)
+
 #define PRIOR_IDLE_MS 160
 #define QUICK_TAP_MS 175
 #define TAPPING_TERM 280
 #undef COMBO_TERM
 #define COMBO_TERM 50
 
+#define PRE_DSK LC(LG(LEFT))
+#define NEX_DSK LC(LG(RIGHT))
 #define ALT LALT
 #define MET LGUI
 #define SFT LSHFT
 #define CTL LCTL
-
-#define ZTHUMB(THUMB_L, THUMB_R) \
-  X_LH THUMB_L X_MH THUMB_R X_RH
-
-#define ZTLAYER(NAME, TOP, MIDDLE, BOTTOM, THUMB_L, THUMB_R, ...) \
-  ZMK_LAYER(NAME, \
-    X_LT TOP X_RT \
-    X_LM MIDDLE X_RM \
-    X_LB BOTTOM X_RB \
-    ZTHUMB(THUMB_L, THUMB_R))
-
-#define ZLAYER(NAME, TOP, MIDDLE, BOTTOM, ...) \
-  ZTLAYER(NAME, TOP, MIDDLE, BOTTOM, LEFT_THUMBS, RIGHT_THUMBS)
-
-#define TRANS_ROW &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-#define TRANS_LAYER(NAME) ZLAYER(NAME, TRANS_ROW, TRANS_ROW, TRANS_ROW)
 
 /* Homerow Mods */
 #define MAKE_HT(NAME, MODE, HOLD, TAP, TRIGGER_POS) \
@@ -64,9 +59,6 @@
 
 #define MAKE_HRM(NAME, HOLD, TAP, TRIGGER_POS) \
     MAKE_HT(NAME, "balanced", HOLD, TAP, TRIGGER_POS)
-
-#define SIMPLE_COMBO(NAME, KEY, COMBO_KEYS) \
-    ZMK_COMBO(NAME, KEY, COMBO_KEYS, COMBO_LAYERS, COMBO_TERM, COMBO_TERM)
 
 MAKE_HRM(hrm_left, &kp, &kp, KEYS_R THUMBS)
 MAKE_HRM(hrm_right, &kp, &kp, KEYS_L THUMBS)
@@ -128,12 +120,12 @@ MAKE_HT(lt_comm, "tap-preferred", &mo, &com_sem, KEYS_R)
   /delete-property/ ignore-modifiers;
 };
 
-/* Morphs */
-ZMK_MOD_MORPH(smart_sft,
-    bindings = <&sk SFT>, <&caps_word>;
-    mods = <(MOD_LSFT)>;
+/* Tri State for Alt-Tab in a layer. */
+ZMK_TRI_STATE(alt_tab,
+    bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
 )
 
+/* Morphs */
 ZMK_MOD_MORPH(bsdel,
     bindings = <&kp BACKSPACE>, <&kp DELETE>;
     mods = <(MOD_LALT|MOD_LGUI|MOD_LSFT)>;
@@ -179,11 +171,6 @@ ZMK_MOD_MORPH(rpar_gt,
     mods = <(MOD_LSFT)>;
 )
 
-/* Tri State for Alt-Tab in a layer. */
-ZMK_TRI_STATE(alt_tab,
-    bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
-)
-
 /* Combos
 ╭───────┬───────┬───────┬───────┬───────╮ ╭───────┬───────┬───────┬───────┬───────╮
 │       │       │       │       │       │ │       │       │       │       │       │
@@ -193,6 +180,8 @@ ZMK_TRI_STATE(alt_tab,
 │      TAB      │       │       │       │ │       │       │       │      RET      │
 ╰───────┴───────┴───────┴───────┴───────╯ ╰───────┴───────┴───────┴───────┴───────╯
 ) */
+#define SIMPLE_COMBO(NAME, KEY, COMBO_KEYS) \
+    ZMK_COMBO(NAME, KEY, COMBO_KEYS, COMBO_LAYERS, COMBO_TERM, COMBO_TERM)
 
 /* right side combos */
 SIMPLE_COMBO(tilde, &kp LS(GB_HASH), RM0 RT0)
@@ -247,16 +236,16 @@ ZMK_MACRO(half_dn, bindings = <&kp LC(D)>;)
 ZMK_MACRO(half_up, bindings = <&kp LC(U)>;)
 
 /* Keymap */
-ZLAYER(graphite,
-  &kp B  &kp L &kp D &kp W &kp Z /**/ &sqt_dqt &kp F &kp O    &kp U     &kp J,
-  &kp N  AL(R) ML(T) CL(S) SL(G) /**/ SR(Y)    CR(H) MR(A)    AR(E)     &kp I,
-  SYL(Q) &kp X &kp M &kp C &kp V /**/ &kp K    &kp P &dot_col &kp MINUS &lt_comm SYS 0,
+LAYER(graphite,
+  &kp B  &kp L &kp D &kp W &kp Z, &sqt_dqt &kp F &kp O    &kp U     &kp J,
+  &kp N  AL(R) ML(T) CL(S) SL(G), SR(Y)    CR(H) MR(A)    AR(E)     &kp I,
+  SYL(Q) &kp X &kp M &kp C &kp V, &kp K    &kp P &dot_col &kp MINUS &lt_comm SYS 0
 )
 
-ZLAYER(qwerty,
-  &kp Q  &kp W &kp E &kp R &kp T /**/ &kp Y &kp U &kp I   &kp O     &kp P,
-  &kp A  AL(S) ML(D) CL(F) SL(G) /**/ SR(H) CR(J) MR(K)   AR(L)     &kp SEMI,
-  SYL(Z) &kp X &kp C &kp V &kp B /**/ &kp M &kp N &kp DOT &kp COMMA SYR(FSLH),
+LAYER(qwerty,
+  &kp Q  &kp W &kp E &kp R &kp T, &kp Y &kp U &kp I   &kp O     &kp P,
+  &kp A  AL(S) ML(D) CL(F) SL(G), SR(H) CR(J) MR(K)   AR(L)     &kp SEMI,
+  SYL(Z) &kp X &kp C &kp V &kp B, &kp M &kp N &kp DOT &kp COMMA SYR(FSLH)
 )
 
 #if defined GAME_LAYER_KEYS
@@ -266,24 +255,24 @@ ZLAYER(qwerty,
 #endif
 
 // Extend Layer with Macros and Special Keys
-ZLAYER(extend,
-  &kp CAPS   &kp PSCRN    &kp PRE_DSK  &kp NEX_DSK  &kp DEL    /**/ &kp HOME &kp PG_DN    &kp PG_UP     &kp END   &none,
-  &alt_tab   &kp LC(BSPC) &pre_tab     &nex_tab     &vi_sav    /**/ &kp LEFT &kp DOWN     &kp UP        &kp RIGHT &kp INS,
-  &smart_sft &sk RALT     &kp C_VOL_UP &kp C_VOL_DN &kp C_MUTE /**/ &none    &kp LC(LEFT) &kp LC(RIGHT) &none     &none,
+LAYER(extend,
+  &kp CAPS   &kp PSCRN    &kp PRE_DSK  &kp NEX_DSK  &kp DEL   , &kp HOME &kp PG_DN    &kp PG_UP     &kp END   &none,
+  &alt_tab   &kp LC(BSPC) &pre_tab     &nex_tab     &vi_sav   , &kp LEFT &kp DOWN     &kp UP        &kp RIGHT &kp INS,
+  &caps_word &sk RALT     &kp C_VOL_UP &kp C_VOL_DN &kp C_MUTE, &none    &kp LC(LEFT) &kp LC(RIGHT) &none     &none
 )
 
 // Numpad & Function Keys
-ZLAYER(nfn,
-  &kp F1 &kp F2  &kp F3  &kp F4  &none /**/ &kp DOT  &kp N7 &kp N8 &kp N9 &kp PLUS ,
-  &kp F5 AL(F6)  ML(F7)  CL(F8)  SL(0) /**/ SR(FSLH) CR(N4) MR(N5) AR(N6) &kp N0   ,
-  &kp F9 &kp F10 &kp F11 &kp F12 &none /**/ &kp STAR &kp N1 &kp N2 &kp N3 &kp MINUS,
+LAYER(nfn,
+  &kp F1 &kp F2  &kp F3  &kp F4  &none, &kp DOT  &kp N7 &kp N8 &kp N9 &kp PLUS ,
+  &kp F5 AL(F6)  ML(F7)  CL(F8)  SL(0), SR(FSLH) CR(N4) MR(N5) AR(N6) &kp N0   ,
+  &kp F9 &kp F10 &kp F11 &kp F12 &none, &kp STAR &kp N1 &kp N2 &kp N3 &kp MINUS
 )
 
 // System Settings
-ZLAYER(system,
-  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR  /**/ &bt BT_CLR_ALL &none &none &none &tog GAME,
-  &none        &none        &kp C_BRI_UP &kp C_BRI_DN &sys_reset  /**/ &sys_reset     &none &none &none &tog QW,
-  &out OUT_BLE &out OUT_USB &none        &none        &bootloader /**/ &bootloader    &none &none &none &none,
+LAYER(system,
+  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR , &bt BT_CLR_ALL &none &none &none &tog GAME,
+  &none        &none        &kp C_BRI_UP &kp C_BRI_DN &sys_reset , &sys_reset     &none &none &none &tog QW,
+  &out OUT_BLE &out OUT_USB &none        &none        &bootloader, &bootloader    &none &none &none &none
 )
 
-// vi:ft=dts
+// vi:ft=devicetree
