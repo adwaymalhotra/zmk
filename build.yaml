@@ -8,8 +8,10 @@ include:
   - board: seeeduino_xiao_ble
     shield: pica40_right
   - board: nice_nano_v2
-    shield: corne_left
+    shield: cygnus_left
   - board: nice_nano_v2
-    shield: corne_right
+    shield: cygnus_right
   - board: nice_nano_v2
     shield: atreus
+  - board: nice_nano_v2
+    shield: settings_reset
