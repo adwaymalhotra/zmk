@@ -17,8 +17,8 @@
 #include "extra_keys.h"
 #include "keys_en_gb_extended.h"
 
-#define LEFT_THUMBS &kp TAB &kp SFT &lt EXT ESC
-#define RIGHT_THUMBS &thm CTL SPC &lt_bsdel NFN 0 &kp RET
+#define LEFT_THUMBS &thl SYS TAB &kp SFT &lt EXT ESC
+#define RIGHT_THUMBS &thm CTL SPC &lt_bsdel NFN 0 &thl SYS RET
 
 #define _LAYER(NAME, LT, RT, LM, RM, LB, RB, LH, RH) \
   ZMK_LAYER(NAME, \
@@ -27,7 +27,6 @@
     X_LB LB RB X_RB \
     X_LH LH X_MH RH X_RH \
   )
-
 #define LAYER(NAME, LT, RT, LM, RM, LB, RB) _LAYER(NAME, LT, RT, LM, RM, LB, RB, LEFT_THUMBS, RIGHT_THUMBS)
 #define TRANS_5 &trans &trans &trans &trans &trans
 #define TRANS_LAYER(NAME) LAYER(NAME, TRANS_5, TRANS_5, TRANS_5, TRANS_5, TRANS_5, TRANS_5)
