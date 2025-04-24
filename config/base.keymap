@@ -224,6 +224,8 @@ ZMK_MACRO(uc_eur,  bindings = <&kp RALT>, <&kp C>,           <&kp EQL> ;tap-ms=<
 ZMK_MACRO(uc_rup,  bindings = <&kp RALT>, <&kp R>,           <&kp EQL> ;tap-ms=<0>; wait-ms=<0>;)
 ZMK_MACRO(vi_sav,  bindings = <&kp ESC>,  <&kp COLON &kp W>, <&kp RET> ;tap-ms=<0>; wait-ms=<20>;)
 ZMK_MACRO(find,    bindings = <&kp LC(F)>;)
+ZMK_MACRO(pre_wor, bindings = <&kp LC(LEFT)>)
+ZMK_MACRO(nex_wor, bindings = <&kp LC(RIGHT)>)
 ZMK_MACRO(pre_tab, bindings = <&kp LC(LS(TAB))>;)
 ZMK_MACRO(nex_tab, bindings = <&kp LC(TAB)>;)
 ZMK_MACRO(pre_dsk, bindings = <&kp LC(LG(LEFT))>;)
@@ -254,10 +256,11 @@ LAYER(qwerty,
 #endif
 
 // Extend Layer with Macros and Special Keys
-LAYER(extend,
-  &kp CAPS   &kp PSCRN    &kp PRE_DSK  &kp NEX_DSK  &kp DEL   , &kp HOME &kp PG_DN    &kp PG_UP     &kp END   &none,
-  &alt_tab   &kp LC(BSPC) &pre_tab     &nex_tab     &vi_sav   , &kp LEFT &kp DOWN     &kp UP        &kp RIGHT &kp INS,
-  &caps_word &sk RALT     &kp C_VOL_UP &kp C_VOL_DN &kp C_MUTE, &none    &kp LC(LEFT) &kp LC(RIGHT) &none     &none
+_LAYER(extend,
+  &none    &kp PSCRN    &pre_dsk &nex_dsk &none  , &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp C_VOL_UP,
+  &alt_tab &kp LC(BSPC) &pre_tab &nex_tab &vi_sav, &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp C_MUTE,
+  &none    &sk RALT     &none    &none    &none  , &kp DEL  &pre_wor  &nex_wor  &kp INS   &kp C_VOL_DN,
+  &caps_word &none &none, &kp CAPS &kp RALT &none
 )
 
 // Numpad & Function Keys
