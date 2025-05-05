@@ -1,10 +1,11 @@
 // Layers
 #define GR          0
-#define QW          1
-#define GAME        2
-#define EXT         3
-#define NFN         4
-#define SYS         5
+#define GR2         1
+#define QW          2
+#define GAME        3
+#define EXT         4
+#define NFN         5
+#define SYS         6
 #define COMBO_LAYERS GR QW NFN
 
 /* ZMK Headers */
@@ -20,6 +21,9 @@
 #define LEFT_THUMBS &thl SYS TAB &kp SFT &lt EXT ESC
 #define RIGHT_THUMBS &thm CTL SPC &lt_bsdel NFN 0 &thl SYS RET
 
+#define ALT_LEFT_THUMBS &thl SYS TAB &kp SFT &thl NFN SPC
+#define ALT_RIGHT_THUMBS &lt EXT ESC &lt_bsdel NFN 0 &thl SYS RET
+
 #define _LAYER(NAME, LT, RT, LM, RM, LB, RB, LH, RH) \
   ZMK_LAYER(NAME, \
     X_LT LT RT X_RT \
@@ -28,6 +32,7 @@
     X_LH LH X_MH RH X_RH \
   )
 #define LAYER(NAME, LT, RT, LM, RM, LB, RB) _LAYER(NAME, LT, RT, LM, RM, LB, RB, LEFT_THUMBS, RIGHT_THUMBS)
+#define ALT_LAYER(NAME, LT, RT, LM, RM, LB, RB) _LAYER(NAME, LT, RT, LM, RM, LB, RB, ALT_LEFT_THUMBS, ALT_RIGHT_THUMBS)
 #define TRANS_5 &trans &trans &trans &trans &trans
 #define TRANS_LAYER(NAME) LAYER(NAME, TRANS_5, TRANS_5, TRANS_5, TRANS_5, TRANS_5, TRANS_5)
 
@@ -224,8 +229,8 @@ ZMK_MACRO(uc_eur,  bindings = <&kp RALT>, <&kp C>,           <&kp EQL> ;tap-ms=<
 ZMK_MACRO(uc_rup,  bindings = <&kp RALT>, <&kp R>,           <&kp EQL> ;tap-ms=<0>; wait-ms=<0>;)
 ZMK_MACRO(vi_sav,  bindings = <&kp ESC>,  <&kp COLON &kp W>, <&kp RET> ;tap-ms=<0>; wait-ms=<20>;)
 ZMK_MACRO(find,    bindings = <&kp LC(F)>;)
-ZMK_MACRO(pre_wor, bindings = <&kp LC(LEFT)>)
-ZMK_MACRO(nex_wor, bindings = <&kp LC(RIGHT)>)
+ZMK_MACRO(pre_wor, bindings = <&kp LC(LEFT)>;)
+ZMK_MACRO(nex_wor, bindings = <&kp LC(RIGHT)>;)
 ZMK_MACRO(pre_tab, bindings = <&kp LC(LS(TAB))>;)
 ZMK_MACRO(nex_tab, bindings = <&kp LC(TAB)>;)
 ZMK_MACRO(pre_dsk, bindings = <&kp LC(LG(LEFT))>;)
@@ -238,6 +243,12 @@ ZMK_MACRO(half_up, bindings = <&kp LC(U)>;)
 
 /* Keymap */
 LAYER(graphite,
+  &kp B  &kp L &kp D &kp W &kp Z, &sqt_dqt &kp F &kp O    &kp U     &kp J,
+  &kp N  AL(R) ML(T) CL(S) SL(G), SR(Y)    CR(H) MR(A)    AR(E)     &kp I,
+  SYL(Q) &kp X &kp M &kp C &kp V, &kp K    &kp P &dot_col &kp MINUS &lt_comm SYS 0
+)
+
+ALT_LAYER(graphite_alt,
   &kp B  &kp L &kp D &kp W &kp Z, &sqt_dqt &kp F &kp O    &kp U     &kp J,
   &kp N  AL(R) ML(T) CL(S) SL(G), SR(Y)    CR(H) MR(A)    AR(E)     &kp I,
   SYL(Q) &kp X &kp M &kp C &kp V, &kp K    &kp P &dot_col &kp MINUS &lt_comm SYS 0
@@ -274,7 +285,7 @@ LAYER(nfn,
 LAYER(system,
   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR , &bt BT_CLR_ALL &none &none &none &tog GAME,
   &none        &none        &kp C_BRI_UP &kp C_BRI_DN &sys_reset , &sys_reset     &none &none &none &tog QW,
-  &out OUT_BLE &out OUT_USB &none        &none        &bootloader, &bootloader    &none &none &none &none
+  &out OUT_BLE &out OUT_USB &none        &none        &bootloader, &bootloader    &none &none &none &tog GR2
 )
 
 // vi:ft=devicetree
