@@ -6,7 +6,8 @@
 #define EXT         4
 #define NFN         5
 #define SYS         6
-#define COMBO_LAYERS GR QW NFN
+#define NFN2        7
+#define COMBO_LAYERS GR GR2 QW
 
 /* ZMK Headers */
 #include <behaviors.dtsi>
@@ -19,10 +20,10 @@
 #include "keys_en_gb_extended.h"
 
 #define LEFT_THUMBS &thl SYS TAB &kp SFT &lt EXT ESC
-#define RIGHT_THUMBS &thm CTL SPC &lt_bsdel NFN 0 &thl SYS RET
+#define RIGHT_THUMBS &thl EXT SPC &lt_bsdel NFN2 0 &thl SYS RET
 
-#define ALT_LEFT_THUMBS &thl SYS TAB &kp SFT &thl NFN SPC
-#define ALT_RIGHT_THUMBS &lt EXT ESC &lt_bsdel NFN 0 &thl SYS RET
+#define ALT_LEFT_THUMBS &thl SYS TAB &kp SFT &lt EXT ESC
+#define ALT_RIGHT_THUMBS &lt_bsdel NFN2 0 &kp SPC &thl SYS RET
 
 #define _LAYER(NAME, LT, RT, LM, RM, LB, RB, LH, RH) \
   ZMK_LAYER(NAME, \
@@ -270,15 +271,15 @@ LAYER(qwerty,
 _LAYER(extend,
   &none    &kp PSCRN    &pre_dsk &nex_dsk &none  , &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp C_VOL_UP,
   &alt_tab &kp LC(BSPC) &pre_tab &nex_tab &vi_sav, &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp C_MUTE,
-  &none    &sk RALT     &none    &none    &none  , &kp DEL  &pre_wor  &nex_wor  &kp INS   &kp C_VOL_DN,
-  &caps_word &none &none, &kp CAPS &kp RALT &none
+  &none    &sk RALT     &none    &none    &none  , &vi_sav  &pre_wor  &nex_wor  &kp INS   &kp C_VOL_DN,
+  &caps_word &none &none, &none &kp RALT &kp CAPS
 )
 
 // Numpad & Function Keys
 LAYER(nfn,
-  &kp F1 &kp F2  &kp F3  &kp F4  &none, &kp DOT  &kp N7 &kp N8 &kp N9 &kp PLUS ,
-  &kp F5 AL(F6)  ML(F7)  CL(F8)  SL(0), SR(FSLH) CR(N4) MR(N5) AR(N6) &kp N0   ,
-  &kp F9 &kp F10 &kp F11 &kp F12 &none, &kp STAR &kp N1 &kp N2 &kp N3 &kp MINUS
+  &kp PLUS  &kp N7 &kp N8 &kp N9 &kp DOT , &none &kp F1 &kp F2  &kp F3  &kp F4 ,
+  SL(N0)    AL(N4) ML(N5) CL(N6) &kp FSLH, SL(0) CR(F5) MR(F6)  AR(F7)  &kp F8 ,
+  &kp MINUS &kp N1 &kp N2 &kp N3 &kp STAR, &none &kp F9 &kp F10 &kp F11 &kp F12
 )
 
 // System Settings
@@ -286,6 +287,12 @@ LAYER(system,
   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR , &bt BT_CLR_ALL &none &none &none &tog GAME,
   &none        &none        &kp C_BRI_UP &kp C_BRI_DN &sys_reset , &sys_reset     &none &none &none &tog QW,
   &out OUT_BLE &out OUT_USB &none        &none        &bootloader, &bootloader    &none &none &none &tog GR2
+)
+
+LAYER(nfn2,
+  &kp F1 &kp F2  &kp F3  &kp F4  &none, &kp DOT  &kp N7 &kp N8 &kp N9 &kp PLUS ,
+  &kp F5 AL(F6)  ML(F7)  CL(F8)  SL(0), SR(FSLH) CR(N4) MR(N5) AR(N6) &kp N0   ,
+  &kp F9 &kp F10 &kp F11 &kp F12 &none, &kp STAR &kp N1 &kp N2 &kp N3 &kp MINUS
 )
 
 // vi:ft=devicetree
