@@ -271,8 +271,8 @@ LAYER(qwerty,
 _LAYER(extend,
   &none    &kp PSCRN    &pre_dsk &nex_dsk &none  , &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp C_VOL_UP,
   &alt_tab &kp LC(BSPC) &pre_tab &nex_tab &vi_sav, &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp C_MUTE,
-  &none    &sk RALT     &none    &none    &none  , &vi_sav  &pre_wor  &nex_wor  &kp INS   &kp C_VOL_DN,
-  &caps_word &none &none, &kp CAPS &kp RALT &none
+  &kp CAPS &sk RALT     &none    &none    &none  , &vi_sav  &pre_wor  &nex_wor  &kp INS   &kp C_VOL_DN,
+  &caps_word &none &none, &none &kp RALT &none
 )
 
 // Numpad & Function Keys
