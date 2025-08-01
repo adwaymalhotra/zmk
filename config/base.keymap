@@ -175,9 +175,9 @@ LAYER(NAV,
 )
 
 TLAYER(SYM,
-  &none   &kp LBRC &kp LBKT &lpar_lt &none, &kp DOT  &kp N7 &kp N8 &kp N9 &kp PLUS ,
-  &sk SFT &sk ALT  &sk MET  &sk CTL  &none, &kp FSLH &kp N4 &kp N5 &kp N6 &kp N0   ,
-  &none   &kp RBRC &kp RBKT &rpar_gt &none, &kp STAR &kp N1 &kp N2 &kp N3 &kp MINUS
+  &kp FSLH  &kp LBRC &kp LBKT &lpar_lt &none, &kp DOT  &kp N7 &kp N8 &kp N9 &kp PLUS ,
+  &sk SFT   &sk ALT  &sk MET  &sk CTL  &none, &kp FSLH &kp N4 &kp N5 &kp N6 &kp N0   ,
+  &kp QMARK &kp RBRC &kp RBKT &rpar_gt &none, &kp STAR &kp N1 &kp N2 &kp N3 &kp MINUS
 )
 
 TLAYER(FN,
@@ -185,9 +185,9 @@ TLAYER(FN,
  &sk SFT &sk ALT &sk MET &sk CTL &kp F11, &kp F12 &sk CTL &sk MET &sk ALT &sk SFT,
  TRANS_5, TRANS_5
 )
+
 #define LEFT_THUMBS &thl SYS TAB &kp SFT &lt NAV ESC
 #define RIGHT_THUMBS &thl NAV SPC &lt_bsdel NFN 0 &thl SYS RET
-
 LAYER(graphite-hrm,
   &kp B  &kp L &kp D &kp W &kp Z, &sqt_dqt &kp F &kp O    &kp U     &kp J,
   &kp N  AL(R) ML(T) CL(S) SL(G), SR(Y)    CR(H) MR(A)    AR(E)     &kp I,
@@ -212,8 +212,6 @@ TLAYER(system,
   &out OUT_BLE &out OUT_USB &none        &none        &bootloader, &bootloader    &none &none &none &none
 )
 
-// This is supposed to only work on the base layer I think. Which means that we can't use conditional layers with
-// experimental layers.
 ZMK_CONDITIONAL_LAYER(function_condition, NAV SYM, FN)
 
 /* Combos */
