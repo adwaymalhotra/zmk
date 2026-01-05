@@ -254,9 +254,8 @@ SIMPLE_COMBO(degree, &uc_deg, LT4 LM4)
 /* horizontal combos */
 SIMPLE_COMBO(ret, &kp RET, RB1 RB2)
 SIMPLE_COMBO(tab, &kp TAB, LB1 LB2)
-
-SIMPLE_COMBO(ret_top, &kp RET, RT1 RT2)
-SIMPLE_COMBO(tab_top, &kp TAB, LT1 LT2)
+SIMPLE_COMBO(ret_mid, &kp RET, RB3 RB2)
+SIMPLE_COMBO(tab_mid, &kp TAB, LB3 LB2)
 
 /* Mod Combos */
 // This system utilizes the slow-release property to keep the layer enabled while one of the combo keys is active.
