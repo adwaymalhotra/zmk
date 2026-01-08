@@ -60,4 +60,4 @@
  &kp TAB   &kp Q   &kp W   &kp E     &kp R  /* &            &      */ &none   &kp N7  &kp N8  &kp N9 &kp N0\
  &kp LCTL  &kp A   &kp S   &kp D     &kp F  /* &            &      */ &none   &kp N4  &kp N5  &kp N6 &none\
  &kp LSHFT &kp Z   &kp X   &kp C     &kp V  /* &            &      */ &none   &kp N1  &kp N2  &kp N3 &tog GAME\
- &mo SYS   &mo EXT &kp ESC &kp LSHFT &kp SPACE &kp ESC /**/ &kp LSHFT &kp RET &kp SQT &none   &none  &mo NFN
+ &mo SYS   &mo NAV &kp ESC &kp LSHFT &kp SPACE &kp ESC /**/ &kp LSHFT &kp RET &kp SQT &none   &none  &mo SYM

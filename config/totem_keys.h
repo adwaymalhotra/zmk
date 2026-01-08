@@ -57,4 +57,4 @@
           &kp TAB &kp Q &kp W &kp E &kp R /**/ &kp T &kp Y &kp U &kp I &kp O\
           &kp CTL &kp A &kp S &kp D &kp F /**/ &kp G &kp H &kp J &kp K &kp L\
   &kp ESC &kp SFT &kp Z &kp X &kp C &kp V /**/ &kp B &kp M &kp N &kp P &kp SEMI &tog GAME\
-                &mo NFN &kp RET &kp SPACE /**/ &kp ALT &mo EXT &kp SQT
+                &mo SYM &kp RET &kp SPACE /**/ &kp ALT &mo NAV &kp SQT
