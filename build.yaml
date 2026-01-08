@@ -8,9 +8,18 @@ include:
   - board: seeeduino_xiao_ble
     shield: pica40_right
   - board: nice_nano
-    shield: cygnus_left
+    shield: cygnus_central_dongle
+    artifact-name: cygnus_dongle
   - board: nice_nano
-    shield: cygnus_right
+    shield: cygnus_peripheral_left
+    artifact-name: cygnus_left
+    cmake_args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+  - board: nice_nano
+    shield: cygnus_peripheral_right
+    artifact-name: cygnus_right
+    cmake_args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+  - board: nice_nano
+    shield: settings_reset
   - board: nice_nano
     shield: atreus
   - board: nice_nano
