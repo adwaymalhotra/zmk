@@ -1,15 +1,35 @@
 include:
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble
     shield: totem_left
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble
     shield: totem_right
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble
     shield: pica40_left
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble
     shield: pica40_right
+  - board: nice_nano
+    shield: cosmos_central
+    artifact-name: cosmos_central
+  - board: xiao_ble
+    shield: cosmos_left_central
+    artifact-name: cosmos_left_central
+  - board: xiao_ble
+    shield: cosmos_left
+    artifact-name: cosmos_left
+    cmake_args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+  - board: xiao_ble
+    shield: cosmos_right
+    artifact-name: cosmos_right
+    cmake_args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+  - board: nice_nano
+    shield: cygnus_central_dongle dongle_display
+    artifact-name: cygnus_dongle
   - board: nice_nano
     shield: cygnus_central_dongle
     artifact-name: cygnus_dongle
+  - board: nice_nano
+    shield: cygnus_central_left
+    artifact-name: cygnus_central_left
   - board: nice_nano
     shield: cygnus_peripheral_left
     artifact-name: cygnus_left
@@ -18,7 +38,7 @@ include:
     shield: cygnus_peripheral_right
     artifact-name: cygnus_right
     cmake_args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
-  - board: nice_nano
+  - board: xiao_ble
     shield: settings_reset
   - board: nice_nano
     shield: atreus

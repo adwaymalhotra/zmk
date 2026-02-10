@@ -1,0 +1,10 @@
+file_format: "1"
+id: cosmos
+name: Cosmos
+type: shield
+requires: [seeeduino_xiao_ble, nice_nano]
+features:
+  - keys
+siblings:
+  - totem_left
+  - totem_right

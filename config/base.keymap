@@ -94,7 +94,8 @@ MAKE_HT(lt_comm, "tap-preferred", &mo, &com_sem, KEYS_R)
 };
 
 /* Tri State for Alt-Tab in a layer. */
-ZMK_TRI_STATE(alt_tab, bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;)
+ZMK_TRI_STATE(alt_tab, bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>; ignored-key-positions = <LT3>;)
+ZMK_TRI_STATE(met_tab, bindings = <&kt LGUI>, <&kp TAB>, <&kt LGUI>; ignored-key-positions = <LT3>;)
 
 /* Morphs */
 ZMK_MOD_MORPH(bsdel,    bindings = <&kp BACKSPACE>, <&kp DELETE>; mods = <(MOD_LALT|MOD_LGUI|MOD_LSFT)>;)
@@ -157,25 +158,25 @@ LAYER(Graphite,
   TRANS_LAYER(game)
 #endif
 
-LAYER(NAV,
-  &alt_tab &kp PSCRN   &pre_dsk &nex_dsk &none   , &kp HOME &kp PG_DN    &kp PG_UP    &kp END    &sk RALT,
-  &sk SFT  &sk ALT     &sk MET  &sk CTL  &vi_sav , &kp LEFT &kp DOWN     &kp UP       &kp RIGHT  &kp RET,
-  &kp TAB  &key_repeat &pre_tab &nex_tab &del_wor, &kp CAPS &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &kp INS
+LAYER(Nav,
+  &alt_tab &kp LS(TAB) &met_tab &kp PSCRN &none   , &kp HOME &kp PG_DN    &kp PG_UP    &kp END    &sk RALT,
+  &sk SFT  &sk ALT     &sk MET  &sk CTL   &vi_sav , &kp LEFT &kp DOWN     &kp UP       &kp RIGHT  &kp RET,
+  &kp TAB  &key_repeat &pre_tab &nex_tab  &del_wor, &kp CAPS &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &kp INS
 )
 
-TLAYER(SYM,
-  &kp EQUAL &kp LBRC &kp LBKT &lpar_lt &none   , &kp DOT  &kp N7 &kp N8 &kp N9 &kp PLUS ,
+TLAYER(Sym,
+  &kp EQUAL &kp LBRC &kp LBKT &lpar_lt &uc_gbp , &kp DOT  &kp N7 &kp N8 &kp N9 &kp PLUS ,
   &sk SFT   &sk ALT  &sk MET  &sk CTL  &kp PIPE, &kp FSLH &kp N4 &kp N5 &kp N6 &kp N0   ,
   &kp QMARK &kp RBRC &kp RBKT &rpar_gt &kp BSLH, &kp STAR &kp N1 &kp N2 &kp N3 &kp MINUS
 )
 
-TLAYER(FN,
- &kp F1       &kp F2       &kp F3       &kp F4       &kp F5     , &kp F6      &kp F7       &kp F8       &kp F9  &kp F10,
- &sk SFT      &sk ALT      &sk MET      &sk CTL      &sys_reset , &sys_reset  &kp C_BRI_DN &kp C_BRI_UP &kp F12 &kp F11,
- &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bootloader, &bootloader &bt BT_CLR   &none        &none   &tog GAME
+TLAYER(Fn,
+ &kp F1       &kp F2       &kp F3       &kp F4       &kp F5     , &kp F6      &kp F7       &kp F8       &kp F9       &kp F10,
+ &sk SFT      &sk ALT      &sk MET      &sk CTL      &sys_reset , &sys_reset  &kp C_BRI_DN &kp C_BRI_UP &kp F12      &kp F11,
+ &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bootloader, &bootloader &bt BT_CLR   &out OUT_BLE &out OUT_USB &tog GAME
 )
 
-TLAYER(system,
+TLAYER(sys,
   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR , &bt BT_CLR_ALL &none &none &none &tog GAME,
   &none        &none        &kp C_BRI_UP &kp C_BRI_DN &sys_reset , &sys_reset     &none &none &none &none,
   &out OUT_BLE &out OUT_USB &none        &none        &bootloader, &bootloader    &none &none &none &none
@@ -230,6 +231,8 @@ SIMPLE_COMBO(tab_mid, &kp TAB, LB3 LB2)
 
 /* Bootloader Combo for sending the "central" into bootloader mode */
 SIMPLE_COMBO(bootloader, &bootloader, LT2 LT1 RT1 RT2)
+SIMPLE_COMBO(reset, &sys_reset, LT1 RT1)
+
 /* Mod Combos */
 // This system utilizes the slow-release property to keep the layer enabled while one of the combo keys is active.
 // This essentially allows the one-shot keys to be activated by either sequencing of the layer and mod key, instead of

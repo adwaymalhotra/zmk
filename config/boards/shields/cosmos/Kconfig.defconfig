@@ -1,0 +1,41 @@
+# Copyright (c) 2022 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+if SHIELD_COSMOS_CENTRAL || SHIELD_COSMOS_LEFT_CENTRAL
+
+config ZMK_KEYBOARD_NAME
+    default "Cosmos"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+config BT_MAX_CONN # 2 peripherals and 3 BT profiles
+    default 5
+
+config BT_MAX_PAIRED # 2 peripherals and 3 BT profiles
+    default 5
+endif
+
+
+if SHIELD_COSMOS_CENTRAL
+
+config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
+  default 2
+
+endif
+
+
+if SHIELD_COSMOS_LEFT_CENTRAL
+
+config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
+  default 1
+
+endif
+
+
+if SHIELD_COSMOS_LEFT || SHIELD_COSMOS_RIGHT || SHIELD_COSMOS_CENTRAL || SHIELD_COSMOS_LEFT_CENTRAL
+
+config ZMK_SPLIT
+    default y
+
+endif
