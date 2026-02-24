@@ -1,0 +1,10 @@
+file_format: "1"
+id: limoncello
+name: Limoncello
+type: shield
+requires: [cosmos_lemon_wireless, nice_nano]
+features:
+  - keys
+siblings:
+  - limoncello_left
+  - limoncello_right

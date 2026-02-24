@@ -9,9 +9,11 @@ manifest:
       url-base: https://github.com/urob
     - name: englmaxi
       url-base: https://github.com/englmaxi
+    - name: rianadon
+      url-base: https://github.com/rianadon
   projects:
     - name: zmk
-      remote: zmkfirmware
+      remote: rianadon
       revision: main
       import: app/west.yml
     - name: zmk-tri-state
@@ -23,3 +25,4 @@ manifest:
       revision: main
   self:
     path: config
+    import: deps.yml

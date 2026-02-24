@@ -1,0 +1,13 @@
+# Copyright (c) 2022 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+config SHIEILD_LIMONCELLO_CENTRAL
+    def_bool $(shields_list_contains,limoncello_central)
+
+config SHIELD_LIMONCELLO_LEFT_CENTRAL
+    def_bool $(shields_list_contains,limoncello_left_central)
+
+config SHIELD_LIMONCELLO_LEFT
+    def_bool $(shields_list_contains,limoncello_left)
+
+config SHIELD_LIMONCELLO_RIGHT
+    def_bool $(shields_list_contains,limoncello_right)
