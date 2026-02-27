@@ -65,4 +65,8 @@ endif
 if SHIELD_CYGNUS_CENTRAL_DONGLE
     config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
         default 2
+    config ZMK_DISPLAY
+        default y
+    config ZMK_DISPLAY_BLANK_ON_IDLE
+        default n
 endif

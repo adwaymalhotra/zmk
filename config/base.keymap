@@ -93,9 +93,26 @@ MAKE_HT(lt_comm, "tap-preferred", &mo, &com_sem, KEYS_R)
   /delete-property/ ignore-modifiers;
 };
 
+/ {
+    behaviors {
+        kt_on: key_toggle_on_only {
+            compatible = "zmk,behavior-key-toggle";
+            #binding-cells = <1>;
+            display-name = "Key Toggle On";
+            toggle-mode = "on";
+        };
+        kt_off: key_toggle_off_only {
+            compatible = "zmk,behavior-key-toggle";
+            #binding-cells = <1>;
+            display-name = "Key Toggle Off";
+            toggle-mode = "off";
+        };
+    };
+};
+
 /* Tri State for Alt-Tab in a layer. */
-ZMK_TRI_STATE(alt_tab, bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>; ignored-key-positions = <LT3>;)
-ZMK_TRI_STATE(met_tab, bindings = <&kt LGUI>, <&kp TAB>, <&kt LGUI>; ignored-key-positions = <LT3>;)
+ZMK_TRI_STATE(alt_tab, bindings = <&kt_on LALT>, <&kp TAB>, <&kt_off LALT>; ignored-key-positions = <LT3>;)
+ZMK_TRI_STATE(met_tab, bindings = <&kt_on LGUI>, <&kp TAB>, <&kt_off LGUI>; ignored-key-positions = <LT3>;)
 
 /* Morphs */
 ZMK_MOD_MORPH(bsdel,    bindings = <&kp BACKSPACE>, <&kp DELETE>; mods = <(MOD_LALT|MOD_LGUI|MOD_LSFT)>;)
@@ -129,8 +146,8 @@ ZMK_MACRO(half_up, bindings = <&kp LC(U)>;)
 ZMK_MACRO(del_wor, bindings = <&kp LC(BSPC)>;)
 
 /* Keymap */
-#define LEFT_THUMBS &thm MET TAB &kp SFT &lt NAV ESC
-#define RIGHT_THUMBS &thl SYM SPC &mt_bsdel CTL 0 &thl FN RET
+#define LEFT_THUMBS &thl SYS TAB &kp SFT &lt NAV ESC
+#define RIGHT_THUMBS &thl SYM SPC &mt_bsdel CTL 0 &thl SYS RET
 #define TRANS_THUMBS &trans &trans &trans
 #define TRANS_5 &trans &trans &trans &trans &trans
 
