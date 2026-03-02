@@ -17,9 +17,9 @@ manifest:
       revision: main
       import: app/west.yml
     - name: zmk-tri-state
-      path: modules/tri-state
+      path: modules/zmk/tri-state
     - name: zmk-helpers
-      path: modules/helpers
+      path: modules/zmk/helpers
     - name: zmk-dongle-display
       remote: englmaxi
       revision: v0.3
