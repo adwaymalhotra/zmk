@@ -1,7 +1,7 @@
 manifest:
   defaults:
     remote: urob
-    revision: v0.1
+    revision: v0.3
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
@@ -22,7 +22,7 @@ manifest:
       path: modules/helpers
     - name: zmk-dongle-display
       remote: englmaxi
-      revision: main
+      revision: v0.3
   self:
     path: config
     import: deps.yml
