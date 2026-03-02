@@ -43,7 +43,7 @@ build expr *west_args:
 
 # clear build cache and artifacts
 clean:
-    rm -rf {{ build }} {{ out }}
+    rm -rf {{ build }}
 
 # clear all automatically generated files
 clean-all: clean
