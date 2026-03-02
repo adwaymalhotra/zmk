@@ -1,7 +1,7 @@
 if SHIELD_LIMONCELLO_LEFT_CENTRAL ||SHIELD_LIMONCELLO_CENTRAL || SHIELD_LIMONCELLO_LEFT || SHIELD_LIMONCELLO_RIGHT
 
 config ZMK_KEYBOARD_NAME
-    default "LIMONCELLO"
+    default "Limoncello"
 
 config ZMK_SPLIT
     default y
@@ -76,7 +76,7 @@ config SPI
     default y
 
 config ZMK_RGB_UNDERGLOW
-    default y
+    default n
     select WS2812_STRIP
     select SPI
 

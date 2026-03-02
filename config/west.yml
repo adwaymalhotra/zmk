@@ -13,7 +13,7 @@ manifest:
       url-base: https://github.com/rianadon
   projects:
     - name: zmk
-      remote: rianadon
+      remote: zmkfirmware
       revision: main
       import: app/west.yml
     - name: zmk-tri-state
@@ -22,7 +22,11 @@ manifest:
       path: modules/zmk/helpers
     - name: zmk-dongle-display
       remote: englmaxi
-      revision: v0.3
+      revision: main # v0.3
+    - name: cosmos-zmk-module
+      remote: rianadon
+      revision: main
+      # import: config/deps.yml
   self:
     path: config
-    import: deps.yml
+    # import: deps.yml
