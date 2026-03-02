@@ -12,35 +12,20 @@ include:
   - board: nice_nano
     shield: atreus
 
-  - board: nice_nano
-    shield: limoncello_central dongle_display
-    artifact-name: limoncello_central
-  - board: lemon_wireless
-    shield: limoncello_left_central
-    artifact-name: limoncello_left_central
-  - board: lemon_wireless
-    shield: limoncello_left
-    artifact-name: limoncello_left
-    cmake_args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
-  - board: lemon_wireless
-    shield: limoncello_right
-    artifact-name: limoncello_right
-    cmake_args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
-
-  - board: nice_nano
-    shield: cosmos_central dongle_display
-    artifact-name: cosmos_central
-  - board: xiao_ble
-    shield: cosmos_left_central
-    artifact-name: cosmos_left_central
-  - board: xiao_ble
-    shield: cosmos_left
-    artifact-name: cosmos_left
-    cmake_args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
-  - board: xiao_ble
-    shield: cosmos_right
-    artifact-name: cosmos_right
-    cmake_args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+  # - board: nice_nano
+  #   shield: limoncello_central dongle_display
+  #   artifact-name: limoncello_central
+  # - board: lemon_wireless
+  #   shield: limoncello_left_central
+  #   artifact-name: limoncello_left_central
+  # - board: lemon_wireless
+  #   shield: limoncello_left
+  #   artifact-name: limoncello_left
+  #   cmake_args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+  # - board: lemon_wireless
+  #   shield: limoncello_right
+  #   artifact-name: limoncello_right
+  #   cmake_args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
     
   - board: nice_nano
     shield: cygnus_central_dongle dongle_display
