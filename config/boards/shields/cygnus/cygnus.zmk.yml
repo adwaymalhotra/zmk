@@ -7,5 +7,7 @@ requires: [pro_micro]
 features:
   - keys
 siblings:
-  - cygnus_left
-  - cygnus_right
+  - cygnus_central_dongle
+  - cygnus_central_left
+  - cygnus_peripheral_left
+  - cygnus_peripheral_right
