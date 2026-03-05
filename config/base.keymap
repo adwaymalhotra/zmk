@@ -1,10 +1,11 @@
 // Layer
 #define GR   0
-#define GAME 1
-#define NAV  2
-#define SYM  3
-#define FN   4
-#define SYS  5
+#define GRA  1
+#define GAME 2
+#define NAV  3
+#define SYM  4
+#define FN   5
+#define SYS  6
 
 /* ZMK Headers */
 #include <behaviors.dtsi>
@@ -21,6 +22,7 @@
 #define SFT LSHFT
 #define CTL LCTL
 #define _____ &none
+#define _TIL LS(GB_HASH)
 
 #define PRIOR_IDLE_MS 160
 #define QUICK_TAP_MS 175
@@ -111,19 +113,9 @@ MAKE_HT(lt_comm, "tap-preferred", &mo, &com_sem, KEYS_R)
 };
 
 /* Tri State for Alt-Tab in a layer. */
-ZMK_TRI_STATE(alt_tab, bindings = <&kt_on LALT>, <&kp TAB>, <&kt_off LALT>; ignored-key-positions = <LT3>;)
-ZMK_TRI_STATE(met_tab, bindings = <&kt_on LGUI>, <&kp TAB>, <&kt_off LGUI>; ignored-key-positions = <LT3>;)
-
-/* Morphs */
-ZMK_MOD_MORPH(bsdel,    bindings = <&kp BACKSPACE>, <&kp DELETE>; mods = <(MOD_LALT|MOD_LGUI|MOD_LSFT)>;)
-ZMK_MOD_MORPH(dlr_gbp,  bindings = <&kp DLLR>, <&uc_gbp>        ; mods = <(MOD_LSFT|MOD_RSFT)>;)
-ZMK_MOD_MORPH(amps_eur, bindings = <&kp AMPS>, <&uc_eur>        ; mods = <(MOD_LSFT|MOD_RSFT)>;)
-ZMK_MOD_MORPH(star_rup, bindings = <&kp STAR>, <&uc_rup>        ; mods = <(MOD_LSFT|MOD_RSFT)>;)
-ZMK_MOD_MORPH(dot_col,  bindings = <&kp DOT>, <&kp COLON>       ; mods = <(MOD_LSFT)>;)
-ZMK_MOD_MORPH(com_sem,  bindings = <&kp COMMA>, <&kp SEMICOLON> ; mods = <(MOD_LSFT)>;)
-ZMK_MOD_MORPH(sqt_dqt,  bindings = <&kp SQT>, <&kp GB_DQT>      ; mods = <(MOD_LSFT)>;)
-ZMK_MOD_MORPH(lpar_lt,  bindings = <&kp LPAR>, <&kp LT>         ; mods = <(MOD_LSFT)>;)
-ZMK_MOD_MORPH(rpar_gt,  bindings = <&kp RPAR>, <&kp GT>         ; mods = <(MOD_LSFT)>;)
+ZMK_TRI_STATE(alt_tab, bindings = <&kt_on LALT>, <&kp TAB>, <&kt_off LALT>; ignored-key-positions = <LT4>;)
+ZMK_TRI_STATE(ctl_tab, bindings = <&kt_on LCTL>, <&kp TAB>, <&kt_off LCTL>; ignored-key-positions = <LT4>;)
+ZMK_TRI_STATE(met_tab, bindings = <&kt_on LGUI>, <&kp TAB>, <&kt_off LGUI>; ignored-key-positions = <LT4>;)
 
 /* Macros */
 ZMK_MACRO(uc_deg,  bindings = <&kp RALT>, <&kp O>,           <&kp O>  ;)
@@ -145,25 +137,52 @@ ZMK_MACRO(half_dn, bindings = <&kp LC(D)>;)
 ZMK_MACRO(half_up, bindings = <&kp LC(U)>;)
 ZMK_MACRO(del_wor, bindings = <&kp LC(BSPC)>;)
 
+/* Morphs */
+ZMK_MOD_MORPH(bsdel,    bindings = <&kp BACKSPACE>, <&kp DELETE>; mods = <(MOD_LALT|MOD_LGUI|MOD_LSFT)>;)
+ZMK_MOD_MORPH(dlr_gbp,  bindings = <&kp DLLR>, <&uc_gbp>        ; mods = <(MOD_LSFT|MOD_RSFT)>;)
+ZMK_MOD_MORPH(amps_eur, bindings = <&kp AMPS>, <&uc_eur>        ; mods = <(MOD_LSFT|MOD_RSFT)>;)
+ZMK_MOD_MORPH(star_rup, bindings = <&kp STAR>, <&uc_rup>        ; mods = <(MOD_LSFT|MOD_RSFT)>;)
+ZMK_MOD_MORPH(dot_col,  bindings = <&kp DOT>, <&kp COLON>       ; mods = <(MOD_LSFT)>;)
+ZMK_MOD_MORPH(com_sem,  bindings = <&kp COMMA>, <&kp SEMICOLON> ; mods = <(MOD_LSFT)>;)
+ZMK_MOD_MORPH(sqt_dqt,  bindings = <&kp SQT>, <&kp GB_DQT>      ; mods = <(MOD_LSFT)>;)
+ZMK_MOD_MORPH(lpar_lt,  bindings = <&kp LPAR>, <&kp LT>         ; mods = <(MOD_LSFT)>;)
+ZMK_MOD_MORPH(rpar_gt,  bindings = <&kp RPAR>, <&kp GT>         ; mods = <(MOD_LSFT)>;)
+
 /* Keymap */
-#define LEFT_THUMBS &thm MET TAB &kp SFT &lt NAV ESC
-#define RIGHT_THUMBS &thl SYM SPC &mt_bsdel CTL 0 &thl FN RET
-#define TRANS_THUMBS &trans &trans &trans
+#define LEFT_THUMBS_A &kp SFT &lt NAV ESC
+#define RIGHT_THUMBS_A &thl SYM SPC &mt_bsdel CTL 0
+#define LEFT_THUMBS &lt NAV ESC &kp SFT
+#define RIGHT_THUMBS &thm CTL SPC &lt_bsdel SYM 0
+#define TRANS_THUMBS &trans &trans
 #define TRANS_5 &trans &trans &trans &trans &trans
+
+#ifndef X_LH3
+  #define X_LH3 &thl SYS RET
+#endif
+#ifndef X_RH3
+  #define X_RH3 &thl SYS RET
+#endif
 
 #define _LAYER(NAME, LT, RT, LM, RM, LB, RB, LH, RH) \
   ZMK_LAYER(NAME, \
-    X_LT LT RT X_RT \
-    X_LM LM RM X_RM \
-    X_LB LB RB X_RB \
-    X_LH LH X_MH RH X_RH \
+    X_LT       LT      RT       X_RT \
+    X_LM       LM      RM       X_RM \
+    X_LB       LB      RB       X_RB \
+    X_LH X_LH3 LH X_MH RH X_RH3 X_RH \
   )
 #define LAYER(NAME, LT, RT, LM, RM, LB, RB) _LAYER(NAME, LT, RT, LM, RM, LB, RB, LEFT_THUMBS, RIGHT_THUMBS)
+#define ALAYER(NAME, LT, RT, LM, RM, LB, RB) _LAYER(NAME, LT, RT, LM, RM, LB, RB, LEFT_THUMBS_A, RIGHT_THUMBS_A)
 #define TLAYER(NAME, LT, RT, LM, RM, LB, RB) _LAYER(NAME, LT, RT, LM, RM, LB, RB, TRANS_THUMBS, TRANS_THUMBS)
 #define TRANS_LAYER(NAME) LAYER(NAME, TRANS_5, TRANS_5, TRANS_5, TRANS_5, TRANS_5, TRANS_5)
 
 // Base
 LAYER(Graphite,
+  &kp B &kp L &kp D &kp W &kp Z, &sqt_dqt &kp F &kp O    &kp U     &kp J,
+  &kp N &kp R &kp T &kp S &kp G, &kp Y    &kp H &kp A    &kp E     &kp I,
+  &kp Q &kp X &kp M &kp C &kp V, &kp K    &kp P &dot_col &kp MINUS &com_sem
+)
+
+ALAYER(Graphite_Alt,
   &kp B &kp L &kp D &kp W &kp Z, &sqt_dqt &kp F &kp O    &kp U     &kp J,
   &kp N &kp R &kp T &kp S &kp G, &kp Y    &kp H &kp A    &kp E     &kp I,
   &kp Q &kp X &kp M &kp C &kp V, &kp K    &kp P &dot_col &kp MINUS &com_sem
@@ -176,15 +195,15 @@ LAYER(Graphite,
 #endif
 
 LAYER(Nav,
-  &alt_tab &kp LS(TAB) &met_tab &kp PSCRN &none   , &kp HOME &kp PG_DN    &kp PG_UP    &kp END    &sk RALT,
-  &sk SFT  &sk ALT     &sk MET  &sk CTL   &vi_sav , &kp LEFT &kp DOWN     &kp UP       &kp RIGHT  &kp RET,
-  &kp TAB  &key_repeat &pre_tab &nex_tab  &del_wor, &kp CAPS &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &kp INS
+  &kp LS(TAB) &alt_tab    &met_tab  &ctl_tab &none   , &kp HOME &kp PG_DN    &kp PG_UP    &kp END    &sk RALT,
+  &sk SFT     &sk ALT     &sk MET   &sk CTL  &vi_sav , &kp LEFT &kp DOWN     &kp UP       &kp RIGHT  &kp RET,
+  &none       &key_repeat &kp PSCRN &kp TAB  &del_wor, &kp CAPS &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &kp INS
 )
 
 TLAYER(Sym,
-  &kp EQUAL &kp LBRC &kp LBKT &lpar_lt &uc_gbp , &kp DOT  &kp N7 &kp N8 &kp N9 &kp PLUS ,
-  &sk SFT   &sk ALT  &sk MET  &sk CTL  &kp PIPE, &kp FSLH &kp N4 &kp N5 &kp N6 &kp N0   ,
-  &kp QMARK &kp RBRC &kp RBKT &rpar_gt &kp BSLH, &kp STAR &kp N1 &kp N2 &kp N3 &kp MINUS
+  &kp EXCL  &kp GB_AT &kp GB_HASH &kp DLLR &kp PRCNT, &kp DOT   &kp N7 &kp N8 &kp N9 &kp N0,
+  &kp STAR  &kp LT    &kp LPAR    &kp LBKT &kp LBRC , &kp EQUAL &kp N4 &kp N5 &kp N6 &kp RET,
+  &kp GRAVE &kp GT    &kp RPAR    &kp RBKT &kp RBRC , &kp MINUS &kp N1 &kp N2 &kp N3 &kp FSLH
 )
 
 TLAYER(Fn,
@@ -195,7 +214,7 @@ TLAYER(Fn,
 
 TLAYER(sys,
   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR , &bt BT_CLR_ALL &none &none &none &tog GAME,
-  &none        &none        &kp C_BRI_UP &kp C_BRI_DN &sys_reset , &sys_reset     &none &none &none &none,
+  &none        &none        &kp C_BRI_UP &kp C_BRI_DN &sys_reset , &sys_reset     &none &none &none &tog GRA,
   &out OUT_BLE &out OUT_USB &none        &none        &bootloader, &bootloader    &none &none &none &none
 )
 
@@ -204,7 +223,7 @@ ZMK_CONDITIONAL_LAYER(function_condition, NAV SYM, FN)
 /* Combos */
 #undef COMBO_TERM
 #define COMBO_TERM 50
-#define COMBO_LAYERS GR NAV SYM 
+#define COMBO_LAYERS GR GRA NAV SYM
 
 #define SIMPLE_COMBO(NAME, KEY, COMBO_KEYS) \
 ZMK_COMBO(NAME, KEY, COMBO_KEYS, COMBO_LAYERS, COMBO_TERM, COMBO_TERM)
@@ -280,14 +299,14 @@ SIMPLE_COMBO(reset, &sys_reset, LT1 RT1)
     ) \
     ZMK_COMBO(combo_##MOD1##_##MOD2##_##LAYER, &macro_##MOD1##_##MOD2##_##LAYER, POSITIONS, COMBO_LAYERS, COMBO_TERM, COMBO_TERM, slow-release;)
 
-MOD_LAYER_COMBO(LCTL, NAV, LH0 LM1)
-MOD_LAYER_COMBO(LGUI, NAV, LH0 LM2)
-MOD_LAYER_COMBO(LALT, NAV, LH0 LM3)
-MOD_LAYER_COMBO(LSFT, NAV, LH0 LM4)
-MOD_LAYER_COMBO_2(LGUI, LCTL, NAV, LH0 LM2 LM1)
-MOD_LAYER_COMBO_2(LGUI, LALT, NAV, LH0 LM2 LM3)
-MOD_LAYER_COMBO_2(LGUI, LSFT, NAV, LH0 LM2 LM4)
-MOD_LAYER_COMBO_2(LCTL, LALT, NAV, LH0 LM1 LM3)
-MOD_LAYER_COMBO_2(LCTL, LSFT, NAV, LH0 LM1 LM4)
+MOD_LAYER_COMBO(LCTL, NAV, LH1 LM1)
+MOD_LAYER_COMBO(LGUI, NAV, LH1 LM2)
+MOD_LAYER_COMBO(LALT, NAV, LH1 LM3)
+MOD_LAYER_COMBO(LSFT, NAV, LH1 LM4)
+MOD_LAYER_COMBO_2(LGUI, LCTL, NAV, LH1 LM2 LM1)
+MOD_LAYER_COMBO_2(LGUI, LALT, NAV, LH1 LM2 LM3)
+MOD_LAYER_COMBO_2(LGUI, LSFT, NAV, LH1 LM2 LM4)
+MOD_LAYER_COMBO_2(LCTL, LALT, NAV, LH1 LM1 LM3)
+MOD_LAYER_COMBO_2(LCTL, LSFT, NAV, LH1 LM1 LM4)
 
 // vi:ft=devicetree
