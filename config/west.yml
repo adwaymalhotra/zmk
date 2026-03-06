@@ -9,6 +9,8 @@ manifest:
       url-base: https://github.com/urob
     - name: englmaxi
       url-base: https://github.com/englmaxi
+    - name: dhruvinsh
+      url-base: https://github.com/dhruvinsh
     - name: rianadon
       url-base: https://github.com/rianadon
   projects:
