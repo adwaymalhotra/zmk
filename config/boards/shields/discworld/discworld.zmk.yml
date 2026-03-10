@@ -1,0 +1,13 @@
+file_format: "1"
+id: atreus
+name: Atreus
+type: shield
+url: https://github.com/adwaymalhotra/atreus/
+requires: [pro_micro]
+# exposes: [i2c_oled]
+features:
+  - keys
+  # - display
+# siblings:
+#   - corne_left
+#   - corne_right

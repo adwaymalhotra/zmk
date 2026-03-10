@@ -1,0 +1,4 @@
+if SHIELD_DISCWORLD
+  config ZMK_KEYBOARD_NAME
+    default "discworld"
+endif
