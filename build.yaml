@@ -16,6 +16,10 @@ include:
     artifact-name: atreus
 
   - board: nice_nano//zmk
+    shield: discworld
+    artifact-name: discworld
+
+  - board: nice_nano//zmk
     shield: limoncello_central
     artifact-name: limoncello_central
   - board: lemon_wireless
@@ -54,3 +58,6 @@ include:
   - board: lemon_wireless
     shield: settings_reset
     artifact-name: settings_reset_lemon_wireless
+    
+  - board: rp2040_zero
+    shield: endgame
