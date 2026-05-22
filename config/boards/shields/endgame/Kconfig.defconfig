@@ -1,0 +1,4 @@
+if SHIELD_ENDGAME
+  config ZMK_KEYBOARD_NAME
+    default "endgame"
+endif
