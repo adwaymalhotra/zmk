@@ -1,11 +1,16 @@
 /* Aliases */
-#define GR   0
-#define QW   1
-#define GAME 2
-#define NAV  3
-#define SYM  4
-#define FN   5
-#define SYS  6
+#define GR     0
+#define GRM    1
+#define QW     2
+#define QWM    3
+#define GAME   4
+#define NAV    5
+#define NAVM   6
+#define SYM    7
+#define SYMM   8
+#define FN     9
+#define FNM   10
+#define SYS   11
 
 #define ALT LALT
 #define MET LGUI
@@ -19,7 +24,7 @@
 
 #undef COMBO_TERM
 #define COMBO_TERM 50
-#define COMBO_LAYERS GR QW NAV SYM
+#define COMBO_LAYERS GR QW NAV SYM GRM QWM NAVM SYMM
 
 /* ZMK Core Features */
 #include <behaviors.dtsi>
@@ -108,8 +113,8 @@ NUM_MORPH(n9_end, N9, END)
 #define LEFT_THUMBS &mo NAV &kp SFT
 #define RIGHT_THUMBS &thm CTL SPC &mo SYM
 
-#define LEFT_THUMBS_A &kp SFT &lt NAV ESC
-#define RIGHT_THUMBS_A &thl SYM SPC &mt_bsdel CTL 0
+#define LEFT_THUMBS_MAC &mo NAVM &kp SFT
+#define RIGHT_THUMBS_MAC &thm GUI SPC &mo SYMM
 
 #define TRANS_THUMBS &trans &trans
 #define TRANS_5 &trans &trans &trans &trans &trans
@@ -120,7 +125,19 @@ LAYER(Graphite,
   &kp Q &kp X &kp M &kp C &kp V, &kp K    &kp P &dot_col &kp MINUS &com_sem
 )
 
+MLAYER(Graphite,
+  &kp B &kp L &kp D &kp W &kp Z, &sqt_dqt &kp F &kp O    &kp U     &kp J,
+  &kp N &kp R &kp T &kp S &kp G, &kp Y    &kp H &kp A    &kp E     &kp I,
+  &kp Q &kp X &kp M &kp C &kp V, &kp K    &kp P &dot_col &kp MINUS &com_sem
+)
+
 LAYER(Qwerty,
+  &kp Q &kp W &kp E &kp R &kp T, &kp Y &kp U &kp I     &kp O   &kp P,
+  &kp A &kp S &kp D &kp F &kp G, &kp H &kp J &kp K     &kp L   &kp SEMI,
+  &kp Z &kp X &kp C &kp V &kp B, &kp N &kp M &kp COMMA &kp DOT &kp FSLH
+)
+
+MLAYER(Qwerty,
   &kp Q &kp W &kp E &kp R &kp T, &kp Y &kp U &kp I     &kp O   &kp P,
   &kp A &kp S &kp D &kp F &kp G, &kp H &kp J &kp K     &kp L   &kp SEMI,
   &kp Z &kp X &kp C &kp V &kp B, &kp N &kp M &kp COMMA &kp DOT &kp FSLH
@@ -138,10 +155,22 @@ LAYER(Nav,
   &vi_sav  &key_repeat &kp TAB  &kp ESC  &kp QMARK, &kp MINUS &kp N1   &kp N2   &kp N3    &kp PLUS
 )
 
+MLAYER(Nav,
+  &met_tab &trans &trans  &trans  &trans, TRANS_5,
+  &trans   &trans &sk CTL &sk MET &trans, TRANS_5,
+  TRANS_5, TRANS_5
+)
+
 TLAYER(Sym,
   &kp GRAVE &kp LT    &kp LBKT &kp RBKT &kp GT,      &kp HOME &kp PG_DN &kp PG_UP &kp END   &sk RALT,
   SL(EXCL)  AL(GB_AT) ML(LPAR) CL(RPAR) &kp GB_HASH, &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp RET,
   &kp AMPS  &kp DLLR  &kp LBRC &kp RBRC &kp CARET,   &del_wor &kp BSPC  &kp DEL   &kp INS   &kp GB_BSLH
+)
+
+MLAYER(Sym,
+  TRANS_5, TRANS_5,
+  &trans &trans CL(LPAR) ML(RPAR) &trans, TRANS_5,
+  TRANS_5, &kp LG(BSPC) &trans &trans &trans &trans
 )
 
 TLAYER(Fn,
@@ -150,13 +179,20 @@ TLAYER(Fn,
  &tog SYS &none   &none   &none   &none,   &kp CAPS &kp C_BRI_DN &kp C_BRI_UP &none      &kp PSCRN
 )
 
+MLAYER(Fn,
+ TRANS_5,TRANS_5,
+ &trans  &trans &sk CTL &sk MET &trans, TRANS_5,
+ TRANS_5,TRANS_5
+)
+
 TLAYER(sys,
-  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR , &bt BT_CLR_ALL &none &none &none &tog GAME,
-  &none        &none        &kp C_BRI_UP &kp C_BRI_DN &sys_reset , &sys_reset     &none &none &none &tog QW,
-  &out OUT_BLE &out OUT_USB &none        &none        &bootloader, &bootloader    &none &none &none &none
+  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR , &bt BT_CLR_ALL &none &none &none    &tog GAME,
+  &none        &none        &kp C_BRI_UP &kp C_BRI_DN &sys_reset , &sys_reset     &none &none &tog QWM &tog QW,
+  &out OUT_BLE &out OUT_USB &none        &none        &bootloader, &bootloader    &none &none &none    &tog GRM
 )
 
 ZMK_CONDITIONAL_LAYER(function_condition, NAV SYM, FN)
+ZMK_CONDITIONAL_LAYER(function_condition, NAVM SYMM, FNM)
 
 /* Combos */
 SIMPLE_COMBO(degree, &uc_deg, LT4 LM4)
@@ -165,6 +201,7 @@ SIMPLE_COMBO(degree, &uc_deg, LT4 LM4)
 SIMPLE_COMBO(bootloader, &bootloader, LT0 LT1 RT1 RT0)
 SIMPLE_COMBO(reset, &sys_reset, LT0 RT0)
 
+/* Linux/Win Layers */
 MOD_LAYER_COMBO(LCTL, NAV, LH1 LM1)
 MOD_LAYER_COMBO(LGUI, NAV, LH1 LM2)
 MOD_LAYER_COMBO(LALT, NAV, LH1 LM3)
@@ -184,5 +221,26 @@ MOD_LAYER_COMBO_2(LGUI, LALT, SYM, RH1 LM2 LM3)
 MOD_LAYER_COMBO_2(LGUI, LSFT, SYM, RH1 LM2 LM4)
 MOD_LAYER_COMBO_2(LCTL, LALT, SYM, RH1 LM1 LM3)
 MOD_LAYER_COMBO_2(LCTL, LSFT, SYM, RH1 LM1 LM4)
+
+/* For the Mac Layers */
+MOD_LAYER_COMBO(LGUI, NAVM, LH1 LM1)
+MOD_LAYER_COMBO(LCTL, NAVM, LH1 LM2)
+MOD_LAYER_COMBO(LALT, NAVM, LH1 LM3)
+MOD_LAYER_COMBO(LSFT, NAVM, LH1 LM4)
+MOD_LAYER_COMBO_2(LGUI, LCTL, NAVM, LH1 LM2 LM1)
+MOD_LAYER_COMBO_2(LCTL, LALT, NAVM, LH1 LM2 LM3)
+MOD_LAYER_COMBO_2(LCTL, LSFT, NAVM, LH1 LM2 LM4)
+MOD_LAYER_COMBO_2(LGUI, LALT, NAVM, LH1 LM1 LM3)
+MOD_LAYER_COMBO_2(LGUI, LSFT, NAVM, LH1 LM1 LM4)
+
+MOD_LAYER_COMBO(LGUI,  SYMM, RH1 LM1)
+MOD_LAYER_COMBO(LCTL,  SYMM, RH1 LM2)
+MOD_LAYER_COMBO(LALT,  SYMM, RH1 LM3)
+MOD_LAYER_COMBO(LSFT,  SYMM, RH1 LM4)
+MOD_LAYER_COMBO_2(LGUI, LCTL, SYMM, RH1 LM2 LM1)
+MOD_LAYER_COMBO_2(LCTL, LALT, SYMM, RH1 LM2 LM3)
+MOD_LAYER_COMBO_2(LCTL, LSFT, SYMM, RH1 LM2 LM4)
+MOD_LAYER_COMBO_2(LGUI, LALT, SYMM, RH1 LM1 LM3)
+MOD_LAYER_COMBO_2(LGUI, LSFT, SYMM, RH1 LM1 LM4)
 
 // vi:ft=devicetree
