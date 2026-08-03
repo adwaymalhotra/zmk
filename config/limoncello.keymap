@@ -1,74 +1,63 @@
 #include <dt-bindings/zmk/keys.h>
 
-#define KEYS_L 0 1 2 3  4  5 12 13 14 15 16 17 24 25 26 27 28 29 36 37
-#define KEYS_R 6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35 42 43
-#define THUMBS 38 39 40 41
+#define KEYS_L 0 1 2 3 4 10 11 12 13 14 20 21 22 23 24
+#define KEYS_R 5 6 7 8 9 15 16 17 18 19 25 26 27 28 29
+#define THUMBS 30 31 32 33 34 35 36 37 38 39
 
-#define LT0 5
-#define LT1 4
-#define LT2 3
-#define LT3 2
-#define LT4 1
-#define LT5 0
+#define LT4 0
+#define LT3 1
+#define LT2 2
+#define LT1 3
+#define LT0 4
 
-#define RT0 6
-#define RT1 7
-#define RT2 8
-#define RT3 9
-#define RT4 10
-#define RT5 11
+#define RT0 5
+#define RT1 6
+#define RT2 7
+#define RT3 8
+#define RT4 9
 
-#define LM0 17
-#define LM1 16
-#define LM2 15
-#define LM3 14
-#define LM4 13
-#define LM5 12
+#define LM4 10
+#define LM3 11
+#define LM2 12
+#define LM1 13
+#define LM0 14
 
-#define RM0 18
-#define RM1 19
-#define RM2 20
-#define RM3 21
-#define RM4 22
-#define RM5 23
+#define RM0 15
+#define RM1 16
+#define RM2 17
+#define RM3 18
+#define RM4 19
 
-#define LB0 29
-#define LB1 28
-#define LB2 27
-#define LB3 26
-#define LB4 25
-#define LB5 24
+#define LB4 20
+#define LB3 21
+#define LB2 22
+#define LB1 23
+#define LB0 24
 
-#define RB0 30
-#define RB1 31
-#define RB2 32
-#define RB3 33
-#define RB4 34
-#define RB5 35
+#define RB0 25
+#define RB1 26
+#define RB2 27
+#define RB3 28
+#define RB4 29
 
-#define LH0 39
-#define LH1 38
-#define LH2 37
-#define LH3 36
+/*
+  Thumbs Physical Arrangement
+  1.5u| LH0 LH1 LH2  RH2 RH1 RH0
+  1u  |     LH3 LH4  RH4 RH3
+  Order: |LH3 LH4|  |LH0 LH1|  |LH2 RH2| |RH1 RH0| |RH4 RH3|
+*/
+#define LH3 30
+#define LH4 31
+#define LH0 32
+#define LH1 33
+#define LH2 34
 
-#define RH0 40
-#define RH1 41
-#define RH2 42
-#define RH3 43
+#define RH2 35
+#define RH1 36
+#define RH0 37
+#define RH4 38
+#define RH3 39
 
-#define X_LT &kp TAB
-#define X_RT &kp BSPC
-#define X_LM &mt MET ESC
-#define X_RM &mt MET FSLH
-#define X_LB &kp LALT
-#define X_RB &kp RET
-#define X_LH &lt SYS TAB &mt MET ESC
-#define X_RH &mt MET BSPC &lt SYS RET
-
-#define GAME_LAYER_KEYS\
-  &kp TAB &kp Q &kp W &kp E &kp R     /**/ &kp T &kp Y &kp U &kp I &kp O\
-  &kp CTL &kp A &kp S &kp D &kp F     /**/ &kp G &kp H &kp J &kp K &kp L\
-  &kp SFT &kp Z &kp X &kp C &kp V     /**/ &kp B &kp M &kp N &kp P &kp SEMI\
-  &none &lt SYM ESC &kp RET &kp SPACE /**/ &kp ALT &mo NAV &kp SQT &none
+#define THUMB_CLUSTER LIMONCELLO_THUMBS_L LIMONCELLO_THUMBS_R
 
 #include "base.keymap"
