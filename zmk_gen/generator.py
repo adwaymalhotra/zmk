@@ -4,14 +4,14 @@ from .layout import Keyboard
 from .layer import Layer
 from .os_key import OsKey
 from .behaviors import Behavior, Macro, ModMorph, TriState, HoldTap
-from .combo import SimpleCombo, ModLayerCombo, ModLayerCombo2
+from .combo import SimpleCombo, ModLayerCombo
 
 class KeymapGenerator:
     def __init__(
         self,
         keyboards: List[Keyboard],
         layers: List[Layer],
-        combos: List[Union[SimpleCombo, ModLayerCombo, ModLayerCombo2]],
+        combos: List[Union[SimpleCombo, ModLayerCombo]],
         behaviors: List[Union[Behavior, Macro, ModMorph, TriState, HoldTap]],
     ):
         self.keyboards = keyboards
@@ -53,7 +53,13 @@ class KeymapGenerator:
             "#include <dt-bindings/zmk/outputs.h>",
             "#include <zmk-helpers/helper.h>",
             "",
+            "/* Layer ID Definitions */",
         ]
+
+        # Emit #define layer ID constants at the top of the file
+        for name, idx in layer_indices.items():
+            lines.append(f"#define {name} {idx}")
+        lines.append("")
 
         # 1. Macros Section
         lines.append("/ {")
@@ -66,18 +72,11 @@ class KeymapGenerator:
                     emitted_macros.add(b.name)
                 
         for c in self.combos:
-            if isinstance(c, (ModLayerCombo, ModLayerCombo2)):
-                m_def = c.render_macro_dts("default", layer_indices)
-                m_def_name = c.get_macro_name("default", layer_indices)
-                if m_def_name not in emitted_macros:
-                    lines.append(m_def)
-                    emitted_macros.add(m_def_name)
-                    
-                m_mac = c.render_macro_dts("mac", layer_indices)
-                m_mac_name = c.get_macro_name("mac", layer_indices)
-                if m_mac_name not in emitted_macros:
-                    lines.append(m_mac)
-                    emitted_macros.add(m_mac_name)
+            if isinstance(c, ModLayerCombo):
+                for macro_name, macro_dts in zip(c.all_macro_names(layer_indices), c.render_all_macros(layer_indices)):
+                    if macro_name not in emitted_macros:
+                        lines.append(macro_dts)
+                        emitted_macros.add(macro_name)
         lines.append("    };")
         lines.append("};")
         lines.append("")
@@ -122,15 +121,12 @@ class KeymapGenerator:
                 if c.name not in emitted_combos:
                     lines.append(c.render_dts("default", pos_map, layer_indices, self.registered_behaviors))
                     emitted_combos.add(c.name)
-            elif isinstance(c, (ModLayerCombo, ModLayerCombo2)):
-                m_def_name = f"combo_{c.get_macro_name('default', layer_indices)}"
-                if m_def_name not in emitted_combos:
-                    lines.append(c.render_combo_dts("default", pos_map, layer_indices))
-                    emitted_combos.add(m_def_name)
-                m_mac_name = f"combo_{c.get_macro_name('mac', layer_indices)}"
-                if m_mac_name not in emitted_combos:
-                    lines.append(c.render_combo_dts("mac", pos_map, layer_indices))
-                    emitted_combos.add(m_mac_name)
+            elif isinstance(c, ModLayerCombo):
+                for macro_name, combo_dts in zip(c.all_macro_names(layer_indices), c.render_all_combos(pos_map, layer_indices)):
+                    combo_key = f"combo_{macro_name.replace('macro_', '', 1)}"
+                    if combo_key not in emitted_combos:
+                        lines.append(combo_dts)
+                        emitted_combos.add(combo_key)
         lines.append("    };")
         lines.append("};")
         lines.append("")

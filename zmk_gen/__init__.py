@@ -5,7 +5,7 @@ from .behaviors import (
     SL, CL, AL, ML, SR, CR, AR, MR, SYL, SYR
 )
 from .layer import Layer
-from .combo import SimpleCombo, ModLayerCombo, ModLayerCombo2
+from .combo import SimpleCombo, ModLayerCombo
 from .generator import KeymapGenerator
 
 __all__ = [
@@ -14,6 +14,6 @@ __all__ = [
     "Macro", "ModMorph", "NumMorph", "TriState", "HoldTap", "HRMCall",
     "SL", "CL", "AL", "ML", "SR", "CR", "AR", "MR", "SYL", "SYR",
     "Layer",
-    "SimpleCombo", "ModLayerCombo", "ModLayerCombo2",
+    "SimpleCombo", "ModLayerCombo",
     "KeymapGenerator",
 ]

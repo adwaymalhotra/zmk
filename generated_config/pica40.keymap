@@ -5,6 +5,19 @@
 #include <dt-bindings/zmk/outputs.h>
 #include <zmk-helpers/helper.h>
 
+/* Layer ID Definitions */
+#define Graphite 0
+#define Graphite_mac 1
+#define Qwerty 2
+#define Qwerty_mac 3
+#define Nav 4
+#define NavM 5
+#define Sym 6
+#define SymM 7
+#define Fn 8
+#define FnM 9
+#define sys 10
+
 / {
     macros {
         uc_deg: uc_deg {
@@ -98,288 +111,460 @@
             #binding-cells = <0>;
             bindings = <&kp LC(BSPC)>;
         };
-        macro_LCTL_NAV: macro_LCTL_NAV {
+        macro_LCTL_Nav: macro_LCTL_Nav {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <0>;
             bindings
-                = <&macro_press &mo NAV>
+                = <&macro_press &mo Nav>
                 , <&macro_press &sk LCTL>
                 , <&macro_pause_for_release>
                 , <&macro_release &sk LCTL>
-                , <&macro_release &mo NAV>
+                , <&macro_release &mo Nav>
                 ;
         };
-        macro_LGUI_NAV: macro_LGUI_NAV {
+        macro_LGUI_NavM: macro_LGUI_NavM {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <0>;
             bindings
-                = <&macro_press &mo NAV>
+                = <&macro_press &mo NavM>
                 , <&macro_press &sk LGUI>
                 , <&macro_pause_for_release>
                 , <&macro_release &sk LGUI>
-                , <&macro_release &mo NAV>
+                , <&macro_release &mo NavM>
                 ;
         };
-        macro_LALT_NAV: macro_LALT_NAV {
+        macro_LGUI_Nav: macro_LGUI_Nav {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <0>;
             bindings
-                = <&macro_press &mo NAV>
+                = <&macro_press &mo Nav>
+                , <&macro_press &sk LGUI>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LGUI>
+                , <&macro_release &mo Nav>
+                ;
+        };
+        macro_LCTL_NavM: macro_LCTL_NavM {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo NavM>
+                , <&macro_press &sk LCTL>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LCTL>
+                , <&macro_release &mo NavM>
+                ;
+        };
+        macro_LALT_Nav: macro_LALT_Nav {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo Nav>
                 , <&macro_press &sk LALT>
                 , <&macro_pause_for_release>
                 , <&macro_release &sk LALT>
-                , <&macro_release &mo NAV>
+                , <&macro_release &mo Nav>
                 ;
         };
-        macro_LSHFT_NAV: macro_LSHFT_NAV {
+        macro_LSHFT_Nav: macro_LSHFT_Nav {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <0>;
             bindings
-                = <&macro_press &mo NAV>
+                = <&macro_press &mo Nav>
                 , <&macro_press &sk LSHFT>
                 , <&macro_pause_for_release>
                 , <&macro_release &sk LSHFT>
-                , <&macro_release &mo NAV>
+                , <&macro_release &mo Nav>
                 ;
         };
-        macro_LGUI_LCTL_NAV: macro_LGUI_LCTL_NAV {
+        macro_LGUI_LCTL_Nav: macro_LGUI_LCTL_Nav {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <0>;
             bindings
-                = <&macro_press &mo NAV>
+                = <&macro_press &mo Nav>
                 , <&macro_press &sk LGUI>
                 , <&macro_press &sk LCTL>
                 , <&macro_pause_for_release>
                 , <&macro_release &sk LCTL>
                 , <&macro_release &sk LGUI>
-                , <&macro_release &mo NAV>
+                , <&macro_release &mo Nav>
                 ;
         };
-        macro_LCTL_LGUI_NAV: macro_LCTL_LGUI_NAV {
+        macro_LCTL_LGUI_NavM: macro_LCTL_LGUI_NavM {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <0>;
             bindings
-                = <&macro_press &mo NAV>
+                = <&macro_press &mo NavM>
                 , <&macro_press &sk LCTL>
                 , <&macro_press &sk LGUI>
                 , <&macro_pause_for_release>
                 , <&macro_release &sk LGUI>
                 , <&macro_release &sk LCTL>
-                , <&macro_release &mo NAV>
+                , <&macro_release &mo NavM>
                 ;
         };
-        macro_LGUI_LALT_NAV: macro_LGUI_LALT_NAV {
+        macro_LGUI_LALT_Nav: macro_LGUI_LALT_Nav {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <0>;
             bindings
-                = <&macro_press &mo NAV>
-                , <&macro_press &sk LGUI>
-                , <&macro_press &sk LALT>
-                , <&macro_pause_for_release>
-                , <&macro_release &sk LALT>
-                , <&macro_release &sk LGUI>
-                , <&macro_release &mo NAV>
-                ;
-        };
-        macro_LCTL_LALT_NAV: macro_LCTL_LALT_NAV {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <0>;
-            tap-ms = <0>;
-            bindings
-                = <&macro_press &mo NAV>
-                , <&macro_press &sk LCTL>
-                , <&macro_press &sk LALT>
-                , <&macro_pause_for_release>
-                , <&macro_release &sk LALT>
-                , <&macro_release &sk LCTL>
-                , <&macro_release &mo NAV>
-                ;
-        };
-        macro_LGUI_LSHFT_NAV: macro_LGUI_LSHFT_NAV {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <0>;
-            tap-ms = <0>;
-            bindings
-                = <&macro_press &mo NAV>
-                , <&macro_press &sk LGUI>
-                , <&macro_press &sk LSHFT>
-                , <&macro_pause_for_release>
-                , <&macro_release &sk LSHFT>
-                , <&macro_release &sk LGUI>
-                , <&macro_release &mo NAV>
-                ;
-        };
-        macro_LCTL_LSHFT_NAV: macro_LCTL_LSHFT_NAV {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <0>;
-            tap-ms = <0>;
-            bindings
-                = <&macro_press &mo NAV>
-                , <&macro_press &sk LCTL>
-                , <&macro_press &sk LSHFT>
-                , <&macro_pause_for_release>
-                , <&macro_release &sk LSHFT>
-                , <&macro_release &sk LCTL>
-                , <&macro_release &mo NAV>
-                ;
-        };
-        macro_LCTL_SYM: macro_LCTL_SYM {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <0>;
-            tap-ms = <0>;
-            bindings
-                = <&macro_press &mo SYM>
-                , <&macro_press &sk LCTL>
-                , <&macro_pause_for_release>
-                , <&macro_release &sk LCTL>
-                , <&macro_release &mo SYM>
-                ;
-        };
-        macro_LGUI_SYM: macro_LGUI_SYM {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <0>;
-            tap-ms = <0>;
-            bindings
-                = <&macro_press &mo SYM>
-                , <&macro_press &sk LGUI>
-                , <&macro_pause_for_release>
-                , <&macro_release &sk LGUI>
-                , <&macro_release &mo SYM>
-                ;
-        };
-        macro_LALT_SYM: macro_LALT_SYM {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <0>;
-            tap-ms = <0>;
-            bindings
-                = <&macro_press &mo SYM>
-                , <&macro_press &sk LALT>
-                , <&macro_pause_for_release>
-                , <&macro_release &sk LALT>
-                , <&macro_release &mo SYM>
-                ;
-        };
-        macro_LSHFT_SYM: macro_LSHFT_SYM {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <0>;
-            tap-ms = <0>;
-            bindings
-                = <&macro_press &mo SYM>
-                , <&macro_press &sk LSHFT>
-                , <&macro_pause_for_release>
-                , <&macro_release &sk LSHFT>
-                , <&macro_release &mo SYM>
-                ;
-        };
-        macro_LGUI_LCTL_SYM: macro_LGUI_LCTL_SYM {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <0>;
-            tap-ms = <0>;
-            bindings
-                = <&macro_press &mo SYM>
-                , <&macro_press &sk LGUI>
-                , <&macro_press &sk LCTL>
-                , <&macro_pause_for_release>
-                , <&macro_release &sk LCTL>
-                , <&macro_release &sk LGUI>
-                , <&macro_release &mo SYM>
-                ;
-        };
-        macro_LCTL_LGUI_SYM: macro_LCTL_LGUI_SYM {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <0>;
-            tap-ms = <0>;
-            bindings
-                = <&macro_press &mo SYM>
-                , <&macro_press &sk LCTL>
-                , <&macro_press &sk LGUI>
-                , <&macro_pause_for_release>
-                , <&macro_release &sk LGUI>
-                , <&macro_release &sk LCTL>
-                , <&macro_release &mo SYM>
-                ;
-        };
-        macro_LGUI_LALT_SYM: macro_LGUI_LALT_SYM {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <0>;
-            tap-ms = <0>;
-            bindings
-                = <&macro_press &mo SYM>
+                = <&macro_press &mo Nav>
                 , <&macro_press &sk LGUI>
                 , <&macro_press &sk LALT>
                 , <&macro_pause_for_release>
                 , <&macro_release &sk LALT>
                 , <&macro_release &sk LGUI>
-                , <&macro_release &mo SYM>
+                , <&macro_release &mo Nav>
                 ;
         };
-        macro_LCTL_LALT_SYM: macro_LCTL_LALT_SYM {
+        macro_LCTL_LALT_NavM: macro_LCTL_LALT_NavM {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <0>;
             bindings
-                = <&macro_press &mo SYM>
+                = <&macro_press &mo NavM>
                 , <&macro_press &sk LCTL>
                 , <&macro_press &sk LALT>
                 , <&macro_pause_for_release>
                 , <&macro_release &sk LALT>
                 , <&macro_release &sk LCTL>
-                , <&macro_release &mo SYM>
+                , <&macro_release &mo NavM>
                 ;
         };
-        macro_LGUI_LSHFT_SYM: macro_LGUI_LSHFT_SYM {
+        macro_LGUI_LSHFT_Nav: macro_LGUI_LSHFT_Nav {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <0>;
             bindings
-                = <&macro_press &mo SYM>
+                = <&macro_press &mo Nav>
                 , <&macro_press &sk LGUI>
                 , <&macro_press &sk LSHFT>
                 , <&macro_pause_for_release>
                 , <&macro_release &sk LSHFT>
                 , <&macro_release &sk LGUI>
-                , <&macro_release &mo SYM>
+                , <&macro_release &mo Nav>
                 ;
         };
-        macro_LCTL_LSHFT_SYM: macro_LCTL_LSHFT_SYM {
+        macro_LCTL_LSHFT_NavM: macro_LCTL_LSHFT_NavM {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <0>;
             bindings
-                = <&macro_press &mo SYM>
+                = <&macro_press &mo NavM>
                 , <&macro_press &sk LCTL>
                 , <&macro_press &sk LSHFT>
                 , <&macro_pause_for_release>
                 , <&macro_release &sk LSHFT>
                 , <&macro_release &sk LCTL>
-                , <&macro_release &mo SYM>
+                , <&macro_release &mo NavM>
+                ;
+        };
+        macro_LCTL_LALT_Nav: macro_LCTL_LALT_Nav {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo Nav>
+                , <&macro_press &sk LCTL>
+                , <&macro_press &sk LALT>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LALT>
+                , <&macro_release &sk LCTL>
+                , <&macro_release &mo Nav>
+                ;
+        };
+        macro_LGUI_LALT_NavM: macro_LGUI_LALT_NavM {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo NavM>
+                , <&macro_press &sk LGUI>
+                , <&macro_press &sk LALT>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LALT>
+                , <&macro_release &sk LGUI>
+                , <&macro_release &mo NavM>
+                ;
+        };
+        macro_LCTL_LSHFT_Nav: macro_LCTL_LSHFT_Nav {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo Nav>
+                , <&macro_press &sk LCTL>
+                , <&macro_press &sk LSHFT>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LSHFT>
+                , <&macro_release &sk LCTL>
+                , <&macro_release &mo Nav>
+                ;
+        };
+        macro_LGUI_LSHFT_NavM: macro_LGUI_LSHFT_NavM {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo NavM>
+                , <&macro_press &sk LGUI>
+                , <&macro_press &sk LSHFT>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LSHFT>
+                , <&macro_release &sk LGUI>
+                , <&macro_release &mo NavM>
+                ;
+        };
+        macro_LCTL_Sym: macro_LCTL_Sym {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo Sym>
+                , <&macro_press &sk LCTL>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LCTL>
+                , <&macro_release &mo Sym>
+                ;
+        };
+        macro_LGUI_SymM: macro_LGUI_SymM {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo SymM>
+                , <&macro_press &sk LGUI>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LGUI>
+                , <&macro_release &mo SymM>
+                ;
+        };
+        macro_LGUI_Sym: macro_LGUI_Sym {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo Sym>
+                , <&macro_press &sk LGUI>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LGUI>
+                , <&macro_release &mo Sym>
+                ;
+        };
+        macro_LCTL_SymM: macro_LCTL_SymM {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo SymM>
+                , <&macro_press &sk LCTL>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LCTL>
+                , <&macro_release &mo SymM>
+                ;
+        };
+        macro_LALT_Sym: macro_LALT_Sym {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo Sym>
+                , <&macro_press &sk LALT>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LALT>
+                , <&macro_release &mo Sym>
+                ;
+        };
+        macro_LSHFT_Sym: macro_LSHFT_Sym {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo Sym>
+                , <&macro_press &sk LSHFT>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LSHFT>
+                , <&macro_release &mo Sym>
+                ;
+        };
+        macro_LGUI_LCTL_Sym: macro_LGUI_LCTL_Sym {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo Sym>
+                , <&macro_press &sk LGUI>
+                , <&macro_press &sk LCTL>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LCTL>
+                , <&macro_release &sk LGUI>
+                , <&macro_release &mo Sym>
+                ;
+        };
+        macro_LCTL_LGUI_SymM: macro_LCTL_LGUI_SymM {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo SymM>
+                , <&macro_press &sk LCTL>
+                , <&macro_press &sk LGUI>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LGUI>
+                , <&macro_release &sk LCTL>
+                , <&macro_release &mo SymM>
+                ;
+        };
+        macro_LGUI_LALT_Sym: macro_LGUI_LALT_Sym {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo Sym>
+                , <&macro_press &sk LGUI>
+                , <&macro_press &sk LALT>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LALT>
+                , <&macro_release &sk LGUI>
+                , <&macro_release &mo Sym>
+                ;
+        };
+        macro_LCTL_LALT_SymM: macro_LCTL_LALT_SymM {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo SymM>
+                , <&macro_press &sk LCTL>
+                , <&macro_press &sk LALT>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LALT>
+                , <&macro_release &sk LCTL>
+                , <&macro_release &mo SymM>
+                ;
+        };
+        macro_LGUI_LSHFT_Sym: macro_LGUI_LSHFT_Sym {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo Sym>
+                , <&macro_press &sk LGUI>
+                , <&macro_press &sk LSHFT>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LSHFT>
+                , <&macro_release &sk LGUI>
+                , <&macro_release &mo Sym>
+                ;
+        };
+        macro_LCTL_LSHFT_SymM: macro_LCTL_LSHFT_SymM {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo SymM>
+                , <&macro_press &sk LCTL>
+                , <&macro_press &sk LSHFT>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LSHFT>
+                , <&macro_release &sk LCTL>
+                , <&macro_release &mo SymM>
+                ;
+        };
+        macro_LCTL_LALT_Sym: macro_LCTL_LALT_Sym {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo Sym>
+                , <&macro_press &sk LCTL>
+                , <&macro_press &sk LALT>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LALT>
+                , <&macro_release &sk LCTL>
+                , <&macro_release &mo Sym>
+                ;
+        };
+        macro_LGUI_LALT_SymM: macro_LGUI_LALT_SymM {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo SymM>
+                , <&macro_press &sk LGUI>
+                , <&macro_press &sk LALT>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LALT>
+                , <&macro_release &sk LGUI>
+                , <&macro_release &mo SymM>
+                ;
+        };
+        macro_LCTL_LSHFT_Sym: macro_LCTL_LSHFT_Sym {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo Sym>
+                , <&macro_press &sk LCTL>
+                , <&macro_press &sk LSHFT>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LSHFT>
+                , <&macro_release &sk LCTL>
+                , <&macro_release &mo Sym>
+                ;
+        };
+        macro_LGUI_LSHFT_SymM: macro_LGUI_LSHFT_SymM {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings
+                = <&macro_press &mo SymM>
+                , <&macro_press &sk LGUI>
+                , <&macro_press &sk LSHFT>
+                , <&macro_pause_for_release>
+                , <&macro_release &sk LSHFT>
+                , <&macro_release &sk LGUI>
+                , <&macro_release &mo SymM>
                 ;
         };
     };
@@ -612,144 +797,228 @@
             key-positions = <4 5>;
             bindings = <&sys_reset>;
         };
-        combo_LCTL_NAV {
+        combo_LCTL_Nav {
             timeout-ms = <50>;
             key-positions = <35 14>;
-            bindings = <&macro_LCTL_NAV>;
-            layers = <0 2 4 6 8 10>;
+            bindings = <&macro_LCTL_Nav>;
+            layers = <0 2>;
             slow-release;
         };
-        combo_LGUI_NAV {
+        combo_LGUI_NavM {
             timeout-ms = <50>;
             key-positions = <35 14>;
-            bindings = <&macro_LGUI_NAV>;
-            layers = <1 3 5 7 9 10>;
+            bindings = <&macro_LGUI_NavM>;
+            layers = <1 3>;
             slow-release;
         };
-        combo_LALT_NAV {
+        combo_LGUI_Nav {
+            timeout-ms = <50>;
+            key-positions = <35 13>;
+            bindings = <&macro_LGUI_Nav>;
+            layers = <0 2>;
+            slow-release;
+        };
+        combo_LCTL_NavM {
+            timeout-ms = <50>;
+            key-positions = <35 13>;
+            bindings = <&macro_LCTL_NavM>;
+            layers = <1 3>;
+            slow-release;
+        };
+        combo_LALT_Nav {
             timeout-ms = <50>;
             key-positions = <35 12>;
-            bindings = <&macro_LALT_NAV>;
-            layers = <0 2 4 6 8 10>;
+            bindings = <&macro_LALT_Nav>;
+            layers = <0 2>;
             slow-release;
         };
-        combo_LSHFT_NAV {
+        combo_LSHFT_Nav {
             timeout-ms = <50>;
             key-positions = <35 11>;
-            bindings = <&macro_LSHFT_NAV>;
-            layers = <0 2 4 6 8 10>;
+            bindings = <&macro_LSHFT_Nav>;
+            layers = <0 2>;
             slow-release;
         };
-        combo_LGUI_LCTL_NAV {
+        combo_LGUI_LCTL_Nav {
             timeout-ms = <50>;
             key-positions = <35 13 14>;
-            bindings = <&macro_LGUI_LCTL_NAV>;
-            layers = <0 2 4 6 8 10>;
+            bindings = <&macro_LGUI_LCTL_Nav>;
+            layers = <0 2>;
             slow-release;
         };
-        combo_LCTL_LGUI_NAV {
+        combo_LCTL_LGUI_NavM {
             timeout-ms = <50>;
             key-positions = <35 13 14>;
-            bindings = <&macro_LCTL_LGUI_NAV>;
-            layers = <1 3 5 7 9 10>;
+            bindings = <&macro_LCTL_LGUI_NavM>;
+            layers = <1 3>;
             slow-release;
         };
-        combo_LGUI_LALT_NAV {
+        combo_LGUI_LALT_Nav {
             timeout-ms = <50>;
             key-positions = <35 13 12>;
-            bindings = <&macro_LGUI_LALT_NAV>;
-            layers = <0 2 4 6 8 10>;
+            bindings = <&macro_LGUI_LALT_Nav>;
+            layers = <0 2>;
             slow-release;
         };
-        combo_LCTL_LALT_NAV {
+        combo_LCTL_LALT_NavM {
             timeout-ms = <50>;
             key-positions = <35 13 12>;
-            bindings = <&macro_LCTL_LALT_NAV>;
-            layers = <1 3 5 7 9 10>;
+            bindings = <&macro_LCTL_LALT_NavM>;
+            layers = <1 3>;
             slow-release;
         };
-        combo_LGUI_LSHFT_NAV {
+        combo_LGUI_LSHFT_Nav {
             timeout-ms = <50>;
             key-positions = <35 13 11>;
-            bindings = <&macro_LGUI_LSHFT_NAV>;
-            layers = <0 2 4 6 8 10>;
+            bindings = <&macro_LGUI_LSHFT_Nav>;
+            layers = <0 2>;
             slow-release;
         };
-        combo_LCTL_LSHFT_NAV {
+        combo_LCTL_LSHFT_NavM {
             timeout-ms = <50>;
             key-positions = <35 13 11>;
-            bindings = <&macro_LCTL_LSHFT_NAV>;
-            layers = <1 3 5 7 9 10>;
+            bindings = <&macro_LCTL_LSHFT_NavM>;
+            layers = <1 3>;
             slow-release;
         };
-        combo_LCTL_SYM {
+        combo_LCTL_LALT_Nav {
+            timeout-ms = <50>;
+            key-positions = <35 14 12>;
+            bindings = <&macro_LCTL_LALT_Nav>;
+            layers = <0 2>;
+            slow-release;
+        };
+        combo_LGUI_LALT_NavM {
+            timeout-ms = <50>;
+            key-positions = <35 14 12>;
+            bindings = <&macro_LGUI_LALT_NavM>;
+            layers = <1 3>;
+            slow-release;
+        };
+        combo_LCTL_LSHFT_Nav {
+            timeout-ms = <50>;
+            key-positions = <35 14 11>;
+            bindings = <&macro_LCTL_LSHFT_Nav>;
+            layers = <0 2>;
+            slow-release;
+        };
+        combo_LGUI_LSHFT_NavM {
+            timeout-ms = <50>;
+            key-positions = <35 14 11>;
+            bindings = <&macro_LGUI_LSHFT_NavM>;
+            layers = <1 3>;
+            slow-release;
+        };
+        combo_LCTL_Sym {
             timeout-ms = <50>;
             key-positions = <38 14>;
-            bindings = <&macro_LCTL_SYM>;
-            layers = <0 2 4 6 8 10>;
+            bindings = <&macro_LCTL_Sym>;
+            layers = <0 2>;
             slow-release;
         };
-        combo_LGUI_SYM {
+        combo_LGUI_SymM {
             timeout-ms = <50>;
             key-positions = <38 14>;
-            bindings = <&macro_LGUI_SYM>;
-            layers = <1 3 5 7 9 10>;
+            bindings = <&macro_LGUI_SymM>;
+            layers = <1 3>;
             slow-release;
         };
-        combo_LALT_SYM {
+        combo_LGUI_Sym {
+            timeout-ms = <50>;
+            key-positions = <38 13>;
+            bindings = <&macro_LGUI_Sym>;
+            layers = <0 2>;
+            slow-release;
+        };
+        combo_LCTL_SymM {
+            timeout-ms = <50>;
+            key-positions = <38 13>;
+            bindings = <&macro_LCTL_SymM>;
+            layers = <1 3>;
+            slow-release;
+        };
+        combo_LALT_Sym {
             timeout-ms = <50>;
             key-positions = <38 12>;
-            bindings = <&macro_LALT_SYM>;
-            layers = <0 2 4 6 8 10>;
+            bindings = <&macro_LALT_Sym>;
+            layers = <0 2>;
             slow-release;
         };
-        combo_LSHFT_SYM {
+        combo_LSHFT_Sym {
             timeout-ms = <50>;
             key-positions = <38 11>;
-            bindings = <&macro_LSHFT_SYM>;
-            layers = <0 2 4 6 8 10>;
+            bindings = <&macro_LSHFT_Sym>;
+            layers = <0 2>;
             slow-release;
         };
-        combo_LGUI_LCTL_SYM {
+        combo_LGUI_LCTL_Sym {
             timeout-ms = <50>;
             key-positions = <38 13 14>;
-            bindings = <&macro_LGUI_LCTL_SYM>;
-            layers = <0 2 4 6 8 10>;
+            bindings = <&macro_LGUI_LCTL_Sym>;
+            layers = <0 2>;
             slow-release;
         };
-        combo_LCTL_LGUI_SYM {
+        combo_LCTL_LGUI_SymM {
             timeout-ms = <50>;
             key-positions = <38 13 14>;
-            bindings = <&macro_LCTL_LGUI_SYM>;
-            layers = <1 3 5 7 9 10>;
+            bindings = <&macro_LCTL_LGUI_SymM>;
+            layers = <1 3>;
             slow-release;
         };
-        combo_LGUI_LALT_SYM {
+        combo_LGUI_LALT_Sym {
             timeout-ms = <50>;
             key-positions = <38 13 12>;
-            bindings = <&macro_LGUI_LALT_SYM>;
-            layers = <0 2 4 6 8 10>;
+            bindings = <&macro_LGUI_LALT_Sym>;
+            layers = <0 2>;
             slow-release;
         };
-        combo_LCTL_LALT_SYM {
+        combo_LCTL_LALT_SymM {
             timeout-ms = <50>;
             key-positions = <38 13 12>;
-            bindings = <&macro_LCTL_LALT_SYM>;
-            layers = <1 3 5 7 9 10>;
+            bindings = <&macro_LCTL_LALT_SymM>;
+            layers = <1 3>;
             slow-release;
         };
-        combo_LGUI_LSHFT_SYM {
+        combo_LGUI_LSHFT_Sym {
             timeout-ms = <50>;
             key-positions = <38 13 11>;
-            bindings = <&macro_LGUI_LSHFT_SYM>;
-            layers = <0 2 4 6 8 10>;
+            bindings = <&macro_LGUI_LSHFT_Sym>;
+            layers = <0 2>;
             slow-release;
         };
-        combo_LCTL_LSHFT_SYM {
+        combo_LCTL_LSHFT_SymM {
             timeout-ms = <50>;
             key-positions = <38 13 11>;
-            bindings = <&macro_LCTL_LSHFT_SYM>;
-            layers = <1 3 5 7 9 10>;
+            bindings = <&macro_LCTL_LSHFT_SymM>;
+            layers = <1 3>;
+            slow-release;
+        };
+        combo_LCTL_LALT_Sym {
+            timeout-ms = <50>;
+            key-positions = <38 14 12>;
+            bindings = <&macro_LCTL_LALT_Sym>;
+            layers = <0 2>;
+            slow-release;
+        };
+        combo_LGUI_LALT_SymM {
+            timeout-ms = <50>;
+            key-positions = <38 14 12>;
+            bindings = <&macro_LGUI_LALT_SymM>;
+            layers = <1 3>;
+            slow-release;
+        };
+        combo_LCTL_LSHFT_Sym {
+            timeout-ms = <50>;
+            key-positions = <38 14 11>;
+            bindings = <&macro_LCTL_LSHFT_Sym>;
+            layers = <0 2>;
+            slow-release;
+        };
+        combo_LGUI_LSHFT_SymM {
+            timeout-ms = <50>;
+            key-positions = <38 14 11>;
+            bindings = <&macro_LGUI_LSHFT_SymM>;
+            layers = <1 3>;
             slow-release;
         };
     };
@@ -761,79 +1030,79 @@
 
         Graphite {
             bindings = <
-                &kp B &kp L &kp D &kp W &kp Z &sqt_dqt &kp F &kp O &kp U &kp J
-                &kp N &kp R &kp T &kp S &kp G &kp Y &kp H &kp A &kp E &kp I
-                &kp Q &kp X &kp M &kp C &kp V &kp K &kp P &dot_col &kp MINUS &com_sem
+                &kp B &kp L &kp D &kp W &kp Z /**/ &sqt_dqt &kp F &kp O    &kp U     &kp J   
+                &kp N &kp R &kp T &kp S &kp G /**/ &kp Y    &kp H &kp A    &kp E     &kp I   
+                &kp Q &kp X &kp M &kp C &kp V /**/ &kp K    &kp P &dot_col &kp MINUS &com_sem
             >;
         };
         Graphite_mac {
             bindings = <
-                &kp B &kp L &kp D &kp W &kp Z &sqt_dqt &kp F &kp O &kp U &kp J
-                &kp N &kp R &kp T &kp S &kp G &kp Y &kp H &kp A &kp E &kp I
-                &kp Q &kp X &kp M &kp C &kp V &kp K &kp P &dot_col &kp MINUS &com_sem
+                &kp B &kp L &kp D &kp W &kp Z /**/ &sqt_dqt &kp F &kp O    &kp U     &kp J   
+                &kp N &kp R &kp T &kp S &kp G /**/ &kp Y    &kp H &kp A    &kp E     &kp I   
+                &kp Q &kp X &kp M &kp C &kp V /**/ &kp K    &kp P &dot_col &kp MINUS &com_sem
             >;
         };
         Qwerty {
             bindings = <
-                &kp Q &kp W &kp E &kp R &kp T &kp Y &kp U &kp I &kp O &kp P
-                &kp A &kp S &kp D &kp F &kp G &kp H &kp J &kp K &kp L &kp SEMI
-                &kp Z &kp X &kp C &kp V &kp B &kp N &kp M &kp COMMA &kp DOT &kp FSLH
+                &kp Q &kp W &kp E &kp R &kp T /**/ &kp Y &kp U &kp I     &kp O   &kp P   
+                &kp A &kp S &kp D &kp F &kp G /**/ &kp H &kp J &kp K     &kp L   &kp SEMI
+                &kp Z &kp X &kp C &kp V &kp B /**/ &kp N &kp M &kp COMMA &kp DOT &kp FSLH
             >;
         };
         Qwerty_mac {
             bindings = <
-                &kp Q &kp W &kp E &kp R &kp T &kp Y &kp U &kp I &kp O &kp P
-                &kp A &kp S &kp D &kp F &kp G &kp H &kp J &kp K &kp L &kp SEMI
-                &kp Z &kp X &kp C &kp V &kp B &kp N &kp M &kp COMMA &kp DOT &kp FSLH
+                &kp Q &kp W &kp E &kp R &kp T /**/ &kp Y &kp U &kp I     &kp O   &kp P   
+                &kp A &kp S &kp D &kp F &kp G /**/ &kp H &kp J &kp K     &kp L   &kp SEMI
+                &kp Z &kp X &kp C &kp V &kp B /**/ &kp N &kp M &kp COMMA &kp DOT &kp FSLH
             >;
         };
         Nav {
             bindings = <
-                &alt_tab LS(TAB) &pre_tab &nex_tab &kp PRCNT &dot_home &n7_pgdn &n8_pgup &n9_end &kp FSLH
-                &sk SFT &sk ALT &sk MET &sk CTL &kp STAR &eql_left &n4_down &n5_up &n6_right &n0_ret
-                &vi_sav &kp key_repeat &kp TAB &kp ESC &kp QMARK &kp MINUS &kp N1 &kp N2 &kp N3 &kp PLUS
+                &alt_tab LS(TAB)        &pre_tab &nex_tab &kp PRCNT /**/ &dot_home &n7_pgdn &n8_pgup &n9_end   &kp FSLH
+                &sk SFT  &sk ALT        &sk MET  &sk CTL  &kp STAR  /**/ &eql_left &n4_down &n5_up   &n6_right &n0_ret 
+                &vi_sav  &kp key_repeat &kp TAB  &kp ESC  &kp QMARK /**/ &kp MINUS &kp N1   &kp N2   &kp N3    &kp PLUS
             >;
         };
         NavM {
             bindings = <
-                &alt_tab LS(TAB) &pre_tab &nex_tab &kp PRCNT &dot_home_mac &n7_pgdn_mac &n8_pgup_mac &n9_end_mac &kp FSLH
-                &sk SFT &sk ALT &sk MET &sk CTL &kp STAR &eql_left_mac &n4_down_mac &n5_up_mac &n6_right_mac &n0_ret_mac
-                &vi_sav &kp key_repeat &kp TAB &kp ESC &kp QMARK &kp MINUS &kp N1 &kp N2 &kp N3 &kp PLUS
+                &alt_tab LS(TAB)        &pre_tab &nex_tab &kp PRCNT /**/ &dot_home_mac &n7_pgdn_mac &n8_pgup_mac &n9_end_mac   &kp FSLH   
+                &sk SFT  &sk ALT        &sk MET  &sk CTL  &kp STAR  /**/ &eql_left_mac &n4_down_mac &n5_up_mac   &n6_right_mac &n0_ret_mac
+                &vi_sav  &kp key_repeat &kp TAB  &kp ESC  &kp QMARK /**/ &kp MINUS     &kp N1       &kp N2       &kp N3        &kp PLUS   
             >;
         };
         Sym {
             bindings = <
-                &kp GRAVE &kp LT &kp LBKT &kp RBKT &kp GT &kp HOME &kp PG_DN &kp PG_UP &kp END &sk RALT
-                SL(EXCL) AL(GB_AT) ML(LPAR) CL(RPAR) &kp GB_HASH &kp LEFT &kp DOWN &kp UP &kp RIGHT &kp RET
-                &kp AMPS &kp DLLR &kp LBRC &kp RBRC &kp CARET &del_wor &kp BSPC &kp DEL &kp INS &kp GB_BSLH
+                &kp GRAVE &kp LT    &kp LBKT &kp RBKT &kp GT      /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &sk RALT   
+                SL(EXCL)  AL(GB_AT) ML(LPAR) CL(RPAR) &kp GB_HASH /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp RET    
+                &kp AMPS  &kp DLLR  &kp LBRC &kp RBRC &kp CARET   /**/ &del_wor &kp BSPC  &kp DEL   &kp INS   &kp GB_BSLH
             >;
         };
         SymM {
             bindings = <
-                &kp GRAVE &kp LT &kp LBKT &kp RBKT &kp GT &kp HOME &kp PG_DN &kp PG_UP &kp END &sk RALT
-                SL(EXCL) AL(GB_AT) ML(LPAR) CL(RPAR) &kp GB_HASH &kp LEFT &kp DOWN &kp UP &kp RIGHT &kp RET
-                &kp AMPS &kp DLLR &kp LBRC &kp RBRC &kp CARET &del_wor &kp BSPC &kp DEL &kp INS &kp GB_BSLH
+                &kp GRAVE &kp LT    &kp LBKT &kp RBKT &kp GT      /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &sk RALT   
+                SL(EXCL)  AL(GB_AT) ML(LPAR) CL(RPAR) &kp GB_HASH /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp RET    
+                &kp AMPS  &kp DLLR  &kp LBRC &kp RBRC &kp CARET   /**/ &del_wor &kp BSPC  &kp DEL   &kp INS   &kp GB_BSLH
             >;
         };
         Fn {
             bindings = <
-                &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &kp F6 &kp F7 &kp F8 &kp F9 &kp F10
-                &sk SFT &sk ALT &sk MET &sk CTL &kp F11 &kp F12 &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &vi_sav
-                &tog SYS &kp none &kp none &kp none &kp none &kp CAPS &kp C_BRI_DN &kp C_BRI_UP &kp none &kp PSCRN
+                &kp F1   &kp F2   &kp F3   &kp F4   &kp F5   /**/ &kp F6   &kp F7       &kp F8       &kp F9     &kp F10  
+                &sk SFT  &sk ALT  &sk MET  &sk CTL  &kp F11  /**/ &kp F12  &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &vi_sav  
+                &tog SYS &kp none &kp none &kp none &kp none /**/ &kp CAPS &kp C_BRI_DN &kp C_BRI_UP &kp none   &kp PSCRN
             >;
         };
         FnM {
             bindings = <
-                &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &kp F6 &kp F7 &kp F8 &kp F9 &kp F10
-                &sk SFT &sk ALT &sk MET &sk CTL &kp F11 &kp F12 &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &vi_sav
-                &tog SYS &kp none &kp none &kp none &kp none &kp CAPS &kp C_BRI_DN &kp C_BRI_UP &kp none &kp PSCRN
+                &kp F1   &kp F2   &kp F3   &kp F4   &kp F5   /**/ &kp F6   &kp F7       &kp F8       &kp F9     &kp F10  
+                &sk SFT  &sk ALT  &sk MET  &sk CTL  &kp F11  /**/ &kp F12  &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &vi_sav  
+                &tog SYS &kp none &kp none &kp none &kp none /**/ &kp CAPS &kp C_BRI_DN &kp C_BRI_UP &kp none   &kp PSCRN
             >;
         };
         sys {
             bindings = <
-                &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR &bt BT_CLR_ALL &kp none &kp none &kp none &tog GAME
-                &kp none &kp none &kp C_BRI_UP &kp C_BRI_DN &kp sys_reset &kp sys_reset &kp none &kp none &tog QWM &tog QW
-                &out OUT_BLE &out OUT_USB &kp none &kp none &kp bootloader &kp bootloader &kp none &kp none &kp none &tog GRM
+                &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR     /**/ &bt BT_CLR_ALL &kp none &kp none &kp none &tog GAME
+                &kp none     &kp none     &kp C_BRI_UP &kp C_BRI_DN &kp sys_reset  /**/ &kp sys_reset  &kp none &kp none &tog QWM &tog QW  
+                &out OUT_BLE &out OUT_USB &kp none     &kp none     &kp bootloader /**/ &kp bootloader &kp none &kp none &kp none &tog GRM 
             >;
         };
     };

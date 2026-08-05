@@ -75,22 +75,34 @@ class Layer:
     ) -> "Layer":
         """
         Parses a multiline string layout into row structures.
-        Expects 3 rows (Top, Middle, Bottom). Each line has left half and right half.
+        Expects 3 rows (Top, Middle, Bottom). Each line has left and right halves
+        separated by a | character.
+
+        Column indexing is outward from center: index 0 is the innermost key on
+        each half. If the layer defines more columns than the keyboard supports,
+        the excess outer columns are silently skipped. If fewer, the outer
+        keyboard columns are filled with &none.
         """
-        lines = [line.strip() for line in layout.strip().split("\n") if line.strip() and not line.strip().startswith("//")]
+        lines = [
+            line.strip()
+            for line in layout.strip().split("\n")
+            if line.strip() and not line.strip().startswith("//")
+        ]
         parsed_rows = []
-        
+
         for line in lines:
-            tokens = tokenize_line(line)
-            if not tokens:
-                continue
-            
-            # Split tokens into left half and right half
-            mid = len(tokens) // 2
-            left_half = tokens[:mid]
-            right_half = tokens[mid:]
-            
-            parsed_rows.append({"left": left_half, "right": right_half})
+            if "|" not in line:
+                # Fallback: split at midpoint (legacy support)
+                tokens = tokenize_line(line)
+                if not tokens:
+                    continue
+                mid = len(tokens) // 2
+                parsed_rows.append({"left": tokens[:mid], "right": tokens[mid:]})
+            else:
+                left_raw, _, right_raw = line.partition("|")
+                left_half = tokenize_line(left_raw)
+                right_half = tokenize_line(right_raw)
+                parsed_rows.append({"left": left_half, "right": right_half})
 
         return cls(name=name, rows=parsed_rows, thumbs=thumbs, generate_mac=generate_mac)
 
@@ -135,72 +147,76 @@ class Layer:
         keyboard,
         os_target: str,
         registered_behaviors: Dict[str, object],
-    ) -> List[str]:
+    ) -> Tuple[List[Tuple[List[str], List[str]]], List[str]]:
         if self.is_raw_devicetree:
-            return [self.raw_content]
+            return [], [self.raw_content]
 
-        bindings = []
+        rows_bindings = []
         max_cols = keyboard.max_cols
 
         # Process 3 main rows (Top, Mid, Bot)
         for row_idx, row in enumerate(self.rows[:3]):
             left_tokens = row["left"]
             right_tokens = row["right"]
-            
-            num_left = len(left_tokens)
-            num_right = len(right_tokens)
 
-            # Map center-out indices
+            # Column index 0 = innermost (adjacent to center).
+            # Layer tokens are ordered inward-to-outward: token[0] -> col 0, token[1] -> col 1, ...
+            # Left half written left-to-right means token[-1] is innermost, so reverse:
+            #   left_tokens[-1] -> col 0, left_tokens[-2] -> col 1, ...
+            # Right half written left-to-right means token[0] is innermost:
+            #   right_tokens[0] -> col 0, right_tokens[1] -> col 1, ...
+            # Indices >= max_cols are silently dropped; missing cols filled with &none.
+
             left_cols = {}
-            for idx, token in enumerate(left_tokens):
-                col_idx = (num_left - 1) - idx
+            for idx, token in enumerate(reversed(left_tokens)):
+                col_idx = idx  # 0 = innermost
                 if col_idx < max_cols:
                     left_cols[col_idx] = token
-                    
+
             right_cols = {}
             for idx, token in enumerate(right_tokens):
-                col_idx = idx
+                col_idx = idx  # 0 = innermost
                 if col_idx < max_cols:
                     right_cols[col_idx] = token
 
-            row_bindings = []
-            
-            # Left half: from highest col index down to 0
+            left_row_bindings = []
+            right_row_bindings = []
+
+            # Left half: emit from outermost (max_cols-1) down to innermost (0)
             for c in range(max_cols - 1, -1, -1):
                 if c in keyboard.column_overrides:
                     ov = keyboard.column_overrides[c]
                     side_overrides = ov.get("left", [])
                     if row_idx < len(side_overrides):
-                        row_bindings.append(self.format_token(side_overrides[row_idx], os_target, registered_behaviors))
+                        left_row_bindings.append(self.format_token(side_overrides[row_idx], os_target, registered_behaviors))
                         continue
-                
-                tok = left_cols.get(c, "&none")
-                row_bindings.append(self.format_token(tok, os_target, registered_behaviors))
 
-            # Right half: from 0 up to highest col index
+                tok = left_cols.get(c, "&none")
+                left_row_bindings.append(self.format_token(tok, os_target, registered_behaviors))
+
+            # Right half: emit from innermost (0) up to outermost (max_cols-1)
             for c in range(max_cols):
                 if c in keyboard.column_overrides:
                     ov = keyboard.column_overrides[c]
                     side_overrides = ov.get("right", [])
                     if row_idx < len(side_overrides):
-                        row_bindings.append(self.format_token(side_overrides[row_idx], os_target, registered_behaviors))
+                        right_row_bindings.append(self.format_token(side_overrides[row_idx], os_target, registered_behaviors))
                         continue
 
                 tok = right_cols.get(c, "&none")
-                row_bindings.append(self.format_token(tok, os_target, registered_behaviors))
+                right_row_bindings.append(self.format_token(tok, os_target, registered_behaviors))
 
-            bindings.extend(row_bindings)
+            rows_bindings.append((left_row_bindings, right_row_bindings))
 
         # Thumbs
         if self.thumbs:
             thumb_tokens = self.thumbs
         else:
             thumb_tokens = keyboard.get_thumb_bindings(os_target)
-            
-        for t in thumb_tokens:
-            bindings.append(self.format_token(t, os_target, registered_behaviors))
 
-        return bindings
+        thumb_bindings = [self.format_token(t, os_target, registered_behaviors) for t in thumb_tokens]
+
+        return rows_bindings, thumb_bindings
 
     def render_dts(
         self,
@@ -214,13 +230,31 @@ class Layer:
         lines = [f"        {layer_name} {{"]
         lines.append('            bindings = <')
         
-        bindings = self.render_layer_bindings(keyboard, os_target, registered_behaviors)
+        rows_bindings, thumb_bindings = self.render_layer_bindings(keyboard, os_target, registered_behaviors)
         
-        chunk_size = keyboard.max_cols * 2
-        for i in range(0, len(bindings), chunk_size):
-            chunk = bindings[i:i + chunk_size]
-            lines.append(f'                {" ".join(chunk)}')
-            
+        if self.is_raw_devicetree:
+            for b in thumb_bindings:
+                lines.append(f'                {b}')
+        else:
+            # Calculate column widths across all rows for alignment
+            max_cols = keyboard.max_cols
+            col_widths_left = [0] * max_cols
+            col_widths_right = [0] * max_cols
+
+            for left_row, right_row in rows_bindings:
+                for c, tok in enumerate(left_row):
+                    col_widths_left[c] = max(col_widths_left[c], len(tok))
+                for c, tok in enumerate(right_row):
+                    col_widths_right[c] = max(col_widths_right[c], len(tok))
+
+            for left_row, right_row in rows_bindings:
+                left_str = " ".join(tok.ljust(col_widths_left[c]) for c, tok in enumerate(left_row))
+                right_str = " ".join(tok.ljust(col_widths_right[c]) for c, tok in enumerate(right_row))
+                lines.append(f'                {left_str} /**/ {right_str}')
+
+            if thumb_bindings:
+                lines.append(f'                {" ".join(thumb_bindings)}')
+
         lines.append('            >;')
         lines.append('        };')
         return "\n".join(lines)

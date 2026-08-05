@@ -1,5 +1,10 @@
-from typing import List, Union, Optional, Dict
+from __future__ import annotations
+from typing import TYPE_CHECKING, List, Union, Optional, Dict
 from .os_key import OsKey
+
+if TYPE_CHECKING:
+    from .layer import Layer
+
 
 class SimpleCombo:
     def __init__(
@@ -25,24 +30,14 @@ class SimpleCombo:
         layer_indices: Dict[str, int],
         registered_behaviors: Optional[Dict[str, object]] = None,
     ) -> str:
-        # Convert position names (e.g. LT4) to physical key position indices
-        indices = []
-        for p in self.positions:
-            if p in pos_map:
-                indices.append(str(pos_map[p]))
-            else:
-                indices.append(str(p))
-                
+        indices = [str(pos_map.get(p, p)) for p in self.positions]
         lines = [f"        combo_{self.name} {{"]
         lines.append(f'            timeout-ms = <{self.timeout_ms}>;')
         lines.append(f'            key-positions = <{" ".join(indices)}>;')
-        
-        # Render key reference
-        key_str = self.key
-        if not key_str.startswith("&"):
-            key_str = f"&{key_str}"
+
+        key_str = self.key if self.key.startswith("&") else f"&{self.key}"
         lines.append(f'            bindings = <{key_str}>;')
-        
+
         if self.layers:
             layer_nums = []
             for l in self.layers:
@@ -51,65 +46,93 @@ class SimpleCombo:
                     layer_nums.append(str(layer_indices[target_l]))
             if layer_nums:
                 lines.append(f'            layers = <{" ".join(layer_nums)}>;')
-                
+
         if self.slow_release:
             lines.append('            slow-release;')
-            
+
         lines.append('        };')
         return "\n".join(lines)
 
 
 class ModLayerCombo:
     """
-    OS-aware Mod Layer Combo. Generates macro and combo nodes.
-    Scoped strictly to the layers of the target OS environment.
+    Unified OS-aware Mod Layer Combo for 1 or more modifiers.
+
+    - `layer` is a Layer object. The combo activates `layer.name` for linux/default
+      and the mac variant (e.g. `NavM` or `Nav_mac`) for mac targets.
+    - If ANY mod is an OsKey whose `default_kp != mac_kp`, separate macros and combos
+      are emitted for each OS target. Otherwise only one shared combo is emitted.
+    - Combos are scoped to the base (non-functional) layers of the relevant OS.
     """
+
     def __init__(
         self,
-        mod: Union[str, OsKey],
-        layer: str,
+        mods: Union[Union[str, OsKey], List[Union[str, OsKey]]],
+        layer: "Layer",
         positions: List[str],
         timeout_ms: int = 50,
     ):
-        self.mod = mod
+        self.mods: List[Union[str, OsKey]] = mods if isinstance(mods, list) else [mods]
         self.layer = layer
         self.positions = positions
         self.timeout_ms = timeout_ms
 
-    def get_mod_str(self, os_target: str) -> str:
-        if isinstance(self.mod, OsKey):
-            return self.mod.get_kp(os_target)
-        return str(self.mod)
+    # ------------------------------------------------------------------ helpers
 
-    def get_target_layer(self, os_target: str, layer_indices: Dict[str, int]) -> str:
+    def _has_os_split(self) -> bool:
+        """True if any mod produces different keys on linux vs mac."""
+        return any(
+            isinstance(m, OsKey) and m.default_kp != m.mac_kp
+            for m in self.mods
+        )
+
+    def get_mod_strs(self, os_target: str) -> List[str]:
+        return [
+            m.get_kp(os_target) if isinstance(m, OsKey) else str(m)
+            for m in self.mods
+        ]
+
+    def get_target_layer_name(self, os_target: str, layer_indices: Dict[str, int]) -> str:
+        base = self.layer.name
         if os_target == "mac":
-            mac_name = f"{self.layer}M" if f"{self.layer}M" in layer_indices else f"{self.layer}_mac"
-            if mac_name in layer_indices:
-                return mac_name
-        return self.layer
+            for candidate in (f"{base}M", f"{base}_mac"):
+                if candidate in layer_indices:
+                    return candidate
+        return base
 
     def get_macro_name(self, os_target: str, layer_indices: Dict[str, int]) -> str:
-        mod_str = self.get_mod_str(os_target)
-        target_layer = self.get_target_layer(os_target, layer_indices)
-        return f"macro_{mod_str}_{target_layer}"
+        m_strs = self.get_mod_strs(os_target)
+        target_layer = self.get_target_layer_name(os_target, layer_indices)
+        return f"macro_{'_'.join(m_strs)}_{target_layer}"
+
+    def _os_targets(self) -> List[str]:
+        """Return the list of OS targets to generate for this combo."""
+        return ["default", "mac"] if self._has_os_split() else ["default"]
 
     def get_scoped_layers(self, os_target: str, layer_indices: Dict[str, int]) -> List[str]:
+        """
+        Scope the combo to base (non-functional) layers for the given OS.
+        'Base' layers are those with generate_mac=True that serve as the top-level
+        layout layers (Graphite, Qwerty, Game, etc.).
+        """
+        base_layer_names = ["Graphite", "Qwerty", "Game"]
         scoped = []
-        for name, idx in layer_indices.items():
-            is_mac = name.endswith("_mac") or name.endswith("M")
+        for name in base_layer_names:
             if os_target == "mac":
-                if is_mac or name.lower() in ["game", "sys"]:
-                    scoped.append(str(idx))
+                candidate = f"{name}_mac" if f"{name}_mac" in layer_indices else name
             else:
-                if not is_mac or name.lower() in ["game", "sys"]:
-                    scoped.append(str(idx))
+                candidate = name
+            if candidate in layer_indices:
+                scoped.append(str(layer_indices[candidate]))
         return scoped
 
+    # ------------------------------------------------------------------ rendering
+
     def render_macro_dts(self, os_target: str, layer_indices: Dict[str, int]) -> str:
-        mod_str = self.get_mod_str(os_target)
-        target_layer = self.get_target_layer(os_target, layer_indices)
+        m_strs = self.get_mod_strs(os_target)
+        target_layer = self.get_target_layer_name(os_target, layer_indices)
         macro_name = self.get_macro_name(os_target, layer_indices)
-        
+
         lines = [f"        {macro_name}: {macro_name} {{"]
         lines.append('            compatible = "zmk,behavior-macro";')
         lines.append('            #binding-cells = <0>;')
@@ -117,9 +140,11 @@ class ModLayerCombo:
         lines.append('            tap-ms = <0>;')
         lines.append('            bindings')
         lines.append(f'                = <&macro_press &mo {target_layer}>')
-        lines.append(f'                , <&macro_press &sk {mod_str}>')
+        for m in m_strs:
+            lines.append(f'                , <&macro_press &sk {m}>')
         lines.append('                , <&macro_pause_for_release>')
-        lines.append(f'                , <&macro_release &sk {mod_str}>')
+        for m in reversed(m_strs):
+            lines.append(f'                , <&macro_release &sk {m}>')
         lines.append(f'                , <&macro_release &mo {target_layer}>')
         lines.append('                ;')
         lines.append('        };')
@@ -131,14 +156,12 @@ class ModLayerCombo:
         pos_map: Dict[str, int],
         layer_indices: Dict[str, int],
     ) -> str:
-        mod_str = self.get_mod_str(os_target)
-        target_layer = self.get_target_layer(os_target, layer_indices)
-        macro_name = f"macro_{mod_str}_{target_layer}"
-        combo_name = f"combo_{mod_str}_{target_layer}"
-        
+        macro_name = self.get_macro_name(os_target, layer_indices)
+        combo_name = f"combo_{macro_name.replace('macro_', '', 1)}"
+
         indices = [str(pos_map.get(p, p)) for p in self.positions]
         scoped_layers = self.get_scoped_layers(os_target, layer_indices)
-        
+
         lines = [f"        {combo_name} {{"]
         lines.append(f'            timeout-ms = <{self.timeout_ms}>;')
         lines.append(f'            key-positions = <{" ".join(indices)}>;')
@@ -149,100 +172,17 @@ class ModLayerCombo:
         lines.append('        };')
         return "\n".join(lines)
 
+    def render_all_macros(self, layer_indices: Dict[str, int]) -> List[str]:
+        """Return all macro DTS nodes needed for this combo (1 or 2 depending on OS split)."""
+        return [self.render_macro_dts(t, layer_indices) for t in self._os_targets()]
 
-class ModLayerCombo2:
-    """
-    OS-aware Mod Layer Combo with 2 modifiers.
-    Scoped strictly to the layers of the target OS environment.
-    """
-    def __init__(
+    def render_all_combos(
         self,
-        mod1: Union[str, OsKey],
-        mod2: Union[str, OsKey],
-        layer: str,
-        positions: List[str],
-        timeout_ms: int = 50,
-    ):
-        self.mod1 = mod1
-        self.mod2 = mod2
-        self.layer = layer
-        self.positions = positions
-        self.timeout_ms = timeout_ms
-
-    def get_mod_str(self, mod: Union[str, OsKey], os_target: str) -> str:
-        if isinstance(mod, OsKey):
-            return mod.get_kp(os_target)
-        return str(mod)
-
-    def get_target_layer(self, os_target: str, layer_indices: Dict[str, int]) -> str:
-        if os_target == "mac":
-            mac_name = f"{self.layer}M" if f"{self.layer}M" in layer_indices else f"{self.layer}_mac"
-            if mac_name in layer_indices:
-                return mac_name
-        return self.layer
-
-    def get_macro_name(self, os_target: str, layer_indices: Dict[str, int]) -> str:
-        m1 = self.get_mod_str(self.mod1, os_target)
-        m2 = self.get_mod_str(self.mod2, os_target)
-        target_layer = self.get_target_layer(os_target, layer_indices)
-        return f"macro_{m1}_{m2}_{target_layer}"
-
-    def get_scoped_layers(self, os_target: str, layer_indices: Dict[str, int]) -> List[str]:
-        scoped = []
-        for name, idx in layer_indices.items():
-            is_mac = name.endswith("_mac") or name.endswith("M")
-            if os_target == "mac":
-                if is_mac or name.lower() in ["game", "sys"]:
-                    scoped.append(str(idx))
-            else:
-                if not is_mac or name.lower() in ["game", "sys"]:
-                    scoped.append(str(idx))
-        return scoped
-
-    def render_macro_dts(self, os_target: str, layer_indices: Dict[str, int]) -> str:
-        macro_name = self.get_macro_name(os_target, layer_indices)
-        m1 = self.get_mod_str(self.mod1, os_target)
-        m2 = self.get_mod_str(self.mod2, os_target)
-        target_layer = self.get_target_layer(os_target, layer_indices)
-        
-        lines = [f"        {macro_name}: {macro_name} {{"]
-        lines.append('            compatible = "zmk,behavior-macro";')
-        lines.append('            #binding-cells = <0>;')
-        lines.append('            wait-ms = <0>;')
-        lines.append('            tap-ms = <0>;')
-        lines.append('            bindings')
-        lines.append(f'                = <&macro_press &mo {target_layer}>')
-        lines.append(f'                , <&macro_press &sk {m1}>')
-        lines.append(f'                , <&macro_press &sk {m2}>')
-        lines.append('                , <&macro_pause_for_release>')
-        lines.append(f'                , <&macro_release &sk {m2}>')
-        lines.append(f'                , <&macro_release &sk {m1}>')
-        lines.append(f'                , <&macro_release &mo {target_layer}>')
-        lines.append('                ;')
-        lines.append('        };')
-        return "\n".join(lines)
-
-    def render_combo_dts(
-        self,
-        os_target: str,
         pos_map: Dict[str, int],
         layer_indices: Dict[str, int],
-    ) -> str:
-        m1 = self.get_mod_str(self.mod1, os_target)
-        m2 = self.get_mod_str(self.mod2, os_target)
-        target_layer = self.get_target_layer(os_target, layer_indices)
-        macro_name = f"macro_{m1}_{m2}_{target_layer}"
-        combo_name = f"combo_{m1}_{m2}_{target_layer}"
-        
-        indices = [str(pos_map.get(p, p)) for p in self.positions]
-        scoped_layers = self.get_scoped_layers(os_target, layer_indices)
-        
-        lines = [f"        {combo_name} {{"]
-        lines.append(f'            timeout-ms = <{self.timeout_ms}>;')
-        lines.append(f'            key-positions = <{" ".join(indices)}>;')
-        lines.append(f'            bindings = <&{macro_name}>;')
-        if scoped_layers:
-            lines.append(f'            layers = <{" ".join(scoped_layers)}>;')
-        lines.append('            slow-release;')
-        lines.append('        };')
-        return "\n".join(lines)
+    ) -> List[str]:
+        """Return all combo DTS nodes needed for this combo (1 or 2 depending on OS split)."""
+        return [self.render_combo_dts(t, pos_map, layer_indices) for t in self._os_targets()]
+
+    def all_macro_names(self, layer_indices: Dict[str, int]) -> List[str]:
+        return [self.get_macro_name(t, layer_indices) for t in self._os_targets()]

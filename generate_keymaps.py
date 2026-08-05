@@ -11,7 +11,7 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from zmk_gen import (
-    Keyboard, Layer, OsKey, ModLayerCombo, ModLayerCombo2, SimpleCombo,
+    Keyboard, Layer, OsKey, ModLayerCombo, SimpleCombo,
     Macro, ModMorph, NumMorph, TriState, KeymapGenerator,
     CTL_CMD, CMD_CTL, ALT, SFT,
     SL, CL, AL, ML, SR, CR, AR, MR, SYL, SYR
@@ -80,11 +80,11 @@ all_behaviors = [
 # ---------------------------------------------------------------------------
 limoncello = Keyboard(
     name="limoncello",
-    max_cols=6,
+    max_cols=5,
     layout=[
-        ["LT5", "LT4", "LT3", "LT2", "LT1", "LT0", "RT0", "RT1", "RT2", "RT3", "RT4", "RT5"],
-        ["LM5", "LM4", "LM3", "LM2", "LM1", "LM0", "RM0", "RM1", "RM2", "RM3", "RM4", "RM5"],
-        ["LB5", "LB4", "LB3", "LB2", "LB1", "LB0", "RB0", "RB1", "RB2", "RB3", "RB4", "RB5"],
+        ["LT4", "LT3", "LT2", "LT1", "LT0", "RT0", "RT1", "RT2", "RT3", "RT4"],
+        ["LM4", "LM3", "LM2", "LM1", "LM0", "RM0", "RM1", "RM2", "RM3", "RM4"],
+        ["LB4", "LB3", "LB2", "LB1", "LB0", "RB0", "RB1", "RB2", "RB3", "RB4"],
         ["LH3", "LH2", "LH1", "LH0",               "RH0", "RH1", "RH2", "RH3"],
     ],
     thumbs={
@@ -101,7 +101,7 @@ limoncello = Keyboard(
 
 totem = Keyboard(
     name="totem",
-    max_cols=5,
+    max_cols=6,
     layout=[
         ["LT4", "LT3", "LT2", "LT1", "LT0", "RT0", "RT1", "RT2", "RT3", "RT4"],
         ["LM4", "LM3", "LM2", "LM1", "LM0", "RM0", "RM1", "RM2", "RM3", "RM4"],
@@ -185,54 +185,54 @@ all_keyboards = [limoncello, totem, cygnus, discworld, endgame, atreus, pica40]
 graphite = Layer.from_text(
     name="Graphite",
     layout="""
-        B  L  D  W  Z      sqt_dqt F  O    U     J
-        N  R  T  S  G      Y       H  A    E     I
-        Q  X  M  C  V      K       P  dot_col MINUS com_sem
+        B  L  D  W  Z | sqt_dqt F  O       U     J
+        N  R  T  S  G | Y       H  A       E     I
+        Q  X  M  C  V | K       P  dot_col MINUS com_sem
     """
 )
 
 qwerty = Layer.from_text(
     name="Qwerty",
     layout="""
-        Q  W  E  R  T      Y  U  I     O   P
-        A  S  D  F  G      H  J  K     L   SEMI
-        Z  X  C  V  B      N  M  COMMA DOT FSLH
+        Q  W  E  R  T | Y  U  I     O   P
+        A  S  D  F  G | H  J  K     L   SEMI
+        Z  X  C  V  B | N  M  COMMA DOT FSLH
     """
 )
 
 nav = Layer.from_text(
     name="Nav",
     layout="""
-        alt_tab  LS(TAB) pre_tab nex_tab PRCNT     dot_home n7_pgdn n8_pgup n9_end   FSLH
-        &sk SFT  &sk ALT  &sk MET &sk CTL STAR     eql_left n4_down n5_up   n6_right n0_ret
-        vi_sav   key_repeat TAB   ESC    QMARK     MINUS    N1      N2      N3       PLUS
+        alt_tab  LS(TAB)    pre_tab nex_tab PRCNT | dot_home n7_pgdn n8_pgup n9_end   FSLH
+        &sk SFT  &sk ALT    &sk MET &sk CTL STAR  | eql_left n4_down n5_up   n6_right n0_ret
+        vi_sav   key_repeat TAB     ESC     QMARK | MINUS    N1      N2      N3       PLUS
     """
 )
 
 sym = Layer.from_text(
     name="Sym",
     layout="""
-        GRAVE    LT       LBKT     RBKT     GT        HOME     PG_DN    PG_UP    END      &sk RALT
-        SL(EXCL) AL(GB_AT) ML(LPAR) CL(RPAR) GB_HASH   LEFT     DOWN     UP       RIGHT    RET
-        AMPS     DLLR     LBRC     RBRC     CARET     del_wor  BSPC     DEL      INS      GB_BSLH
+        GRAVE    LT        LBKT     RBKT     GT      | HOME    PG_DN PG_UP END   &sk RALT
+        SL(EXCL) AL(GB_AT) ML(LPAR) CL(RPAR) GB_HASH | LEFT    DOWN  UP    RIGHT RET
+        AMPS     DLLR      LBRC     RBRC     CARET   | del_wor BSPC  DEL   INS   GB_BSLH
     """
 )
 
 fn = Layer.from_text(
     name="Fn",
     layout="""
-        F1      F2     F3     F4     F5       F6       F7       F8       F9     F10
-        &sk SFT &sk ALT &sk MET &sk CTL F11     F12      C_VOL_DN C_VOL_UP C_MUTE vi_sav
-        &tog SYS none  none   none   none     CAPS     C_BRI_DN C_BRI_UP none   PSCRN
+        F1       F2      F3      F4      F5   | F6   F7       F8       F9     F10
+        &sk SFT  &sk ALT &sk MET &sk CTL F11  | F12  C_VOL_DN C_VOL_UP C_MUTE vi_sav
+        &tog SYS none    none    none    none | CAPS C_BRI_DN C_BRI_UP none   PSCRN
     """
 )
 
 sys_layer = Layer.from_text(
     name="sys",
     layout="""
-        &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR  &bt BT_CLR_ALL none none none &tog GAME
-        none         none         C_BRI_UP     C_BRI_DN     sys_reset   sys_reset      none none &tog QWM &tog QW
-        &out OUT_BLE &out OUT_USB none         none         bootloader  bootloader     none none none &tog GRM
+        &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR | &bt BT_CLR_ALL none none none     &tog GAME
+        none         none         C_BRI_UP     C_BRI_DN     sys_reset  | sys_reset      none none &tog QWM &tog QW
+        &out OUT_BLE &out OUT_USB none         none         bootloader | bootloader     none none none     &tog GRM
     """,
     generate_mac=False
 )
@@ -247,26 +247,28 @@ combos = [
     SimpleCombo("bootloader", "&bootloader", ["LT0", "LT1", "RT1", "RT0"]),
     SimpleCombo("reset", "&sys_reset", ["LT0", "RT0"]),
 
-    # Linux / Win Combos (CTL_CMD = LCTL, CMD_CTL = LGUI)
-    ModLayerCombo(CTL_CMD, "NAV", ["LH1", "LM1"]),
-    ModLayerCombo(CMD_CTL, "NAV", ["LH1", "LM2"]),
-    ModLayerCombo(ALT, "NAV", ["LH1", "LM3"]),
-    ModLayerCombo(SFT, "NAV", ["LH1", "LM4"]),
-    ModLayerCombo2(CMD_CTL, CTL_CMD, "NAV", ["LH1", "LM2", "LM1"]),
-    ModLayerCombo2(CMD_CTL, ALT, "NAV", ["LH1", "LM2", "LM3"]),
-    ModLayerCombo2(CMD_CTL, SFT, "NAV", ["LH1", "LM2", "LM4"]),
-    ModLayerCombo2(CTL_CMD, ALT, "NAV", ["LH1", "LM1", "LM3"]),
-    ModLayerCombo2(CTL_CMD, SFT, "NAV", ["LH1", "LM1", "LM4"]),
+    # Mod Layer Combos - pass the Layer object directly.
+    # OsKey mods (CTL_CMD, CMD_CTL) auto-generate both linux and mac combos+macros.
+    # Plain string mods (ALT, SFT) are identical across OSs → only one combo is emitted.
+    ModLayerCombo(CTL_CMD, nav, ["LH1", "LM1"]),
+    ModLayerCombo(CMD_CTL, nav, ["LH1", "LM2"]),
+    ModLayerCombo(ALT,     nav, ["LH1", "LM3"]),
+    ModLayerCombo(SFT,     nav, ["LH1", "LM4"]),
+    ModLayerCombo([CMD_CTL, CTL_CMD], nav, ["LH1", "LM2", "LM1"]),
+    ModLayerCombo([CMD_CTL, ALT],     nav, ["LH1", "LM2", "LM3"]),
+    ModLayerCombo([CMD_CTL, SFT],     nav, ["LH1", "LM2", "LM4"]),
+    ModLayerCombo([CTL_CMD, ALT],     nav, ["LH1", "LM1", "LM3"]),
+    ModLayerCombo([CTL_CMD, SFT],     nav, ["LH1", "LM1", "LM4"]),
 
-    ModLayerCombo(CTL_CMD, "SYM", ["RH1", "LM1"]),
-    ModLayerCombo(CMD_CTL, "SYM", ["RH1", "LM2"]),
-    ModLayerCombo(ALT, "SYM", ["RH1", "LM3"]),
-    ModLayerCombo(SFT, "SYM", ["RH1", "LM4"]),
-    ModLayerCombo2(CMD_CTL, CTL_CMD, "SYM", ["RH1", "LM2", "LM1"]),
-    ModLayerCombo2(CMD_CTL, ALT, "SYM", ["RH1", "LM2", "LM3"]),
-    ModLayerCombo2(CMD_CTL, SFT, "SYM", ["RH1", "LM2", "LM4"]),
-    ModLayerCombo2(CTL_CMD, ALT, "SYM", ["RH1", "LM1", "LM3"]),
-    ModLayerCombo2(CTL_CMD, SFT, "SYM", ["RH1", "LM1", "LM4"]),
+    ModLayerCombo(CTL_CMD, sym, ["RH1", "LM1"]),
+    ModLayerCombo(CMD_CTL, sym, ["RH1", "LM2"]),
+    ModLayerCombo(ALT,     sym, ["RH1", "LM3"]),
+    ModLayerCombo(SFT,     sym, ["RH1", "LM4"]),
+    ModLayerCombo([CMD_CTL, CTL_CMD], sym, ["RH1", "LM2", "LM1"]),
+    ModLayerCombo([CMD_CTL, ALT],     sym, ["RH1", "LM2", "LM3"]),
+    ModLayerCombo([CMD_CTL, SFT],     sym, ["RH1", "LM2", "LM4"]),
+    ModLayerCombo([CTL_CMD, ALT],     sym, ["RH1", "LM1", "LM3"]),
+    ModLayerCombo([CTL_CMD, SFT],     sym, ["RH1", "LM1", "LM4"]),
 ]
 
 # ---------------------------------------------------------------------------
