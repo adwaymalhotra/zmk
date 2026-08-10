@@ -1,5 +1,5 @@
 import os
-from typing import List, Dict, Union
+from typing import List, Dict, Union, Optional, Tuple, Any
 from .layout import Keyboard
 from .layer import Layer
 from .os_key import OsKey
@@ -11,14 +11,30 @@ class KeymapGenerator:
         self,
         keyboards: List[Keyboard],
         layers: List[Layer],
-        combos: List[Union[SimpleCombo, ModLayerCombo]],
-        behaviors: List[Union[Behavior, Macro, ModMorph, TriState, HoldTap]],
+        thumbs: Optional[Union[Tuple, List, Dict]] = None,
+        combos: Optional[List[Union[SimpleCombo, ModLayerCombo]]] = None,
+        behaviors: Optional[List[Union[Behavior, Macro, ModMorph, TriState, HoldTap]]] = None,
+        thumb_base: Optional[Union[Tuple, List, Dict]] = None,
+        thumb_extras: Optional[Dict] = None,
     ):
         self.keyboards = keyboards
         self.layers = layers
-        self.combos = combos
-        self.behaviors = behaviors
-        self.registered_behaviors = {b.name: b for b in behaviors}
+        self.combos = combos or []
+        self.behaviors = behaviors or []
+        self.registered_behaviors = {b.name: b for b in self.behaviors}
+        
+        if thumb_base is not None or thumb_extras is not None:
+            self.thumb_base = thumb_base
+            self.thumb_extras = thumb_extras
+        elif isinstance(thumbs, (list, tuple)) and len(thumbs) >= 2:
+            self.thumb_base = thumbs[0]
+            self.thumb_extras = thumbs[1]
+        elif isinstance(thumbs, dict):
+            self.thumb_base = thumbs.get("base", thumbs.get("thumb_base"))
+            self.thumb_extras = thumbs.get("extras", thumbs.get("thumb_extras"))
+        else:
+            self.thumb_base = None
+            self.thumb_extras = None
 
     def build_pos_map(self, keyboard: Keyboard) -> Dict[str, int]:
         pos_map = {}
@@ -138,9 +154,9 @@ class KeymapGenerator:
         lines.append("")
 
         for l in self.layers:
-            lines.append(l.render_dts(keyboard, "default", self.registered_behaviors, layer_indices))
+            lines.append(l.render_dts(keyboard, "default", self.registered_behaviors, layer_indices, default_thumb_base=self.thumb_base, default_thumb_extras=self.thumb_extras))
             if l.generate_mac and l.name in ["Nav", "Sym", "Fn", "Graphite", "Qwerty"]:
-                lines.append(l.render_dts(keyboard, "mac", self.registered_behaviors, layer_indices))
+                lines.append(l.render_dts(keyboard, "mac", self.registered_behaviors, layer_indices, default_thumb_base=self.thumb_base, default_thumb_extras=self.thumb_extras))
 
         lines.append("    };")
         lines.append("};")

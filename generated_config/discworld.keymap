@@ -770,7 +770,7 @@
             bindings = <&kt_on LCTL>, <&kp TAB>, <&kt_off LCTL>;
             ignored-key-positions = <1>;
         };
-        met_tab: met_tab {
+        gui_tab: gui_tab {
             compatible = "zmk,behavior-tri-state";
             #binding-cells = <0>;
             bindings = <&kt_on LGUI>, <&kp TAB>, <&kt_off LGUI>;
@@ -1033,6 +1033,7 @@
                 &kp B &kp L &kp D &kp W &kp Z /**/ &sqt_dqt &kp F &kp O    &kp U     &kp J   
                 &kp N &kp R &kp T &kp S &kp G /**/ &kp Y    &kp H &kp A    &kp E     &kp I   
                 &kp Q &kp X &kp M &kp C &kp V /**/ &kp K    &kp P &dot_col &kp MINUS &com_sem
+                &mo Nav &kp SFT &thm LCTL SPC &mo Sym
             >;
         };
         Graphite_mac {
@@ -1040,6 +1041,7 @@
                 &kp B &kp L &kp D &kp W &kp Z /**/ &sqt_dqt &kp F &kp O    &kp U     &kp J   
                 &kp N &kp R &kp T &kp S &kp G /**/ &kp Y    &kp H &kp A    &kp E     &kp I   
                 &kp Q &kp X &kp M &kp C &kp V /**/ &kp K    &kp P &dot_col &kp MINUS &com_sem
+                &mo NavM &kp SFT &thm LGUI SPC &mo SymM
             >;
         };
         Qwerty {
@@ -1047,6 +1049,7 @@
                 &kp Q &kp W &kp E &kp R &kp T /**/ &kp Y &kp U &kp I     &kp O   &kp P   
                 &kp A &kp S &kp D &kp F &kp G /**/ &kp H &kp J &kp K     &kp L   &kp SEMI
                 &kp Z &kp X &kp C &kp V &kp B /**/ &kp N &kp M &kp COMMA &kp DOT &kp FSLH
+                &mo Nav &kp SFT &thm LCTL SPC &mo Sym
             >;
         };
         Qwerty_mac {
@@ -1054,20 +1057,23 @@
                 &kp Q &kp W &kp E &kp R &kp T /**/ &kp Y &kp U &kp I     &kp O   &kp P   
                 &kp A &kp S &kp D &kp F &kp G /**/ &kp H &kp J &kp K     &kp L   &kp SEMI
                 &kp Z &kp X &kp C &kp V &kp B /**/ &kp N &kp M &kp COMMA &kp DOT &kp FSLH
+                &mo NavM &kp SFT &thm LGUI SPC &mo SymM
             >;
         };
         Nav {
             bindings = <
-                &alt_tab LS(TAB)        &pre_tab &nex_tab &kp PRCNT /**/ &dot_home &n7_pgdn &n8_pgup &n9_end   &kp FSLH
-                &sk SFT  &sk ALT        &sk MET  &sk CTL  &kp STAR  /**/ &eql_left &n4_down &n5_up   &n6_right &n0_ret 
-                &vi_sav  &kp key_repeat &kp TAB  &kp ESC  &kp QMARK /**/ &kp MINUS &kp N1   &kp N2   &kp N3    &kp PLUS
+                &kp win_switch LS(TAB)        &pre_tab &nex_tab &kp PRCNT /**/ &dot_home &n7_pgdn &n8_pgup &n9_end   &kp FSLH
+                &sk SFT        &sk ALT        &sk LGUI &sk LCTL &kp STAR  /**/ &eql_left &n4_down &n5_up   &n6_right &n0_ret 
+                &vi_sav        &kp key_repeat &kp TAB  &kp ESC  &kp QMARK /**/ &kp MINUS &kp N1   &kp N2   &kp N3    &kp PLUS
+                &mo Nav &kp SFT &thm LCTL SPC &mo Sym
             >;
         };
         NavM {
             bindings = <
-                &alt_tab LS(TAB)        &pre_tab &nex_tab &kp PRCNT /**/ &dot_home_mac &n7_pgdn_mac &n8_pgup_mac &n9_end_mac   &kp FSLH   
-                &sk SFT  &sk ALT        &sk MET  &sk CTL  &kp STAR  /**/ &eql_left_mac &n4_down_mac &n5_up_mac   &n6_right_mac &n0_ret_mac
-                &vi_sav  &kp key_repeat &kp TAB  &kp ESC  &kp QMARK /**/ &kp MINUS     &kp N1       &kp N2       &kp N3        &kp PLUS   
+                &kp win_switch LS(TAB)        &pre_tab &nex_tab &kp PRCNT /**/ &dot_home_mac &n7_pgdn_mac &n8_pgup_mac &n9_end_mac   &kp FSLH   
+                &sk SFT        &sk ALT        &sk LCTL &sk LGUI &kp STAR  /**/ &eql_left_mac &n4_down_mac &n5_up_mac   &n6_right_mac &n0_ret_mac
+                &vi_sav        &kp key_repeat &kp TAB  &kp ESC  &kp QMARK /**/ &kp MINUS     &kp N1       &kp N2       &kp N3        &kp PLUS   
+                &mo NavM &kp SFT &thm LGUI SPC &mo SymM
             >;
         };
         Sym {
@@ -1075,6 +1081,7 @@
                 &kp GRAVE &kp LT    &kp LBKT &kp RBKT &kp GT      /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &sk RALT   
                 SL(EXCL)  AL(GB_AT) ML(LPAR) CL(RPAR) &kp GB_HASH /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp RET    
                 &kp AMPS  &kp DLLR  &kp LBRC &kp RBRC &kp CARET   /**/ &del_wor &kp BSPC  &kp DEL   &kp INS   &kp GB_BSLH
+                &mo Nav &kp SFT &thm LCTL SPC &mo Sym
             >;
         };
         SymM {
@@ -1082,20 +1089,23 @@
                 &kp GRAVE &kp LT    &kp LBKT &kp RBKT &kp GT      /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &sk RALT   
                 SL(EXCL)  AL(GB_AT) ML(LPAR) CL(RPAR) &kp GB_HASH /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp RET    
                 &kp AMPS  &kp DLLR  &kp LBRC &kp RBRC &kp CARET   /**/ &del_wor &kp BSPC  &kp DEL   &kp INS   &kp GB_BSLH
+                &mo NavM &kp SFT &thm LGUI SPC &mo SymM
             >;
         };
         Fn {
             bindings = <
                 &kp F1   &kp F2   &kp F3   &kp F4   &kp F5   /**/ &kp F6   &kp F7       &kp F8       &kp F9     &kp F10  
-                &sk SFT  &sk ALT  &sk MET  &sk CTL  &kp F11  /**/ &kp F12  &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &vi_sav  
+                &sk SFT  &sk ALT  &sk LGUI &sk LCTL &kp F11  /**/ &kp F12  &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &vi_sav  
                 &tog SYS &kp none &kp none &kp none &kp none /**/ &kp CAPS &kp C_BRI_DN &kp C_BRI_UP &kp none   &kp PSCRN
+                &mo Nav &kp SFT &thm LCTL SPC &mo Sym
             >;
         };
         FnM {
             bindings = <
                 &kp F1   &kp F2   &kp F3   &kp F4   &kp F5   /**/ &kp F6   &kp F7       &kp F8       &kp F9     &kp F10  
-                &sk SFT  &sk ALT  &sk MET  &sk CTL  &kp F11  /**/ &kp F12  &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &vi_sav  
+                &sk SFT  &sk ALT  &sk LCTL &sk LGUI &kp F11  /**/ &kp F12  &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &vi_sav  
                 &tog SYS &kp none &kp none &kp none &kp none /**/ &kp CAPS &kp C_BRI_DN &kp C_BRI_UP &kp none   &kp PSCRN
+                &mo NavM &kp SFT &thm LGUI SPC &mo SymM
             >;
         };
         sys {
@@ -1103,6 +1113,7 @@
                 &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR     /**/ &bt BT_CLR_ALL &kp none &kp none &kp none &tog GAME
                 &kp none     &kp none     &kp C_BRI_UP &kp C_BRI_DN &kp sys_reset  /**/ &kp sys_reset  &kp none &kp none &tog QWM &tog QW  
                 &out OUT_BLE &out OUT_USB &kp none     &kp none     &kp bootloader /**/ &kp bootloader &kp none &kp none &kp none &tog GRM 
+                &mo Nav &kp SFT &thm LCTL SPC &mo Sym
             >;
         };
     };

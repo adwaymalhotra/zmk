@@ -762,19 +762,19 @@
             compatible = "zmk,behavior-tri-state";
             #binding-cells = <0>;
             bindings = <&kt_on LALT>, <&kp TAB>, <&kt_off LALT>;
-            ignored-key-positions = <2>;
+            ignored-key-positions = <1>;
         };
         ctl_tab: ctl_tab {
             compatible = "zmk,behavior-tri-state";
             #binding-cells = <0>;
             bindings = <&kt_on LCTL>, <&kp TAB>, <&kt_off LCTL>;
-            ignored-key-positions = <2>;
+            ignored-key-positions = <1>;
         };
-        met_tab: met_tab {
+        gui_tab: gui_tab {
             compatible = "zmk,behavior-tri-state";
             #binding-cells = <0>;
             bindings = <&kt_on LGUI>, <&kp TAB>, <&kt_off LGUI>;
-            ignored-key-positions = <2>;
+            ignored-key-positions = <1>;
         };
     };
 };
@@ -784,239 +784,239 @@
         compatible = "zmk,combos";
         combo_degree {
             timeout-ms = <50>;
-            key-positions = <1 13>;
+            key-positions = <0 10>;
             bindings = <&uc_deg>;
         };
         combo_bootloader {
             timeout-ms = <50>;
-            key-positions = <5 4 7 6>;
+            key-positions = <4 3 6 5>;
             bindings = <&bootloader>;
         };
         combo_reset {
             timeout-ms = <50>;
-            key-positions = <5 6>;
+            key-positions = <4 5>;
             bindings = <&sys_reset>;
         };
         combo_LCTL_Nav {
             timeout-ms = <50>;
-            key-positions = <38 16>;
+            key-positions = <33 13>;
             bindings = <&macro_LCTL_Nav>;
             layers = <0 2>;
             slow-release;
         };
         combo_LGUI_NavM {
             timeout-ms = <50>;
-            key-positions = <38 16>;
+            key-positions = <33 13>;
             bindings = <&macro_LGUI_NavM>;
             layers = <1 3>;
             slow-release;
         };
         combo_LGUI_Nav {
             timeout-ms = <50>;
-            key-positions = <38 15>;
+            key-positions = <33 12>;
             bindings = <&macro_LGUI_Nav>;
             layers = <0 2>;
             slow-release;
         };
         combo_LCTL_NavM {
             timeout-ms = <50>;
-            key-positions = <38 15>;
+            key-positions = <33 12>;
             bindings = <&macro_LCTL_NavM>;
             layers = <1 3>;
             slow-release;
         };
         combo_LALT_Nav {
             timeout-ms = <50>;
-            key-positions = <38 14>;
+            key-positions = <33 11>;
             bindings = <&macro_LALT_Nav>;
             layers = <0 2>;
             slow-release;
         };
         combo_LSHFT_Nav {
             timeout-ms = <50>;
-            key-positions = <38 13>;
+            key-positions = <33 10>;
             bindings = <&macro_LSHFT_Nav>;
             layers = <0 2>;
             slow-release;
         };
         combo_LGUI_LCTL_Nav {
             timeout-ms = <50>;
-            key-positions = <38 15 16>;
+            key-positions = <33 12 13>;
             bindings = <&macro_LGUI_LCTL_Nav>;
             layers = <0 2>;
             slow-release;
         };
         combo_LCTL_LGUI_NavM {
             timeout-ms = <50>;
-            key-positions = <38 15 16>;
+            key-positions = <33 12 13>;
             bindings = <&macro_LCTL_LGUI_NavM>;
             layers = <1 3>;
             slow-release;
         };
         combo_LGUI_LALT_Nav {
             timeout-ms = <50>;
-            key-positions = <38 15 14>;
+            key-positions = <33 12 11>;
             bindings = <&macro_LGUI_LALT_Nav>;
             layers = <0 2>;
             slow-release;
         };
         combo_LCTL_LALT_NavM {
             timeout-ms = <50>;
-            key-positions = <38 15 14>;
+            key-positions = <33 12 11>;
             bindings = <&macro_LCTL_LALT_NavM>;
             layers = <1 3>;
             slow-release;
         };
         combo_LGUI_LSHFT_Nav {
             timeout-ms = <50>;
-            key-positions = <38 15 13>;
+            key-positions = <33 12 10>;
             bindings = <&macro_LGUI_LSHFT_Nav>;
             layers = <0 2>;
             slow-release;
         };
         combo_LCTL_LSHFT_NavM {
             timeout-ms = <50>;
-            key-positions = <38 15 13>;
+            key-positions = <33 12 10>;
             bindings = <&macro_LCTL_LSHFT_NavM>;
             layers = <1 3>;
             slow-release;
         };
         combo_LCTL_LALT_Nav {
             timeout-ms = <50>;
-            key-positions = <38 16 14>;
+            key-positions = <33 13 11>;
             bindings = <&macro_LCTL_LALT_Nav>;
             layers = <0 2>;
             slow-release;
         };
         combo_LGUI_LALT_NavM {
             timeout-ms = <50>;
-            key-positions = <38 16 14>;
+            key-positions = <33 13 11>;
             bindings = <&macro_LGUI_LALT_NavM>;
             layers = <1 3>;
             slow-release;
         };
         combo_LCTL_LSHFT_Nav {
             timeout-ms = <50>;
-            key-positions = <38 16 13>;
+            key-positions = <33 13 10>;
             bindings = <&macro_LCTL_LSHFT_Nav>;
             layers = <0 2>;
             slow-release;
         };
         combo_LGUI_LSHFT_NavM {
             timeout-ms = <50>;
-            key-positions = <38 16 13>;
+            key-positions = <33 13 10>;
             bindings = <&macro_LGUI_LSHFT_NavM>;
             layers = <1 3>;
             slow-release;
         };
         combo_LCTL_Sym {
             timeout-ms = <50>;
-            key-positions = <41 16>;
+            key-positions = <36 13>;
             bindings = <&macro_LCTL_Sym>;
             layers = <0 2>;
             slow-release;
         };
         combo_LGUI_SymM {
             timeout-ms = <50>;
-            key-positions = <41 16>;
+            key-positions = <36 13>;
             bindings = <&macro_LGUI_SymM>;
             layers = <1 3>;
             slow-release;
         };
         combo_LGUI_Sym {
             timeout-ms = <50>;
-            key-positions = <41 15>;
+            key-positions = <36 12>;
             bindings = <&macro_LGUI_Sym>;
             layers = <0 2>;
             slow-release;
         };
         combo_LCTL_SymM {
             timeout-ms = <50>;
-            key-positions = <41 15>;
+            key-positions = <36 12>;
             bindings = <&macro_LCTL_SymM>;
             layers = <1 3>;
             slow-release;
         };
         combo_LALT_Sym {
             timeout-ms = <50>;
-            key-positions = <41 14>;
+            key-positions = <36 11>;
             bindings = <&macro_LALT_Sym>;
             layers = <0 2>;
             slow-release;
         };
         combo_LSHFT_Sym {
             timeout-ms = <50>;
-            key-positions = <41 13>;
+            key-positions = <36 10>;
             bindings = <&macro_LSHFT_Sym>;
             layers = <0 2>;
             slow-release;
         };
         combo_LGUI_LCTL_Sym {
             timeout-ms = <50>;
-            key-positions = <41 15 16>;
+            key-positions = <36 12 13>;
             bindings = <&macro_LGUI_LCTL_Sym>;
             layers = <0 2>;
             slow-release;
         };
         combo_LCTL_LGUI_SymM {
             timeout-ms = <50>;
-            key-positions = <41 15 16>;
+            key-positions = <36 12 13>;
             bindings = <&macro_LCTL_LGUI_SymM>;
             layers = <1 3>;
             slow-release;
         };
         combo_LGUI_LALT_Sym {
             timeout-ms = <50>;
-            key-positions = <41 15 14>;
+            key-positions = <36 12 11>;
             bindings = <&macro_LGUI_LALT_Sym>;
             layers = <0 2>;
             slow-release;
         };
         combo_LCTL_LALT_SymM {
             timeout-ms = <50>;
-            key-positions = <41 15 14>;
+            key-positions = <36 12 11>;
             bindings = <&macro_LCTL_LALT_SymM>;
             layers = <1 3>;
             slow-release;
         };
         combo_LGUI_LSHFT_Sym {
             timeout-ms = <50>;
-            key-positions = <41 15 13>;
+            key-positions = <36 12 10>;
             bindings = <&macro_LGUI_LSHFT_Sym>;
             layers = <0 2>;
             slow-release;
         };
         combo_LCTL_LSHFT_SymM {
             timeout-ms = <50>;
-            key-positions = <41 15 13>;
+            key-positions = <36 12 10>;
             bindings = <&macro_LCTL_LSHFT_SymM>;
             layers = <1 3>;
             slow-release;
         };
         combo_LCTL_LALT_Sym {
             timeout-ms = <50>;
-            key-positions = <41 16 14>;
+            key-positions = <36 13 11>;
             bindings = <&macro_LCTL_LALT_Sym>;
             layers = <0 2>;
             slow-release;
         };
         combo_LGUI_LALT_SymM {
             timeout-ms = <50>;
-            key-positions = <41 16 14>;
+            key-positions = <36 13 11>;
             bindings = <&macro_LGUI_LALT_SymM>;
             layers = <1 3>;
             slow-release;
         };
         combo_LCTL_LSHFT_Sym {
             timeout-ms = <50>;
-            key-positions = <41 16 13>;
+            key-positions = <36 13 10>;
             bindings = <&macro_LCTL_LSHFT_Sym>;
             layers = <0 2>;
             slow-release;
         };
         combo_LGUI_LSHFT_SymM {
             timeout-ms = <50>;
-            key-positions = <41 16 13>;
+            key-positions = <36 13 10>;
             bindings = <&macro_LGUI_LSHFT_SymM>;
             layers = <1 3>;
             slow-release;
@@ -1030,90 +1030,90 @@
 
         Graphite {
             bindings = <
-                &kp TAB     &kp B &kp L &kp D &kp W &kp Z /**/ &sqt_dqt &kp F &kp O    &kp U     &kp J    &kp BSPC    
-                &mt MET ESC &kp N &kp R &kp T &kp S &kp G /**/ &kp Y    &kp H &kp A    &kp E     &kp I    &mt MET FSLH
-                &kp LALT    &kp Q &kp X &kp M &kp C &kp V /**/ &kp K    &kp P &dot_col &kp MINUS &com_sem &kp RET     
-                &lt SYS TAB &mt MET ESC &mt MET BSPC &lt SYS RET
+                &kp B &kp L &kp D &kp W &kp Z /**/ &sqt_dqt &kp F &kp O    &kp U     &kp J   
+                &kp N &kp R &kp T &kp S &kp G /**/ &kp Y    &kp H &kp A    &kp E     &kp I   
+                &kp Q &kp X &kp M &kp C &kp V /**/ &kp K    &kp P &dot_col &kp MINUS &com_sem
+                &mt MET TAB &lt SYS GRAVE &mo Nav &kp SFT &mt LALT ESC &mt LALT RET &thm LCTL SPC &mo Sym &lt SYS FSLH &mt SFT BSPC
             >;
         };
         Graphite_mac {
             bindings = <
-                &kp TAB     &kp B &kp L &kp D &kp W &kp Z /**/ &sqt_dqt &kp F &kp O    &kp U     &kp J    &kp BSPC    
-                &mt MET ESC &kp N &kp R &kp T &kp S &kp G /**/ &kp Y    &kp H &kp A    &kp E     &kp I    &mt MET FSLH
-                &kp LALT    &kp Q &kp X &kp M &kp C &kp V /**/ &kp K    &kp P &dot_col &kp MINUS &com_sem &kp RET     
-                &lt SYSM TAB &mt MET ESC &mt MET BSPC &lt SYSM RET
+                &kp B &kp L &kp D &kp W &kp Z /**/ &sqt_dqt &kp F &kp O    &kp U     &kp J   
+                &kp N &kp R &kp T &kp S &kp G /**/ &kp Y    &kp H &kp A    &kp E     &kp I   
+                &kp Q &kp X &kp M &kp C &kp V /**/ &kp K    &kp P &dot_col &kp MINUS &com_sem
+                &mt MET TAB &lt SYS GRAVE &mo NavM &kp SFT &mt LALT ESC &mt LALT RET &thm LGUI SPC &mo SymM &lt SYS FSLH &mt SFT BSPC
             >;
         };
         Qwerty {
             bindings = <
-                &kp TAB     &kp Q &kp W &kp E &kp R &kp T /**/ &kp Y &kp U &kp I     &kp O   &kp P    &kp BSPC    
-                &mt MET ESC &kp A &kp S &kp D &kp F &kp G /**/ &kp H &kp J &kp K     &kp L   &kp SEMI &mt MET FSLH
-                &kp LALT    &kp Z &kp X &kp C &kp V &kp B /**/ &kp N &kp M &kp COMMA &kp DOT &kp FSLH &kp RET     
-                &lt SYS TAB &mt MET ESC &mt MET BSPC &lt SYS RET
+                &kp Q &kp W &kp E &kp R &kp T /**/ &kp Y &kp U &kp I     &kp O   &kp P   
+                &kp A &kp S &kp D &kp F &kp G /**/ &kp H &kp J &kp K     &kp L   &kp SEMI
+                &kp Z &kp X &kp C &kp V &kp B /**/ &kp N &kp M &kp COMMA &kp DOT &kp FSLH
+                &mt MET TAB &lt SYS GRAVE &mo Nav &kp SFT &mt LALT ESC &mt LALT RET &thm LCTL SPC &mo Sym &lt SYS FSLH &mt SFT BSPC
             >;
         };
         Qwerty_mac {
             bindings = <
-                &kp TAB     &kp Q &kp W &kp E &kp R &kp T /**/ &kp Y &kp U &kp I     &kp O   &kp P    &kp BSPC    
-                &mt MET ESC &kp A &kp S &kp D &kp F &kp G /**/ &kp H &kp J &kp K     &kp L   &kp SEMI &mt MET FSLH
-                &kp LALT    &kp Z &kp X &kp C &kp V &kp B /**/ &kp N &kp M &kp COMMA &kp DOT &kp FSLH &kp RET     
-                &lt SYSM TAB &mt MET ESC &mt MET BSPC &lt SYSM RET
+                &kp Q &kp W &kp E &kp R &kp T /**/ &kp Y &kp U &kp I     &kp O   &kp P   
+                &kp A &kp S &kp D &kp F &kp G /**/ &kp H &kp J &kp K     &kp L   &kp SEMI
+                &kp Z &kp X &kp C &kp V &kp B /**/ &kp N &kp M &kp COMMA &kp DOT &kp FSLH
+                &mt MET TAB &lt SYS GRAVE &mo NavM &kp SFT &mt LALT ESC &mt LALT RET &thm LGUI SPC &mo SymM &lt SYS FSLH &mt SFT BSPC
             >;
         };
         Nav {
             bindings = <
-                &kp TAB     &alt_tab LS(TAB)        &pre_tab &nex_tab &kp PRCNT /**/ &dot_home &n7_pgdn &n8_pgup &n9_end   &kp FSLH &kp BSPC    
-                &mt MET ESC &sk SFT  &sk ALT        &sk MET  &sk CTL  &kp STAR  /**/ &eql_left &n4_down &n5_up   &n6_right &n0_ret  &mt MET FSLH
-                &kp LALT    &vi_sav  &kp key_repeat &kp TAB  &kp ESC  &kp QMARK /**/ &kp MINUS &kp N1   &kp N2   &kp N3    &kp PLUS &kp RET     
-                &lt SYS TAB &mt MET ESC &mt MET BSPC &lt SYS RET
+                &kp win_switch LS(TAB)        &pre_tab &nex_tab &kp PRCNT /**/ &dot_home &n7_pgdn &n8_pgup &n9_end   &kp FSLH
+                &sk SFT        &sk ALT        &sk LGUI &sk LCTL &kp STAR  /**/ &eql_left &n4_down &n5_up   &n6_right &n0_ret 
+                &vi_sav        &kp key_repeat &kp TAB  &kp ESC  &kp QMARK /**/ &kp MINUS &kp N1   &kp N2   &kp N3    &kp PLUS
+                &mt MET TAB &lt SYS GRAVE &mo Nav &kp SFT &mt LALT ESC &mt LALT RET &thm LCTL SPC &mo Sym &lt SYS FSLH &mt SFT BSPC
             >;
         };
         NavM {
             bindings = <
-                &kp TAB     &alt_tab LS(TAB)        &pre_tab &nex_tab &kp PRCNT /**/ &dot_home_mac &n7_pgdn_mac &n8_pgup_mac &n9_end_mac   &kp FSLH    &kp BSPC    
-                &mt MET ESC &sk SFT  &sk ALT        &sk MET  &sk CTL  &kp STAR  /**/ &eql_left_mac &n4_down_mac &n5_up_mac   &n6_right_mac &n0_ret_mac &mt MET FSLH
-                &kp LALT    &vi_sav  &kp key_repeat &kp TAB  &kp ESC  &kp QMARK /**/ &kp MINUS     &kp N1       &kp N2       &kp N3        &kp PLUS    &kp RET     
-                &lt SYSM TAB &mt MET ESC &mt MET BSPC &lt SYSM RET
+                &kp win_switch LS(TAB)        &pre_tab &nex_tab &kp PRCNT /**/ &dot_home_mac &n7_pgdn_mac &n8_pgup_mac &n9_end_mac   &kp FSLH   
+                &sk SFT        &sk ALT        &sk LCTL &sk LGUI &kp STAR  /**/ &eql_left_mac &n4_down_mac &n5_up_mac   &n6_right_mac &n0_ret_mac
+                &vi_sav        &kp key_repeat &kp TAB  &kp ESC  &kp QMARK /**/ &kp MINUS     &kp N1       &kp N2       &kp N3        &kp PLUS   
+                &mt MET TAB &lt SYS GRAVE &mo NavM &kp SFT &mt LALT ESC &mt LALT RET &thm LGUI SPC &mo SymM &lt SYS FSLH &mt SFT BSPC
             >;
         };
         Sym {
             bindings = <
-                &kp TAB     &kp GRAVE &kp LT    &kp LBKT &kp RBKT &kp GT      /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &sk RALT    &kp BSPC    
-                &mt MET ESC SL(EXCL)  AL(GB_AT) ML(LPAR) CL(RPAR) &kp GB_HASH /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp RET     &mt MET FSLH
-                &kp LALT    &kp AMPS  &kp DLLR  &kp LBRC &kp RBRC &kp CARET   /**/ &del_wor &kp BSPC  &kp DEL   &kp INS   &kp GB_BSLH &kp RET     
-                &lt SYS TAB &mt MET ESC &mt MET BSPC &lt SYS RET
+                &kp GRAVE &kp LT    &kp LBKT &kp RBKT &kp GT      /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &sk RALT   
+                SL(EXCL)  AL(GB_AT) ML(LPAR) CL(RPAR) &kp GB_HASH /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp RET    
+                &kp AMPS  &kp DLLR  &kp LBRC &kp RBRC &kp CARET   /**/ &del_wor &kp BSPC  &kp DEL   &kp INS   &kp GB_BSLH
+                &mt MET TAB &lt SYS GRAVE &mo Nav &kp SFT &mt LALT ESC &mt LALT RET &thm LCTL SPC &mo Sym &lt SYS FSLH &mt SFT BSPC
             >;
         };
         SymM {
             bindings = <
-                &kp TAB     &kp GRAVE &kp LT    &kp LBKT &kp RBKT &kp GT      /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &sk RALT    &kp BSPC    
-                &mt MET ESC SL(EXCL)  AL(GB_AT) ML(LPAR) CL(RPAR) &kp GB_HASH /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp RET     &mt MET FSLH
-                &kp LALT    &kp AMPS  &kp DLLR  &kp LBRC &kp RBRC &kp CARET   /**/ &del_wor &kp BSPC  &kp DEL   &kp INS   &kp GB_BSLH &kp RET     
-                &lt SYSM TAB &mt MET ESC &mt MET BSPC &lt SYSM RET
+                &kp GRAVE &kp LT    &kp LBKT &kp RBKT &kp GT      /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &sk RALT   
+                SL(EXCL)  AL(GB_AT) ML(LPAR) CL(RPAR) &kp GB_HASH /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp RET    
+                &kp AMPS  &kp DLLR  &kp LBRC &kp RBRC &kp CARET   /**/ &del_wor &kp BSPC  &kp DEL   &kp INS   &kp GB_BSLH
+                &mt MET TAB &lt SYS GRAVE &mo NavM &kp SFT &mt LALT ESC &mt LALT RET &thm LGUI SPC &mo SymM &lt SYS FSLH &mt SFT BSPC
             >;
         };
         Fn {
             bindings = <
-                &kp TAB     &kp F1   &kp F2   &kp F3   &kp F4   &kp F5   /**/ &kp F6   &kp F7       &kp F8       &kp F9     &kp F10   &kp BSPC    
-                &mt MET ESC &sk SFT  &sk ALT  &sk MET  &sk CTL  &kp F11  /**/ &kp F12  &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &vi_sav   &mt MET FSLH
-                &kp LALT    &tog SYS &kp none &kp none &kp none &kp none /**/ &kp CAPS &kp C_BRI_DN &kp C_BRI_UP &kp none   &kp PSCRN &kp RET     
-                &lt SYS TAB &mt MET ESC &mt MET BSPC &lt SYS RET
+                &kp F1   &kp F2   &kp F3   &kp F4   &kp F5   /**/ &kp F6   &kp F7       &kp F8       &kp F9     &kp F10  
+                &sk SFT  &sk ALT  &sk LGUI &sk LCTL &kp F11  /**/ &kp F12  &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &vi_sav  
+                &tog SYS &kp none &kp none &kp none &kp none /**/ &kp CAPS &kp C_BRI_DN &kp C_BRI_UP &kp none   &kp PSCRN
+                &mt MET TAB &lt SYS GRAVE &mo Nav &kp SFT &mt LALT ESC &mt LALT RET &thm LCTL SPC &mo Sym &lt SYS FSLH &mt SFT BSPC
             >;
         };
         FnM {
             bindings = <
-                &kp TAB     &kp F1   &kp F2   &kp F3   &kp F4   &kp F5   /**/ &kp F6   &kp F7       &kp F8       &kp F9     &kp F10   &kp BSPC    
-                &mt MET ESC &sk SFT  &sk ALT  &sk MET  &sk CTL  &kp F11  /**/ &kp F12  &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &vi_sav   &mt MET FSLH
-                &kp LALT    &tog SYS &kp none &kp none &kp none &kp none /**/ &kp CAPS &kp C_BRI_DN &kp C_BRI_UP &kp none   &kp PSCRN &kp RET     
-                &lt SYSM TAB &mt MET ESC &mt MET BSPC &lt SYSM RET
+                &kp F1   &kp F2   &kp F3   &kp F4   &kp F5   /**/ &kp F6   &kp F7       &kp F8       &kp F9     &kp F10  
+                &sk SFT  &sk ALT  &sk LCTL &sk LGUI &kp F11  /**/ &kp F12  &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &vi_sav  
+                &tog SYS &kp none &kp none &kp none &kp none /**/ &kp CAPS &kp C_BRI_DN &kp C_BRI_UP &kp none   &kp PSCRN
+                &mt MET TAB &lt SYS GRAVE &mo NavM &kp SFT &mt LALT ESC &mt LALT RET &thm LGUI SPC &mo SymM &lt SYS FSLH &mt SFT BSPC
             >;
         };
         sys {
             bindings = <
-                &kp TAB     &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR     /**/ &bt BT_CLR_ALL &kp none &kp none &kp none &tog GAME &kp BSPC    
-                &mt MET ESC &kp none     &kp none     &kp C_BRI_UP &kp C_BRI_DN &kp sys_reset  /**/ &kp sys_reset  &kp none &kp none &tog QWM &tog QW   &mt MET FSLH
-                &kp LALT    &out OUT_BLE &out OUT_USB &kp none     &kp none     &kp bootloader /**/ &kp bootloader &kp none &kp none &kp none &tog GRM  &kp RET     
-                &lt SYS TAB &mt MET ESC &mt MET BSPC &lt SYS RET
+                &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR     /**/ &bt BT_CLR_ALL &kp none &kp none &kp none &tog GAME
+                &kp none     &kp none     &kp C_BRI_UP &kp C_BRI_DN &kp sys_reset  /**/ &kp sys_reset  &kp none &kp none &tog QWM &tog QW  
+                &out OUT_BLE &out OUT_USB &kp none     &kp none     &kp bootloader /**/ &kp bootloader &kp none &kp none &kp none &tog GRM 
+                &mt MET TAB &lt SYS GRAVE &mo Nav &kp SFT &mt LALT ESC &mt LALT RET &thm LCTL SPC &mo Sym &lt SYS FSLH &mt SFT BSPC
             >;
         };
     };

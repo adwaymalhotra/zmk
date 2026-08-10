@@ -65,19 +65,26 @@ n9_end   = NumMorph("n9_end", "N9", "END", mods=[CMD_CTL, ALT])
 # Tri States
 alt_tab  = TriState("alt_tab", start="&kt_on LALT", tap="&kp TAB", end="&kt_off LALT", ignored_positions=["LT3"])
 ctl_tab  = TriState("ctl_tab", start="&kt_on LCTL", tap="&kp TAB", end="&kt_off LCTL", ignored_positions=["LT3"])
-met_tab  = TriState("met_tab", start="&kt_on LGUI", tap="&kp TAB", end="&kt_off LGUI", ignored_positions=["LT3"])
+gui_tab  = TriState("gui_tab", start="&kt_on LGUI", tap="&kp TAB", end="&kt_off LGUI", ignored_positions=["LT3"])
+win_switch = OsKey(default="&alt_tab", mac="&gui_tab")
 
 all_behaviors = [
     uc_deg, uc_gbp, uc_eur, uc_rup, vi_sav, find, pre_wor, nex_wor,
     pre_tab, nex_tab, pre_dsk, nex_dsk, cut, copy, paste, half_dn, half_up, del_wor,
     bsdel, dlr_gbp, amps_eur, star_rup, dot_col, com_sem, sqt_dqt, lpar_lt, rpar_gt,
     eql_left, n4_down, n5_up, n6_right, n0_ret, n7_pgdn, n8_pgup, dot_home, n9_end,
-    alt_tab, ctl_tab, met_tab
+    alt_tab, ctl_tab, gui_tab
 ]
 
 # ---------------------------------------------------------------------------
 # 2. Keyboard Physical Layout Definitions
 # ---------------------------------------------------------------------------
+thumb_base = ("&mo Nav &kp SFT", "&thm CTL_CMD SPC &mo Sym")
+thumb_extras = {
+    "left":  {"left": ["&mt MET TAB", "&lt SYS GRAVE"], "right": ["&mt LALT ESC"]},
+    "right": {"left": ["&mt LALT RET"], "right": ["&lt SYS FSLH", "&mt SFT BSPC"]},
+}
+
 limoncello = Keyboard(
     name="limoncello",
     max_cols=5,
@@ -85,18 +92,8 @@ limoncello = Keyboard(
         ["LT4", "LT3", "LT2", "LT1", "LT0", "RT0", "RT1", "RT2", "RT3", "RT4"],
         ["LM4", "LM3", "LM2", "LM1", "LM0", "RM0", "RM1", "RM2", "RM3", "RM4"],
         ["LB4", "LB3", "LB2", "LB1", "LB0", "RB0", "RB1", "RB2", "RB3", "RB4"],
-        ["LH3", "LH2", "LH1", "LH0",               "RH0", "RH1", "RH2", "RH3"],
+        ["LH3", "LH4", "LH0", "LH1", "LH2", "RH2", "RH1", "RH0", "RH4", "RH3"],
     ],
-    thumbs={
-        "default": ("&lt SYS TAB &mt MET ESC", "&mt MET BSPC &lt SYS RET"),
-        "mac":     ("&lt SYSM TAB &mt MET ESC", "&mt MET BSPC &lt SYSM RET"),
-    },
-    column_overrides={
-        5: {
-            "left":  ["TAB", "&mt MET ESC", "LALT"],
-            "right": ["BSPC", "&mt MET FSLH", "RET"]
-        }
-    }
 )
 
 totem = Keyboard(
@@ -108,10 +105,6 @@ totem = Keyboard(
         ["LB5", "LB4", "LB3", "LB2", "LB1", "LB0", "RB0", "RB1", "RB2", "RB3", "RB4", "RB5"],
         ["LH2", "LH1", "LH0",               "RH0", "RH1", "RH2"],
     ],
-    thumbs={
-        "default": ("&mo NAV &kp SFT", "&thm CTL SPC &mo SYM"),
-        "mac":     ("&mo NAVM &kp SFT", "&thm GUI SPC &mo SYMM"),
-    }
 )
 
 cygnus = Keyboard(
@@ -123,10 +116,6 @@ cygnus = Keyboard(
         ["LB4", "LB3", "LB2", "LB1", "LB0", "RB0", "RB1", "RB2", "RB3", "RB4"],
         ["LH2", "LH1", "LH0",               "RH0", "RH1", "RH2"],
     ],
-    thumbs={
-        "default": ("&thl SYS TAB", "&thl SYS RET"),
-        "mac":     ("&thl SYS TAB", "&thl SYS RET"),
-    }
 )
 
 discworld = Keyboard(
@@ -137,7 +126,7 @@ discworld = Keyboard(
         ["LM4", "LM3", "LM2", "LM1", "LM0", "RM0", "RM1", "RM2", "RM3", "RM4"],
         ["LB4", "LB3", "LB2", "LB1", "LB0", "RB0", "RB1", "RB2", "RB3", "RB4"],
         ["LH1", "LH0",               "RH0", "RH1"],
-    ]
+    ],
 )
 
 endgame = Keyboard(
@@ -149,10 +138,6 @@ endgame = Keyboard(
         ["LB4", "LB3", "LB2", "LB1", "LB0", "RB0", "RB1", "RB2", "RB3", "RB4"],
         ["LH2", "LH1", "LH0",               "RH0", "RH1", "RH2"],
     ],
-    thumbs={
-        "default": ("&lt SYS TAB", "&lt SYS RET"),
-        "mac":     ("&lt SYS TAB", "&lt SYS RET"),
-    }
 )
 
 atreus = Keyboard(
@@ -163,7 +148,7 @@ atreus = Keyboard(
         ["LM4", "LM3", "LM2", "LM1", "LM0", "RM0", "RM1", "RM2", "RM3", "RM4"],
         ["LB4", "LB3", "LB2", "LB1", "LB0", "RB0", "RB1", "RB2", "RB3", "RB4"],
         ["LH5", "LH4", "LH3", "LH2", "LH1", "LH0", "RH0", "RH1", "RH2", "RH3", "RH4", "RH5"],
-    ]
+    ],
 )
 
 pica40 = Keyboard(
@@ -174,7 +159,7 @@ pica40 = Keyboard(
         ["LM5", "LM4", "LM3", "LM2", "LM1", "LM0", "RM0", "RM1", "RM2", "RM3", "RM4", "RM5"],
         ["LB5", "LB4", "LB3", "LB2", "LB1", "LB0", "RB0", "RB1", "RB2", "RB3", "RB4", "RB5"],
         ["LH2", "LH1", "LH0",               "RH0", "RH1", "RH2"],
-    ]
+    ],
 )
 
 all_keyboards = [limoncello, totem, cygnus, discworld, endgame, atreus, pica40]
@@ -203,9 +188,9 @@ qwerty = Layer.from_text(
 nav = Layer.from_text(
     name="Nav",
     layout="""
-        alt_tab  LS(TAB)    pre_tab nex_tab PRCNT | dot_home n7_pgdn n8_pgup n9_end   FSLH
-        &sk SFT  &sk ALT    &sk MET &sk CTL STAR  | eql_left n4_down n5_up   n6_right n0_ret
-        vi_sav   key_repeat TAB     ESC     QMARK | MINUS    N1      N2      N3       PLUS
+        win_switch  LS(TAB)    pre_tab     nex_tab     PRCNT | dot_home n7_pgdn n8_pgup n9_end   FSLH
+        &sk SFT     &sk ALT    &sk CMD_CTL &sk CTL_CMD STAR  | eql_left n4_down n5_up   n6_right n0_ret
+        vi_sav      key_repeat TAB         ESC         QMARK | MINUS    N1      N2      N3       PLUS
     """
 )
 
@@ -221,9 +206,9 @@ sym = Layer.from_text(
 fn = Layer.from_text(
     name="Fn",
     layout="""
-        F1       F2      F3      F4      F5   | F6   F7       F8       F9     F10
-        &sk SFT  &sk ALT &sk MET &sk CTL F11  | F12  C_VOL_DN C_VOL_UP C_MUTE vi_sav
-        &tog SYS none    none    none    none | CAPS C_BRI_DN C_BRI_UP none   PSCRN
+        F1       F2      F3          F4          F5   | F6   F7       F8       F9     F10
+        &sk SFT  &sk ALT &sk CMD_CTL &sk CTL_CMD F11  | F12  C_VOL_DN C_VOL_UP C_MUTE vi_sav
+        &tog SYS none    none        none        none | CAPS C_BRI_DN C_BRI_UP none   PSCRN
     """
 )
 
@@ -247,13 +232,13 @@ combos = [
     SimpleCombo("bootloader", "&bootloader", ["LT0", "LT1", "RT1", "RT0"]),
     SimpleCombo("reset", "&sys_reset", ["LT0", "RT0"]),
 
-    # Mod Layer Combos - pass the Layer object directly.
     # OsKey mods (CTL_CMD, CMD_CTL) auto-generate both linux and mac combos+macros.
-    # Plain string mods (ALT, SFT) are identical across OSs → only one combo is emitted.
+    # Plain string mods (ALT, SFT) are identical across OSs → only one combo is generated.
     ModLayerCombo(CTL_CMD, nav, ["LH1", "LM1"]),
     ModLayerCombo(CMD_CTL, nav, ["LH1", "LM2"]),
     ModLayerCombo(ALT,     nav, ["LH1", "LM3"]),
     ModLayerCombo(SFT,     nav, ["LH1", "LM4"]),
+
     ModLayerCombo([CMD_CTL, CTL_CMD], nav, ["LH1", "LM2", "LM1"]),
     ModLayerCombo([CMD_CTL, ALT],     nav, ["LH1", "LM2", "LM3"]),
     ModLayerCombo([CMD_CTL, SFT],     nav, ["LH1", "LM2", "LM4"]),
@@ -264,6 +249,7 @@ combos = [
     ModLayerCombo(CMD_CTL, sym, ["RH1", "LM2"]),
     ModLayerCombo(ALT,     sym, ["RH1", "LM3"]),
     ModLayerCombo(SFT,     sym, ["RH1", "LM4"]),
+
     ModLayerCombo([CMD_CTL, CTL_CMD], sym, ["RH1", "LM2", "LM1"]),
     ModLayerCombo([CMD_CTL, ALT],     sym, ["RH1", "LM2", "LM3"]),
     ModLayerCombo([CMD_CTL, SFT],     sym, ["RH1", "LM2", "LM4"]),
@@ -279,6 +265,7 @@ if __name__ == "__main__":
     generator = KeymapGenerator(
         keyboards=all_keyboards,
         layers=all_layers,
+        thumbs=(thumb_base, thumb_extras),
         combos=combos,
         behaviors=all_behaviors
     )

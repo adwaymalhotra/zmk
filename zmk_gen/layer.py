@@ -1,7 +1,8 @@
 import re
-from typing import List, Dict, Union, Optional, Tuple
-from .os_key import OsKey
+from typing import List, Dict, Union, Optional, Tuple, Any
+from .os_key import OsKey, CTL_CMD, CMD_CTL
 from .behaviors import HRMCall, ModMorph, Macro
+from .layout import normalize_tokens, assemble_layer_thumbs
 
 def tokenize_line(line: str) -> List[str]:
     """
@@ -20,7 +21,7 @@ def tokenize_line(line: str) -> List[str]:
                 args = raw_words[i+1 : i+3]
                 tokens.append(" ".join([w] + args))
                 i += 1 + len(args)
-            elif beh in ["&sk", "&mo", "&tog", "&out"]:
+            elif beh in ["&sk", "&mo", "&tog", "&out", "&kp", "&kt_on", "&kt_off"]:
                 if i + 1 < len(raw_words):
                     tokens.append(f"{w} {raw_words[i+1]}")
                     i += 2
@@ -54,6 +55,8 @@ class Layer:
         name: str,
         rows: List[List[Union[str, OsKey, HRMCall]]],
         thumbs: Optional[Union[List[str], Tuple[str, ...]]] = None,
+        thumb_base: Optional[Union[Tuple, List, Dict]] = None,
+        thumb_extras: Optional[Dict] = None,
         generate_mac: bool = True,
         is_raw_devicetree: bool = False,
         raw_content: str = "",
@@ -61,6 +64,8 @@ class Layer:
         self.name = name
         self.rows = rows  # List of rows, each row has left half and right half
         self.thumbs = thumbs
+        self.thumb_base = thumb_base
+        self.thumb_extras = thumb_extras
         self.generate_mac = generate_mac
         self.is_raw_devicetree = is_raw_devicetree
         self.raw_content = raw_content
@@ -71,6 +76,8 @@ class Layer:
         name: str,
         layout: str,
         thumbs: Optional[Union[List[str], Tuple[str, ...]]] = None,
+        thumb_base: Optional[Union[Tuple, List, Dict]] = None,
+        thumb_extras: Optional[Dict] = None,
         generate_mac: bool = True,
     ) -> "Layer":
         """
@@ -91,20 +98,19 @@ class Layer:
         parsed_rows = []
 
         for line in lines:
-            if "|" not in line:
-                # Fallback: split at midpoint (legacy support)
-                tokens = tokenize_line(line)
-                if not tokens:
-                    continue
-                mid = len(tokens) // 2
-                parsed_rows.append({"left": tokens[:mid], "right": tokens[mid:]})
-            else:
-                left_raw, _, right_raw = line.partition("|")
-                left_half = tokenize_line(left_raw)
-                right_half = tokenize_line(right_raw)
-                parsed_rows.append({"left": left_half, "right": right_half})
+            left_raw, _, right_raw = line.partition("|")
+            left_half = tokenize_line(left_raw)
+            right_half = tokenize_line(right_raw)
+            parsed_rows.append({"left": left_half, "right": right_half})
 
-        return cls(name=name, rows=parsed_rows, thumbs=thumbs, generate_mac=generate_mac)
+        return cls(
+            name=name,
+            rows=parsed_rows,
+            thumbs=thumbs,
+            thumb_base=thumb_base,
+            thumb_extras=thumb_extras,
+            generate_mac=generate_mac,
+        )
 
     @classmethod
     def raw_layer(cls, name: str, raw_content: str) -> "Layer":
@@ -125,6 +131,23 @@ class Layer:
             
         # Already starts with &
         if t_str.startswith("&"):
+            parts = t_str.split()
+            if len(parts) > 1:
+                new_parts = [parts[0]]
+                for p in parts[1:]:
+                    if p == "CTL_CMD":
+                        new_parts.append(CTL_CMD.get_kp(os_target))
+                    elif p == "CMD_CTL":
+                        new_parts.append(CMD_CTL.get_kp(os_target))
+                    elif os_target == "mac" and p in ["Nav", "Sym", "Fn"]:
+                        new_parts.append(f"{p}M")
+                    elif os_target == "mac" and p in ["NAV", "SYM", "FN"]:
+                        new_parts.append(f"{p}M")
+                    elif os_target == "mac" and p in ["Graphite", "Qwerty"]:
+                        new_parts.append(f"{p}_mac")
+                    else:
+                        new_parts.append(p)
+                return " ".join(new_parts)
             return t_str
             
         # Check if it's a registered behavior (ModMorph, Macro, etc.)
@@ -147,6 +170,8 @@ class Layer:
         keyboard,
         os_target: str,
         registered_behaviors: Dict[str, object],
+        default_thumb_base: Optional[Any] = None,
+        default_thumb_extras: Optional[Any] = None,
     ) -> Tuple[List[Tuple[List[str], List[str]]], List[str]]:
         if self.is_raw_devicetree:
             return [], [self.raw_content]
@@ -209,10 +234,12 @@ class Layer:
             rows_bindings.append((left_row_bindings, right_row_bindings))
 
         # Thumbs
-        if self.thumbs:
-            thumb_tokens = self.thumbs
+        if self.thumbs is not None:
+            thumb_tokens = normalize_tokens(self.thumbs)
         else:
-            thumb_tokens = keyboard.get_thumb_bindings(os_target)
+            t_base = self.thumb_base if self.thumb_base is not None else default_thumb_base
+            t_extras = self.thumb_extras if self.thumb_extras is not None else default_thumb_extras
+            thumb_tokens = keyboard.get_thumb_bindings(os_target=os_target, thumb_base=t_base, thumb_extras=t_extras)
 
         thumb_bindings = [self.format_token(t, os_target, registered_behaviors) for t in thumb_tokens]
 
@@ -224,13 +251,21 @@ class Layer:
         os_target: str,
         registered_behaviors: Dict[str, object],
         layer_indices: Dict[str, int],
+        default_thumb_base: Optional[Any] = None,
+        default_thumb_extras: Optional[Any] = None,
     ) -> str:
         layer_name = f"{self.name}M" if (os_target == "mac" and self.name in ["Nav", "Sym", "Fn"]) else (f"{self.name}_mac" if os_target == "mac" else self.name)
 
         lines = [f"        {layer_name} {{"]
         lines.append('            bindings = <')
         
-        rows_bindings, thumb_bindings = self.render_layer_bindings(keyboard, os_target, registered_behaviors)
+        rows_bindings, thumb_bindings = self.render_layer_bindings(
+            keyboard,
+            os_target,
+            registered_behaviors,
+            default_thumb_base=default_thumb_base,
+            default_thumb_extras=default_thumb_extras,
+        )
         
         if self.is_raw_devicetree:
             for b in thumb_bindings:
@@ -258,3 +293,4 @@ class Layer:
         lines.append('            >;')
         lines.append('        };')
         return "\n".join(lines)
+
