@@ -121,7 +121,7 @@ class KeymapGenerator:
             if isinstance(b, (Macro, Combo, ModLayerCombo)):
                 continue
             if isinstance(b, Behavior):
-                for name, dts in b.render_all_dts(pos_map=pos_map, wrap_root=False):
+                for name, dts in b.render_all_dts(pos_map=pos_map, keyboard=keyboard, wrap_root=False):
                     if name not in emitted_behaviors:
                         lines.append(dts)
                         emitted_behaviors.add(name)

@@ -303,26 +303,80 @@ class HoldTap(Behavior):
     def __init__(
         self,
         name: str,
-        flavor: str,
-        hold: str,
-        tap: str,
-        trigger_pos: str = "",
+        flavor: str = "tap-preferred",
+        hold: str = "&kp",
+        tap: str = "&kp",
+        trigger_pos: Union[str, List[str], List[int]] = "",
         tapping_term_ms: int = 200,
         quick_tap_ms: int = 175,
-        require_prior_idle_ms: Optional[int] = None,
+        require_prior_idle_ms: Optional[int] = 150,
+        bindings: Optional[str] = None,
+        properties: Optional[Dict[str, Any]] = None,
     ):
-        props = {
-            "flavor": f'"{flavor}"',
-            "tapping-term-ms": f"<{tapping_term_ms}>",
-            "quick-tap-ms": f"<{quick_tap_ms}>",
-            "bindings": f"<{hold}>, <{tap}>",
-        }
-        if require_prior_idle_ms is not None:
-            props["require-prior-idle-ms"] = f"<{require_prior_idle_ms}>"
-        if trigger_pos:
-            props["hold-trigger-key-positions"] = f"<{trigger_pos}>"
-            
-        super().__init__(name=name, compatible="zmk,behavior-hold-tap", section="behaviors", binding_cells=2, properties=props)
+        self.flavor = flavor
+        self.hold = hold if hold.startswith("&") else f"&{hold}"
+        self.tap = tap if tap.startswith("&") else f"&{tap}"
+        self.trigger_pos = trigger_pos
+        self.tapping_term_ms = tapping_term_ms
+        self.quick_tap_ms = quick_tap_ms
+        self.require_prior_idle_ms = require_prior_idle_ms
+        self.custom_bindings = bindings
+
+        props = properties.copy() if properties else {}
+        props["flavor"] = f'"{self.flavor}"'
+        props["tapping-term-ms"] = f"<{self.tapping_term_ms}>"
+        props["quick-tap-ms"] = f"<{self.quick_tap_ms}>"
+        if self.require_prior_idle_ms is not None:
+            props["require-prior-idle-ms"] = f"<{self.require_prior_idle_ms}>"
+        props["bindings"] = self.custom_bindings or f"<{self.hold}>, <{self.tap}>"
+
+        super().__init__(
+            name=name,
+            compatible="zmk,behavior-hold-tap",
+            section="behaviors",
+            binding_cells=2,
+            properties=props,
+        )
+
+    def resolve_trigger_pos(
+        self,
+        keyboard: Optional[Any] = None,
+        pos_map: Optional[Dict[str, int]] = None,
+    ) -> str:
+        if not self.trigger_pos:
+            return ""
+        if isinstance(self.trigger_pos, (list, tuple)):
+            if pos_map:
+                resolved = [str(pos_map.get(p, p)) for p in self.trigger_pos]
+            else:
+                resolved = [str(p) for p in self.trigger_pos]
+            return " ".join(resolved)
+        if isinstance(self.trigger_pos, str):
+            tp = self.trigger_pos.strip()
+            if keyboard is not None or pos_map is not None:
+                keys_l = keyboard.get_keys_l(pos_map) if keyboard and hasattr(keyboard, "get_keys_l") else []
+                keys_r = keyboard.get_keys_r(pos_map) if keyboard and hasattr(keyboard, "get_keys_r") else []
+                thumbs = keyboard.get_thumbs_pos(pos_map) if keyboard and hasattr(keyboard, "get_thumbs_pos") else []
+
+                parts = tp.split()
+                resolved_indices = []
+                for p in parts:
+                    if p in ["KEYS_L", "L"]:
+                        resolved_indices.extend(keys_l)
+                    elif p in ["KEYS_R", "R"]:
+                        resolved_indices.extend(keys_r)
+                    elif p in ["THUMBS", "T"]:
+                        resolved_indices.extend(thumbs)
+                    elif pos_map and p in pos_map:
+                        resolved_indices.append(pos_map[p])
+                    elif p.isdigit():
+                        resolved_indices.append(int(p))
+                    else:
+                        resolved_indices.append(p)
+                if resolved_indices:
+                    return " ".join(str(x) for x in resolved_indices)
+            return tp
+        return str(self.trigger_pos)
 
     def render_dts(
         self,
@@ -330,15 +384,23 @@ class HoldTap(Behavior):
         node_name_override: Optional[str] = None,
         name_suffix: str = "",
         pos_map: Optional[Dict[str, int]] = None,
+        keyboard: Optional[Any] = None,
         wrap_root: bool = True,
         indent: str = "        ",
         **kwargs: Any,
     ) -> str:
+        tp_str = self.resolve_trigger_pos(keyboard=keyboard, pos_map=pos_map)
+        if tp_str:
+            self.properties["hold-trigger-key-positions"] = f"<{tp_str}>"
+        elif "hold-trigger-key-positions" in self.properties:
+            del self.properties["hold-trigger-key-positions"]
+
         return super().render_dts(
             os_target=os_target,
             node_name_override=node_name_override,
             name_suffix=name_suffix,
             pos_map=pos_map,
+            keyboard=keyboard,
             wrap_root=wrap_root,
             indent=indent,
             **kwargs,
@@ -347,17 +409,31 @@ class HoldTap(Behavior):
 
 class HRMCall:
     """
-    Represents a Home Row Mod call inside a layer binding, e.g. SL(EXCL), CL(RPAR).
+    Represents a Home Row Mod call inside a layer binding, e.g. SL("EXCL"), CL("RPAR").
+    Targets hrm_l / hrm_r (for keys) or hrl_l / hrl_r (for layers).
     """
     def __init__(self, hand: str, mod: Union[str, OsKey], key: str, is_layer: bool = False):
-        self.hand = hand
+        self.hand = "l" if hand in ["l", "L", "left", "Left"] else "r"
         self.mod = mod
         self.key = key
         self.is_layer = is_layer
 
     def render(self, os_target: str = "default") -> str:
-        behavior_name = f"hr{'l' if self.is_layer else 'm'}{self.hand}"
-        mod_str = self.mod.get_kp(os_target) if isinstance(self.mod, OsKey) else str(self.mod)
+        prefix = "hrl" if self.is_layer else "hrm"
+        behavior_name = f"{prefix}_{self.hand}"
+
+        if isinstance(self.mod, OsKey):
+            mod_str = self.mod.get_kp(os_target)
+        else:
+            mod_str = str(self.mod)
+            if self.is_layer:
+                if os_target == "mac" and mod_str in ["Nav", "Sym", "Fn"]:
+                    mod_str = f"{mod_str}M"
+                elif os_target == "mac" and mod_str in ["NAV", "SYM", "FN"]:
+                    mod_str = f"{mod_str}M"
+                elif os_target == "mac" and mod_str in ["Graphite", "Qwerty"]:
+                    mod_str = f"{mod_str}_mac"
+
         return f"&{behavior_name} {mod_str} {self.key}"
 
     def render_dts(
@@ -521,6 +597,14 @@ def S(key: str) -> str: return f"LS({key})"
 def C(key: str) -> str: return f"LC({key})"
 def A(key: str) -> str: return f"LA({key})"
 def G(key: str) -> str: return f"LG({key})"
+
+# Standard HoldTap behaviors
+hrm_l = HoldTap("hrm_l", flavor="tap-preferred", hold="&kp", tap="&kp", trigger_pos="KEYS_R THUMBS", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
+hrm_r = HoldTap("hrm_r", flavor="tap-preferred", hold="&kp", tap="&kp", trigger_pos="KEYS_L THUMBS", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
+hrl_l = HoldTap("hrl_l", flavor="tap-preferred", hold="&mo", tap="&kp", trigger_pos="KEYS_R THUMBS", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
+hrl_r = HoldTap("hrl_r", flavor="tap-preferred", hold="&mo", tap="&kp", trigger_pos="KEYS_L THUMBS", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
+thm_ht = HoldTap("thm", flavor="balanced", hold="&kp", tap="&kp", trigger_pos="KEYS_L KEYS_R", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
+thl_ht = HoldTap("thl", flavor="balanced", hold="&mo", tap="&kp", trigger_pos="KEYS_L KEYS_R", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
 
 # Home Row Mod Call Helpers
 def SL(key: str) -> HRMCall: return HRMCall("l", SFT, key)

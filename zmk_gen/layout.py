@@ -164,6 +164,48 @@ class Keyboard:
     def clear_registry(cls) -> None:
         cls._registry.clear()
 
+    def get_pos_map(self) -> Dict[str, int]:
+        pos_map = {}
+        idx = 0
+        for row in self.layout:
+            for key_name in row:
+                pos_map[key_name] = idx
+                idx += 1
+        return pos_map
+
+    def get_keys_l(self, pos_map: Optional[Dict[str, int]] = None) -> List[int]:
+        if self.keys_l is not None:
+            return list(self.keys_l)
+        pos_map = pos_map or self.get_pos_map()
+        res = []
+        for row in self.layout:
+            for k in row:
+                if k.startswith("L") and not k.startswith("LH"):
+                    res.append(pos_map.get(k, k))
+        return [int(x) for x in res]
+
+    def get_keys_r(self, pos_map: Optional[Dict[str, int]] = None) -> List[int]:
+        if self.keys_r is not None:
+            return list(self.keys_r)
+        pos_map = pos_map or self.get_pos_map()
+        res = []
+        for row in self.layout:
+            for k in row:
+                if k.startswith("R") and not k.startswith("RH"):
+                    res.append(pos_map.get(k, k))
+        return [int(x) for x in res]
+
+    def get_thumbs_pos(self, pos_map: Optional[Dict[str, int]] = None) -> List[int]:
+        if self.thumbs_pos is not None:
+            return list(self.thumbs_pos)
+        pos_map = pos_map or self.get_pos_map()
+        res = []
+        for row in self.layout:
+            for k in row:
+                if k.startswith("LH") or k.startswith("RH"):
+                    res.append(pos_map.get(k, k))
+        return [int(x) for x in res]
+
     def _slice_left_thumbs(
         self,
         n_lh: int,
