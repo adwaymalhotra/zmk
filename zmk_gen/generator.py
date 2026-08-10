@@ -2,9 +2,9 @@ import os
 from typing import List, Dict, Union, Optional, Tuple, Any
 from .layout import *
 from .layer import *
-from .os_key import *
+from .primitives import *
+from .constants import *
 from .behaviors import *
-from .combo import *
 
 class KeymapGenerator:
     def __init__(
@@ -16,10 +16,10 @@ class KeymapGenerator:
         behaviors: Optional[List[Behavior]] = None,
         thumb_base: Optional[Union[Tuple, List, Dict]] = None,
         thumb_extras: Optional[Dict] = None,
-        prior_idle_ms: int = 160,
-        quick_tap_ms: int = 175,
-        tapping_term: int = 200,
-        combo_term: int = 50,
+        prior_idle_ms: int = PRIOR_IDLE_MS,
+        quick_tap_ms: int = QUICK_TAP_MS,
+        tapping_term: int = TAPPING_TERM,
+        combo_term: int = COMBO_TERM,
     ):
         self.keyboards = list(keyboards) if keyboards is not None else Keyboard.all()
         self.layers = list(layers) if layers is not None else Layer.all()
@@ -69,10 +69,11 @@ class KeymapGenerator:
         for l in self.layers:
             layer_indices[l.name] = idx
             idx += 1
-            if l.generate_mac and l.name in ["Nav", "Sym", "Fn", "Graphite", "Qwerty"]:
-                mac_name = f"{l.name}M" if l.name in ["Nav", "Sym", "Fn"] else f"{l.name}_mac"
-                layer_indices[mac_name] = idx
-                idx += 1
+            if l.generate_mac:
+                mac_name = LayerRef(l).get_layer_name("mac")
+                if mac_name != l.name:
+                    layer_indices[mac_name] = idx
+                    idx += 1
         return layer_indices
 
     def render_keyboard_keymap(self, keyboard: Keyboard) -> str:
@@ -199,7 +200,7 @@ class KeymapGenerator:
 
         for l in self.layers:
             lines.append(l.render_dts(keyboard, "default", self.registered_behaviors, layer_indices, default_thumb_base=self.thumb_base, default_thumb_extras=self.thumb_extras))
-            if l.generate_mac and l.name in ["Nav", "Sym", "Fn", "Graphite", "Qwerty"]:
+            if l.generate_mac and LayerRef(l).get_layer_name("mac") != l.name:
                 lines.append(l.render_dts(keyboard, "mac", self.registered_behaviors, layer_indices, default_thumb_base=self.thumb_base, default_thumb_extras=self.thumb_extras))
 
         lines.append("    };")

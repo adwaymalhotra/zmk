@@ -2,6 +2,7 @@ import re
 from typing import List, Dict, Union, Optional, Tuple, Any
 from .os_key import *
 from .layout import normalize_tokens
+from .primitives.binding import LayerRef
 
 def tokenize_line(line: str) -> List[str]:
     """
@@ -186,14 +187,7 @@ class Layer:
                 if len(parts) > 1:
                     new_parts = [parts[0]]
                     for p in parts[1:]:
-                        if os_target == "mac" and p in ["Nav", "Sym", "Fn"]:
-                            new_parts.append(f"{p}M")
-                        elif os_target == "mac" and p in ["NAV", "SYM", "FN"]:
-                            new_parts.append(f"{p}M")
-                        elif os_target == "mac" and p in ["Graphite", "Qwerty"]:
-                            new_parts.append(f"{p}_mac")
-                        else:
-                            new_parts.append(p)
+                        new_parts.append(LayerRef(p).get_layer_name(os_target))
                     return " ".join(new_parts)
                 return t_str
             

@@ -25,3 +25,15 @@ class OsKey:
     def __repr__(self):
         return f"OsKey({self.default_kp}/{self.mac_kp})"
 
+
+# Common OS-swapping keys
+CTL_GUI = OsKey(default="LCTL", mac="LGUI")
+GUI_CTL = OsKey(default="LGUI", mac="LCTL")
+
+# Standard modifier key strings
+ALT = "LALT"
+SFT = "LSHFT"
+CTL = "LCTL"
+MET = "LMETA"
+GUI = "LGUI"
+
