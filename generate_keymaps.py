@@ -23,8 +23,8 @@ COMBO_TERM = 50
 # ---------------------------------------------------------------------------
 # 1. Macro & Behavior Definitions (Automatically registered)
 # ---------------------------------------------------------------------------
-CTL_GUI = OsKey(default="LCTL", mac="LGUI")
-GUI_CTL = OsKey(default="LGUI", mac="LCTL")
+CTL_GUI = OsKey(default="LCTRL", mac="LGUI", default_mod = "LCTL")
+GUI_CTL = OsKey(default="LGUI", mac="LCTRL", mac_mod = "LCTL")
 
 # Plain key string constants for keys identical across OSs
 ALT = "LALT"
@@ -48,8 +48,8 @@ def CR(key: str) -> HRMCall: return HRMCall("r", CTL_GUI, key)
 def AR(key: str) -> HRMCall: return HRMCall("r", ALT, key)
 def MR(key: str) -> HRMCall: return HRMCall("r", GUI_CTL, key)
 
-def SYL(key: str) -> HRMCall: return HRMCall("l", "SYS", key, is_layer=True)
-def SYR(key: str) -> HRMCall: return HRMCall("r", "SYS", key, is_layer=True)
+def SYL(key: str) -> HRMCall: return HRMCall("l", "sys", key, is_layer=True)
+def SYR(key: str) -> HRMCall: return HRMCall("r", "sys", key, is_layer=True)
 
 uc_deg   = Macro("uc_deg", ["&kp RALT", "&kp O", "&kp O"])
 uc_gbp   = Macro("uc_gbp", ["&kp RALT", "&kp LS(L)", "&kp EQL"])
@@ -72,15 +72,15 @@ half_up  = Macro("half_up", ["&kp LC(U)"])
 del_wor  = Macro("del_wor", ["&kp LC(BSPC)"])
 
 # Mod Morphs (OS-Aware using GUI_CTL / CTL_GUI / SFT / ALT)
-bsdel    = ModMorph("bsdel", "&kp BACKSPACE", "&kp DELETE", mods=[ALT, GUI_CTL, SFT])
-dlr_gbp  = ModMorph("dlr_gbp", "&kp DLLR", "&uc_gbp", mods=["MOD_LSFT", "MOD_RSFT"])
-amps_eur = ModMorph("amps_eur", "&kp AMPS", "&uc_eur", mods=["MOD_LSFT", "MOD_RSFT"])
-star_rup = ModMorph("star_rup", "&kp STAR", "&uc_rup", mods=["MOD_LSFT", "MOD_RSFT"])
-dot_col  = ModMorph("dot_col", "&kp DOT", "&kp COLON", mods=[SFT])
-com_sem  = ModMorph("com_sem", "&kp COMMA", "&kp SEMICOLON", mods=[SFT])
-sqt_dqt  = ModMorph("sqt_dqt", "&kp SQT", "&kp GB_DQT", mods=[SFT])
-lpar_lt  = ModMorph("lpar_lt", "&kp LPAR", "&kp LT", mods=[SFT])
-rpar_gt  = ModMorph("rpar_gt", "&kp RPAR", "&kp GT", mods=[SFT])
+bsdel    = ModMorph("bsdel", "&kp BACKSPACE", "&kp DELETE", mods= [ALT, GUI_CTL, "LSFT"])
+dlr_gbp  = ModMorph("dlr_gbp", "&kp DLLR", "&uc_gbp", mods= ["LSFT", "RSFT"])
+amps_eur = ModMorph("amps_eur", "&kp AMPS", "&uc_eur", mods= ["LSFT", "RSFT"])
+star_rup = ModMorph("star_rup", "&kp STAR", "&uc_rup", mods= ["LSFT", "RSFT"])
+dot_col  = ModMorph("dot_col", "&kp DOT", "&kp COLON", mods= ["LSFT"])
+com_sem  = ModMorph("com_sem", "&kp COMMA", "&kp SEMICOLON", mods=["LSFT"])
+sqt_dqt  = ModMorph("sqt_dqt", "&kp SQT", "&kp GB_DQT", mods= ["LSFT"])
+lpar_lt  = ModMorph("lpar_lt", "&kp LPAR", "&kp LT", mods= ["LSFT"])
+rpar_gt  = ModMorph("rpar_gt", "&kp RPAR", "&kp GT", mods= ["LSFT"])
 
 # NumMorphs (using GUI_CTL and ALT)
 eql_left = NumMorph("eql_left", "EQUAL", "LEFT", mods=[GUI_CTL, ALT])
@@ -95,7 +95,7 @@ n9_end   = NumMorph("n9_end", "N9", "END", mods=[GUI_CTL, ALT])
 
 # Tri States
 alt_tab  = TriState("alt_tab", start="&kt_on LALT", tap="&kp TAB", end="&kt_off LALT", ignored_positions=["LT3"])
-ctl_tab  = TriState("ctl_tab", start="&kt_on LCTL", tap="&kp TAB", end="&kt_off LCTL", ignored_positions=["LT3"])
+ctl_tab  = TriState("ctl_tab", start="&kt_on LCTRL", tap="&kp TAB", end="&kt_off LCTRL", ignored_positions=["LT3"])
 gui_tab  = TriState("gui_tab", start="&kt_on LGUI", tap="&kp TAB", end="&kt_off LGUI", ignored_positions=["LT3"])
 win_switch = OsKey(default="&alt_tab", mac="&gui_tab")
 
@@ -103,12 +103,12 @@ win_switch = OsKey(default="&alt_tab", mac="&gui_tab")
 # 2. Keyboard Physical Layout Definitions (Automatically registered)
 # ---------------------------------------------------------------------------
 thumb_base = (
-    [mo("Nav"), "SFT"],
-    [thm(CTL_GUI, "SPC"), mo("Sym")]
+    [mo("Nav"), SFT],
+    [thm(CTL_GUI, "SPACE"), mo("Sym")]
 )
 thumb_extras = {
-    "left":  {"left": [mt("MET", "TAB"), lt("SYS", "GRAVE")], "right": [mt("LALT", "ESC")]},
-    "right": {"left": [mt("LALT", "RET")], "right": [lt("SYS", "FSLH"), mt("SFT", "BSPC")]},
+    "left":  {"left": [mt("MET", "TAB"), lt("sys", "GRAVE")], "right": [mt("LALT", "ESC")]},
+    "right": {"left": [mt("LALT", "RET")], "right": [lt("sys", "FSLH"), mt("SFT", "BSPC")]},
 }
 
 limoncello = Keyboard(
@@ -236,7 +236,7 @@ fn = Layer(
     rows=[
         (["F1",       "F2",    "F3",        "F4",        "F5"],  ["F6",   "F7",       "F8",       "F9",     "F10"]),
         ([sk(SFT),    sk(ALT), sk(GUI_CTL), sk(CTL_GUI), "F11"], ["F12",  "C_VOL_DN", "C_VOL_UP", "C_MUTE", vi_sav]),
-        ([tog("SYS"), none,    none,        none,        none],  ["CAPS", "C_BRI_DN", "C_BRI_UP", none,     "PSCRN"]),
+        ([tog("sys"), none,    none,        none,        none],  ["CAPS", "C_BRI_DN", "C_BRI_UP", none,     "PSCRN"]),
     ],
     transparent_thumbs=True,
 )
@@ -244,9 +244,9 @@ fn = Layer(
 sys_layer = Layer(
     name="sys",
     rows=[
-        ([bt_sel(0),  bt_sel(1),  bt_sel(2),  bt_sel(3),  bt_clr()],   [bt_clr_all(), none, none, none,       tog("GAME")]),
-        ([none,       none,       "C_BRI_UP", "C_BRI_DN", sys_reset],  [sys_reset,    none, none, tog("QWM"), tog("QW")]),
-        ([out("BLE"), out("USB"), none,       none,       bootloader], [bootloader,   none, none, none,       tog("GRM")]),
+        ([bt_sel(0),  bt_sel(1),  bt_sel(2),  bt_sel(3),  bt_clr()],   [bt_clr_all(), none, none, none,              none]),
+        ([none,       none,       "C_BRI_UP", "C_BRI_DN", sys_reset],  [sys_reset,    none, none, tog("Qwerty_mac"), tog("Qwerty")]),
+        ([out("BLE"), out("USB"), none,       none,       bootloader], [bootloader,   none, none, none,              tog("Graphite_mac")]),
     ],
     transparent_thumbs=True,
     generate_mac=False,
@@ -287,7 +287,7 @@ ModLayerCombo([CTL_GUI, SFT],     sym, ["RH1", "LM1", "LM4"])
 # 5. Execute Keymap Generation
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
-    output_directory = os.path.join(os.path.dirname(__file__), "generated_config")
+    output_directory = os.path.join(os.path.dirname(__file__), "config")
     generator = KeymapGenerator(
         prior_idle_ms=PRIOR_IDLE_MS,
         quick_tap_ms=QUICK_TAP_MS,

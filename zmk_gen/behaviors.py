@@ -131,7 +131,7 @@ class Macro(Behavior):
             else:
                 resolved_bindings.append(str(b))
                 
-        self.properties["bindings"] = f"<{', '.join(resolved_bindings)}>"
+        self.properties["bindings"] = f"{', '.join(f"<{b}>" for b in resolved_bindings)}"
         return super().render_dts(
             os_target=os_target,
             node_name_override=node_name_override,
@@ -171,7 +171,7 @@ class ModMorph(Behavior):
         return val_str
 
     def format_mods(self, mod_list: List[Union[str, OsKey]], os_target: str) -> str:
-        items = [m.get_mod(os_target) if isinstance(m, OsKey) else str(m) for m in mod_list]
+        items = [m.get_mod(os_target) if isinstance(m, OsKey) else str(f"MOD_{m}") for m in mod_list]
         return "|".join(items)
 
     def render_dts(

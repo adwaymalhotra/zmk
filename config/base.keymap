@@ -112,16 +112,10 @@ NUM_MORPH(n9_end, N9, END)
 /* Keymap */
 #define LEFT_THUMBS &mo NAV &kp SFT
 #define RIGHT_THUMBS &thm CTL SPC &mo SYM
+
 #define LEFT_THUMBS_MAC &mo NAVM &kp SFT
 #define RIGHT_THUMBS_MAC &thm GUI SPC &mo SYMM
 
-// LH3 LH4 LH0 LH1 LH2 RH2 RH1 RH0 RH4 RH3
-#define LIMONCELLO_THUMBS_L &mt MET TAB &lt SYS GRAVE LEFT_THUMBS &mt ALT ESC
-#define LIMONCELLO_THUMBS_R &mt ALT RET RIGHT_THUMBS &lt SYS FSLH &mt SFT BSPC
-
-#if !defined THUMB_CLUSTER
-    #define THUMB_CLUSTER LEFT_THUMBS RIGHT_THUMBS
-#endif
 #define TRANS_THUMBS &trans &trans
 #define TRANS_5 &trans &trans &trans &trans &trans
 

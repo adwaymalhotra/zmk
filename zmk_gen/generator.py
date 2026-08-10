@@ -90,6 +90,7 @@ class KeymapGenerator:
             "#include <dt-bindings/zmk/bt.h>",
             "#include <dt-bindings/zmk/outputs.h>",
             "#include <zmk-helpers/helper.h>",
+            "#include \"keys_en_gb_extended.h\"",
             "",
             f"#define PRIOR_IDLE_MS {self.prior_idle_ms}",
             f"#define QUICK_TAP_MS {self.quick_tap_ms}",
