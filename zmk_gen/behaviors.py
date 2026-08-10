@@ -29,14 +29,6 @@ class Behavior:
     def all(cls) -> List["Behavior"]:
         return list(cls._registry)
 
-    @classmethod
-    def get_all(cls) -> List["Behavior"]:
-        return list(cls._registry)
-
-    @classmethod
-    def clear_registry(cls) -> None:
-        cls._registry.clear()
-
     def render_node_dts(
         self,
         node_name_override: Optional[str] = None,
@@ -52,14 +44,14 @@ class Behavior:
             if v is None:
                 continue
             v_str = str(v)
-            if v_str.startswith("<") and v_str.endswith(">"):
+            if v_str.startswith("<") and v_str.endswith(">"): # string inside <>
                 lines.append(f'{indent}    {k} = {v_str};')
-            elif v_str.startswith('"') and v_str.endswith('"'):
+            elif v_str.startswith('"') and v_str.endswith('"'): # string with quotes
                 lines.append(f'{indent}    {k} = {v_str};')
-            elif isinstance(v, int):
+            elif isinstance(v, int): # integer
                 lines.append(f'{indent}    {k} = <{v}>;')
-            else:
-                lines.append(f'{indent}    {k} = {v_str};')
+            else: # plain string
+                lines.append(f'{indent}    {k} = "{v_str}";')
                 
         lines.append(f"{indent}}};")
         return "\n".join(lines)
@@ -255,9 +247,25 @@ class NumMorph(ModMorph):
     """
     def __init__(self, name: str, normal: str, morph: str, mods: Optional[List[Union[str, OsKey]]] = None):
         if mods is None:
-            mods = [GUI_CTL, ALT]
+            mods = ["MOD_LGUI", "LALT"]
         super().__init__(name=name, normal=normal, morph=morph, mods=mods, keep_mods=mods)
 
+
+class KeyToggle(Behavior):
+    def __init__(
+        self,
+        name: str, 
+        toggle_mode: str = None,
+    ):
+        self.name = name
+        properties = {"toggle-mode": toggle_mode}
+        super().__init__(
+            name=name,
+            compatible="zmk,behavior-key-toggle",
+            section="behaviors",
+            binding_cells=1,
+            properties=properties,
+        )
 
 class TriState(Behavior):
     def __init__(
@@ -591,4 +599,6 @@ hrl_l = HoldTap("hrl_l", flavor="tap-preferred", hold="&mo", tap="&kp", trigger_
 hrl_r = HoldTap("hrl_r", flavor="tap-preferred", hold="&mo", tap="&kp", trigger_pos="KEYS_L THUMBS", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
 thm_ht = HoldTap("thm", flavor="tap-preferred", hold="&kp", tap="&kp", trigger_pos="KEYS_L KEYS_R", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
 thl_ht = HoldTap("thl", flavor="tap-preferred", hold="&mo", tap="&kp", trigger_pos="KEYS_L KEYS_R", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
+kt_off = KeyToggle("kt_off", toggle_mode="off")
+kt_on = KeyToggle("kt_on", toggle_mode="on")
 

@@ -649,7 +649,7 @@
         thm: thm {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            flavor = "balanced";
+            flavor = "tap-preferred";
             tapping-term-ms = <TAPPING_TERM>;
             quick-tap-ms = <QUICK_TAP_MS>;
             require-prior-idle-ms = <PRIOR_IDLE_MS>;
@@ -659,12 +659,22 @@
         thl: thl {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            flavor = "balanced";
+            flavor = "tap-preferred";
             tapping-term-ms = <TAPPING_TERM>;
             quick-tap-ms = <QUICK_TAP_MS>;
             require-prior-idle-ms = <PRIOR_IDLE_MS>;
             bindings = <&mo>, <&kp>;
             hold-trigger-key-positions = <KEYS_L KEYS_R>;
+        };
+        kt_off: kt_off {
+            compatible = "zmk,behavior-key-toggle";
+            #binding-cells = <1>;
+            toggle-mode = "off";
+        };
+        kt_on: kt_on {
+            compatible = "zmk,behavior-key-toggle";
+            #binding-cells = <1>;
+            toggle-mode = "on";
         };
         bsdel: bsdel {
             compatible = "zmk,behavior-mod-morph";
