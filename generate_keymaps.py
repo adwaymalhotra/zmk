@@ -23,6 +23,34 @@ COMBO_TERM = 50
 # ---------------------------------------------------------------------------
 # 1. Macro & Behavior Definitions (Automatically registered)
 # ---------------------------------------------------------------------------
+CTL_GUI = OsKey(default="LCTL", mac="LGUI")
+GUI_CTL = OsKey(default="LGUI", mac="LCTL")
+
+# Plain key string constants for keys identical across OSs
+ALT = "LALT"
+SFT = "LSHFT"
+CTL = "LCTL"
+MET = "LGUI"
+GUI = "LGUI"
+def S(key: str) -> str: return f"LS({key})"
+def C(key: str) -> str: return f"LC({key})"
+def A(key: str) -> str: return f"LA({key})"
+def G(key: str) -> str: return f"LG({key})"
+
+# Home Row Mod Call Helpers
+def SL(key: str) -> HRMCall: return HRMCall("l", SFT, key)
+def CL(key: str) -> HRMCall: return HRMCall("l", CTL_GUI, key)
+def AL(key: str) -> HRMCall: return HRMCall("l", ALT, key)
+def ML(key: str) -> HRMCall: return HRMCall("l", GUI_CTL, key)
+
+def SR(key: str) -> HRMCall: return HRMCall("r", SFT, key)
+def CR(key: str) -> HRMCall: return HRMCall("r", CTL_GUI, key)
+def AR(key: str) -> HRMCall: return HRMCall("r", ALT, key)
+def MR(key: str) -> HRMCall: return HRMCall("r", GUI_CTL, key)
+
+def SYL(key: str) -> HRMCall: return HRMCall("l", "SYS", key, is_layer=True)
+def SYR(key: str) -> HRMCall: return HRMCall("r", "SYS", key, is_layer=True)
+
 uc_deg   = Macro("uc_deg", ["&kp RALT", "&kp O", "&kp O"])
 uc_gbp   = Macro("uc_gbp", ["&kp RALT", "&kp LS(L)", "&kp EQL"])
 uc_eur   = Macro("uc_eur", ["&kp RALT", "&kp C", "&kp EQL"])
@@ -170,6 +198,7 @@ graphite = Layer(
         (["N", "R", "T", "S", "G"], ["Y",     "H", "A",     "E",     "I"]),
         (["Q", "X", "M", "C", "V"], ["K",     "P", dot_col, "MINUS", com_sem]),
     ],
+    thumbs=(thumb_base, thumb_extras),
 )
 
 qwerty = Layer(
@@ -179,6 +208,7 @@ qwerty = Layer(
         (["A", "S", "D", "F", "G"], ["H", "J", "K",     "L",   "SEMI"]),
         (["Z", "X", "C", "V", "B"], ["N", "M", "COMMA", "DOT", "FSLH"]),
     ],
+    thumbs=(thumb_base, thumb_extras),
 )
 
 nav = Layer(
@@ -188,6 +218,7 @@ nav = Layer(
         ([sk(SFT),    sk(ALT),    sk(GUI_CTL), sk(CTL_GUI), "STAR"],  [eql_left, n4_down, n5_up,   n6_right, n0_ret]),
         ([vi_sav,     key_repeat, "TAB",       "ESC",       "QMARK"], ["MINUS",  "N1",    "N2",    "N3",     "PLUS"]),
     ],
+    transparent_thumbs=True,
 )
 
 sym = Layer(
@@ -197,6 +228,7 @@ sym = Layer(
         ([SL("EXCL"), AL("GB_AT"), ML("LPAR"), CL("RPAR"), "GB_HASH"], ["LEFT",  "DOWN",  "UP",    "RIGHT", "RET"]),
         (["AMPS",     "DLLR",      "LBRC",     "RBRC",     "CARET"],   [del_wor, "BSPC",  "DEL",   "INS",   "GB_BSLH"]),
     ],
+    transparent_thumbs=True,
 )
 
 fn = Layer(
@@ -206,6 +238,7 @@ fn = Layer(
         ([sk(SFT),    sk(ALT), sk(GUI_CTL), sk(CTL_GUI), "F11"], ["F12",  "C_VOL_DN", "C_VOL_UP", "C_MUTE", vi_sav]),
         ([tog("SYS"), none,    none,        none,        none],  ["CAPS", "C_BRI_DN", "C_BRI_UP", none,     "PSCRN"]),
     ],
+    transparent_thumbs=True,
 )
 
 sys_layer = Layer(
@@ -215,6 +248,7 @@ sys_layer = Layer(
         ([none,       none,       "C_BRI_UP", "C_BRI_DN", sys_reset],  [sys_reset,    none, none, tog("QWM"), tog("QW")]),
         ([out("BLE"), out("USB"), none,       none,       bootloader], [bootloader,   none, none, none,       tog("GRM")]),
     ],
+    transparent_thumbs=True,
     generate_mac=False,
 )
 
@@ -255,7 +289,6 @@ ModLayerCombo([CTL_GUI, SFT],     sym, ["RH1", "LM1", "LM4"])
 if __name__ == "__main__":
     output_directory = os.path.join(os.path.dirname(__file__), "generated_config")
     generator = KeymapGenerator(
-        thumbs=(thumb_base, thumb_extras),
         prior_idle_ms=PRIOR_IDLE_MS,
         quick_tap_ms=QUICK_TAP_MS,
         tapping_term=TAPPING_TERM,

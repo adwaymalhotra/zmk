@@ -1,6 +1,6 @@
 import re
 from typing import List, Dict, Union, Optional, Tuple, Any
-from .os_key import OsKey, CTL_GUI, GUI_CTL
+from .os_key import *
 from .layout import normalize_tokens
 
 def tokenize_line(line: str) -> List[str]:
@@ -82,9 +82,10 @@ class Layer:
         self,
         name: str,
         rows: Optional[List[Any]] = None,
-        thumbs: Optional[Union[List[Any], Tuple[Any, ...]]] = None,
+        thumbs: Optional[Any] = None,
         thumb_base: Optional[Union[Tuple, List, Dict]] = None,
         thumb_extras: Optional[Dict] = None,
+        transparent_thumbs: bool = False,
         generate_mac: bool = True,
         is_raw_devicetree: bool = False,
         raw_content: str = "",
@@ -94,6 +95,7 @@ class Layer:
         self.thumbs = thumbs
         self.thumb_base = thumb_base
         self.thumb_extras = thumb_extras
+        self.transparent_thumbs = transparent_thumbs
         self.generate_mac = generate_mac
         self.is_raw_devicetree = is_raw_devicetree
         self.raw_content = raw_content
@@ -184,11 +186,7 @@ class Layer:
                 if len(parts) > 1:
                     new_parts = [parts[0]]
                     for p in parts[1:]:
-                        if p == "CTL_GUI":
-                            new_parts.append(CTL_GUI.get_kp(os_target))
-                        elif p == "GUI_CTL":
-                            new_parts.append(GUI_CTL.get_kp(os_target))
-                        elif os_target == "mac" and p in ["Nav", "Sym", "Fn"]:
+                        if os_target == "mac" and p in ["Nav", "Sym", "Fn"]:
                             new_parts.append(f"{p}M")
                         elif os_target == "mac" and p in ["NAV", "SYM", "FN"]:
                             new_parts.append(f"{p}M")
@@ -301,22 +299,40 @@ class Layer:
             rows_bindings.append((left_row_bindings, right_row_bindings))
 
         # Thumbs
-        if self.thumbs is not None:
-            if isinstance(self.thumbs, dict) and ("left" in self.thumbs or "right" in self.thumbs):
+        if self.transparent_thumbs:
+            lh_keys = [k for row in keyboard.layout for k in row if k.startswith("LH")]
+            rh_keys = [k for row in keyboard.layout for k in row if k.startswith("RH")]
+            left_thumb_tokens = ["&trans"] * len(lh_keys)
+            right_thumb_tokens = ["&trans"] * len(rh_keys)
+        elif self.thumbs is not None:
+            if isinstance(self.thumbs, (tuple, list)) and len(self.thumbs) == 2 and isinstance(self.thumbs[1], dict):
+                t_base, t_extras = self.thumbs[0], self.thumbs[1]
+                left_thumb_tokens, right_thumb_tokens = keyboard.get_thumb_halves(os_target=os_target, thumb_base=t_base, thumb_extras=t_extras)
+            elif isinstance(self.thumbs, dict) and ("left" in self.thumbs or "right" in self.thumbs):
                 left_thumb_tokens = normalize_tokens(self.thumbs.get("left", []))
                 right_thumb_tokens = normalize_tokens(self.thumbs.get("right", []))
             elif isinstance(self.thumbs, (list, tuple)) and len(self.thumbs) == 2 and isinstance(self.thumbs[0], (list, tuple)):
                 left_thumb_tokens = normalize_tokens(self.thumbs[0])
                 right_thumb_tokens = normalize_tokens(self.thumbs[1])
+            elif self.thumbs in ["trans", "&trans"]:
+                lh_keys = [k for row in keyboard.layout for k in row if k.startswith("LH")]
+                rh_keys = [k for row in keyboard.layout for k in row if k.startswith("RH")]
+                left_thumb_tokens = ["&trans"] * len(lh_keys)
+                right_thumb_tokens = ["&trans"] * len(rh_keys)
             else:
                 all_t = normalize_tokens(self.thumbs)
                 mid = len(all_t) // 2
                 left_thumb_tokens = all_t[:mid]
                 right_thumb_tokens = all_t[mid:]
+        elif self.thumb_base is not None or self.thumb_extras is not None:
+            left_thumb_tokens, right_thumb_tokens = keyboard.get_thumb_halves(os_target=os_target, thumb_base=self.thumb_base, thumb_extras=self.thumb_extras)
+        elif default_thumb_base is not None or default_thumb_extras is not None:
+            left_thumb_tokens, right_thumb_tokens = keyboard.get_thumb_halves(os_target=os_target, thumb_base=default_thumb_base, thumb_extras=default_thumb_extras)
         else:
-            t_base = self.thumb_base if self.thumb_base is not None else default_thumb_base
-            t_extras = self.thumb_extras if self.thumb_extras is not None else default_thumb_extras
-            left_thumb_tokens, right_thumb_tokens = keyboard.get_thumb_halves(os_target=os_target, thumb_base=t_base, thumb_extras=t_extras)
+            lh_keys = [k for row in keyboard.layout for k in row if k.startswith("LH")]
+            rh_keys = [k for row in keyboard.layout for k in row if k.startswith("RH")]
+            left_thumb_tokens = ["&trans"] * len(lh_keys)
+            right_thumb_tokens = ["&trans"] * len(rh_keys)
 
         left_thumb_bindings = [self.format_token(t, os_target, registered_behaviors) for t in left_thumb_tokens]
         right_thumb_bindings = [self.format_token(t, os_target, registered_behaviors) for t in right_thumb_tokens]

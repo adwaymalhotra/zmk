@@ -1,5 +1,5 @@
 from typing import List, Tuple, Union, Optional, Dict, Any
-from .os_key import OsKey, CTL_GUI, GUI_CTL, ALT, SFT
+from .os_key import *
 
 class Behavior:
     """
@@ -584,30 +584,11 @@ sys_reset = BehaviorCall("sys_reset")
 caps_word = BehaviorCall("caps_word")
 key_repeat = BehaviorCall("key_repeat")
 
-# Mod key helpers
-def S(key: str) -> str: return f"LS({key})"
-def C(key: str) -> str: return f"LC({key})"
-def A(key: str) -> str: return f"LA({key})"
-def G(key: str) -> str: return f"LG({key})"
-
 # Standard HoldTap behaviors
 hrm_l = HoldTap("hrm_l", flavor="tap-preferred", hold="&kp", tap="&kp", trigger_pos="KEYS_R THUMBS", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
 hrm_r = HoldTap("hrm_r", flavor="tap-preferred", hold="&kp", tap="&kp", trigger_pos="KEYS_L THUMBS", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
 hrl_l = HoldTap("hrl_l", flavor="tap-preferred", hold="&mo", tap="&kp", trigger_pos="KEYS_R THUMBS", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
 hrl_r = HoldTap("hrl_r", flavor="tap-preferred", hold="&mo", tap="&kp", trigger_pos="KEYS_L THUMBS", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
-thm_ht = HoldTap("thm", flavor="balanced", hold="&kp", tap="&kp", trigger_pos="KEYS_L KEYS_R", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
-thl_ht = HoldTap("thl", flavor="balanced", hold="&mo", tap="&kp", trigger_pos="KEYS_L KEYS_R", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
+thm_ht = HoldTap("thm", flavor="tap-preferred", hold="&kp", tap="&kp", trigger_pos="KEYS_L KEYS_R", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
+thl_ht = HoldTap("thl", flavor="tap-preferred", hold="&mo", tap="&kp", trigger_pos="KEYS_L KEYS_R", tapping_term_ms=200, quick_tap_ms=175, require_prior_idle_ms=150)
 
-# Home Row Mod Call Helpers
-def SL(key: str) -> HRMCall: return HRMCall("l", SFT, key)
-def CL(key: str) -> HRMCall: return HRMCall("l", CTL_GUI, key)
-def AL(key: str) -> HRMCall: return HRMCall("l", ALT, key)
-def ML(key: str) -> HRMCall: return HRMCall("l", GUI_CTL, key)
-
-def SR(key: str) -> HRMCall: return HRMCall("r", SFT, key)
-def CR(key: str) -> HRMCall: return HRMCall("r", CTL_GUI, key)
-def AR(key: str) -> HRMCall: return HRMCall("r", ALT, key)
-def MR(key: str) -> HRMCall: return HRMCall("r", GUI_CTL, key)
-
-def SYL(key: str) -> HRMCall: return HRMCall("l", "SYS", key, is_layer=True)
-def SYR(key: str) -> HRMCall: return HRMCall("r", "SYS", key, is_layer=True)

@@ -1,10 +1,10 @@
 import os
 from typing import List, Dict, Union, Optional, Tuple, Any
-from .layout import Keyboard
-from .layer import Layer
-from .os_key import OsKey
-from .behaviors import Behavior, Macro, ModMorph, TriState, HoldTap
-from .combo import Combo, SimpleCombo, ModLayerCombo
+from .layout import *
+from .layer import *
+from .os_key import *
+from .behaviors import *
+from .combo import *
 
 class KeymapGenerator:
     def __init__(
