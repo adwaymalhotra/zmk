@@ -10,18 +10,10 @@ import os
 # Add workspace directory to python path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from zmk_gen import (
-    Keyboard, Layer, OsKey, ModLayerCombo, SimpleCombo,
-    Macro, ModMorph, NumMorph, TriState, KeymapGenerator,
-    CTL_CMD, GUI_CTL, ALT, SFT, CTL, MET, GUI,
-    SL, CL, AL, ML, SR, CR, AR, MR, SYL, SYR,
-    mt, lt, mo, tog, sk, thl, thm, out, bt, bt_sel, bt_clr, bt_clr_all, kt_on, kt_off, kp,
-    none, trans, bootloader, sys_reset, caps_word, key_repeat,
-    ls, lc, la, lg, LS, LC, LA, LG
-)
+from zmk_gen import *
 
 # ---------------------------------------------------------------------------
-# 1. Macro & Behavior Definitions
+# 1. Macro & Behavior Definitions (Automatically registered)
 # ---------------------------------------------------------------------------
 uc_deg   = Macro("uc_deg", ["&kp RALT", "&kp O", "&kp O"])
 uc_gbp   = Macro("uc_gbp", ["&kp RALT", "&kp LS(L)", "&kp EQL"])
@@ -43,7 +35,7 @@ half_dn  = Macro("half_dn", ["&kp LC(D)"])
 half_up  = Macro("half_up", ["&kp LC(U)"])
 del_wor  = Macro("del_wor", ["&kp LC(BSPC)"])
 
-# Mod Morphs (OS-Aware using CMD_CTL / CTL_CMD / SFT / ALT)
+# Mod Morphs (OS-Aware using GUI_CTL / CTL_GUI / SFT / ALT)
 bsdel    = ModMorph("bsdel", "&kp BACKSPACE", "&kp DELETE", mods=[ALT, GUI_CTL, SFT])
 dlr_gbp  = ModMorph("dlr_gbp", "&kp DLLR", "&uc_gbp", mods=["MOD_LSFT", "MOD_RSFT"])
 amps_eur = ModMorph("amps_eur", "&kp AMPS", "&uc_eur", mods=["MOD_LSFT", "MOD_RSFT"])
@@ -54,7 +46,7 @@ sqt_dqt  = ModMorph("sqt_dqt", "&kp SQT", "&kp GB_DQT", mods=[SFT])
 lpar_lt  = ModMorph("lpar_lt", "&kp LPAR", "&kp LT", mods=[SFT])
 rpar_gt  = ModMorph("rpar_gt", "&kp RPAR", "&kp GT", mods=[SFT])
 
-# NumMorphs (using CMD_CTL and ALT)
+# NumMorphs (using GUI_CTL and ALT)
 eql_left = NumMorph("eql_left", "EQUAL", "LEFT", mods=[GUI_CTL, ALT])
 n4_down  = NumMorph("n4_down", "N4", "DOWN", mods=[GUI_CTL, ALT])
 n5_up    = NumMorph("n5_up", "N5", "UP", mods=[GUI_CTL, ALT])
@@ -71,20 +63,12 @@ ctl_tab  = TriState("ctl_tab", start="&kt_on LCTL", tap="&kp TAB", end="&kt_off 
 gui_tab  = TriState("gui_tab", start="&kt_on LGUI", tap="&kp TAB", end="&kt_off LGUI", ignored_positions=["LT3"])
 win_switch = OsKey(default="&alt_tab", mac="&gui_tab")
 
-all_behaviors = [
-    uc_deg, uc_gbp, uc_eur, uc_rup, vi_sav, find, pre_wor, nex_wor,
-    pre_tab, nex_tab, pre_dsk, nex_dsk, cut, copy, paste, half_dn, half_up, del_wor,
-    bsdel, dlr_gbp, amps_eur, star_rup, dot_col, com_sem, sqt_dqt, lpar_lt, rpar_gt,
-    eql_left, n4_down, n5_up, n6_right, n0_ret, n7_pgdn, n8_pgup, dot_home, n9_end,
-    alt_tab, ctl_tab, gui_tab
-]
-
 # ---------------------------------------------------------------------------
-# 2. Keyboard Physical Layout Definitions
+# 2. Keyboard Physical Layout Definitions (Automatically registered)
 # ---------------------------------------------------------------------------
 thumb_base = (
     [mo("Nav"), "SFT"],
-    [thm(CTL_CMD, "SPC"), mo("Sym")]
+    [thm(CTL_GUI, "SPC"), mo("Sym")]
 )
 thumb_extras = {
     "left":  {"left": [mt("MET", "TAB"), lt("SYS", "GRAVE")], "right": [mt("LALT", "ESC")]},
@@ -168,10 +152,8 @@ pica40 = Keyboard(
     ],
 )
 
-all_keyboards = [limoncello, totem, cygnus, discworld, endgame, atreus, pica40]
-
 # ---------------------------------------------------------------------------
-# 3. Shared Layer Definitions
+# 3. Shared Layer Definitions (Automatically registered)
 # ---------------------------------------------------------------------------
 graphite = Layer(
     name="Graphite",
@@ -194,8 +176,8 @@ qwerty = Layer(
 nav = Layer(
     name="Nav",
     rows=[
-        ([win_switch, ls("TAB"),  pre_tab,     nex_tab,     "PRCNT"], [dot_home, n7_pgdn, n8_pgup, n9_end,   "FSLH"]),
-        ([sk(SFT),    sk(ALT),    sk(GUI_CTL), sk(CTL_CMD), "STAR"],  [eql_left, n4_down, n5_up,   n6_right, n0_ret]),
+        ([win_switch, S("TAB"),   pre_tab,     nex_tab,     "PRCNT"], [dot_home, n7_pgdn, n8_pgup, n9_end,   "FSLH"]),
+        ([sk(SFT),    sk(ALT),    sk(GUI_CTL), sk(CTL_GUI), "STAR"],  [eql_left, n4_down, n5_up,   n6_right, n0_ret]),
         ([vi_sav,     key_repeat, "TAB",       "ESC",       "QMARK"], ["MINUS",  "N1",    "N2",    "N3",     "PLUS"]),
     ],
 )
@@ -213,7 +195,7 @@ fn = Layer(
     name="Fn",
     rows=[
         (["F1",       "F2",    "F3",        "F4",        "F5"],  ["F6",   "F7",       "F8",       "F9",     "F10"]),
-        ([sk(SFT),    sk(ALT), sk(GUI_CTL), sk(CTL_CMD), "F11"], ["F12",  "C_VOL_DN", "C_VOL_UP", "C_MUTE", vi_sav]),
+        ([sk(SFT),    sk(ALT), sk(GUI_CTL), sk(CTL_GUI), "F11"], ["F12",  "C_VOL_DN", "C_VOL_UP", "C_MUTE", vi_sav]),
         ([tog("SYS"), none,    none,        none,        none],  ["CAPS", "C_BRI_DN", "C_BRI_UP", none,     "PSCRN"]),
     ],
 )
@@ -228,52 +210,42 @@ sys_layer = Layer(
     generate_mac=False,
 )
 
-all_layers = [graphite, qwerty, nav, sym, fn, sys_layer]
-
 # ---------------------------------------------------------------------------
-# 4. Mod Layer Combos & Simple Combos
+# 4. Mod Layer Combos & Simple Combos (Automatically registered)
 # ---------------------------------------------------------------------------
-combos = [
-    SimpleCombo("degree", "&uc_deg", ["LT4", "LM4"]),
-    SimpleCombo("bootloader", "&bootloader", ["LT0", "LT1", "RT1", "RT0"]),
-    SimpleCombo("reset", "&sys_reset", ["LT0", "RT0"]),
+Combo("degree", "&uc_deg", ["LT4", "LM4"])
+Combo("bootloader", "&bootloader", ["LT0", "LT1", "RT1", "RT0"])
+Combo("reset", "&sys_reset", ["LT0", "RT0"])
 
-    # OsKey mods (CTL_CMD, CMD_CTL) auto-generate both linux and mac combos+macros.
-    # Plain string mods (ALT, SFT) are identical across OSs → only one combo is generated.
-    ModLayerCombo(CTL_CMD, nav, ["LH1", "LM1"]),
-    ModLayerCombo(GUI_CTL, nav, ["LH1", "LM2"]),
-    ModLayerCombo(ALT,     nav, ["LH1", "LM3"]),
-    ModLayerCombo(SFT,     nav, ["LH1", "LM4"]),
+# OsKey mods (CTL_GUI, GUI_CTL) auto-generate both linux and mac combos+macros.
+# Plain string mods (ALT, SFT) are identical across OSs → only one combo is generated.
+ModLayerCombo(CTL_GUI, nav, ["LH1", "LM1"])
+ModLayerCombo(GUI_CTL, nav, ["LH1", "LM2"])
+ModLayerCombo(ALT,     nav, ["LH1", "LM3"])
+ModLayerCombo(SFT,     nav, ["LH1", "LM4"])
 
-    ModLayerCombo([GUI_CTL, CTL_CMD], nav, ["LH1", "LM2", "LM1"]),
-    ModLayerCombo([GUI_CTL, ALT],     nav, ["LH1", "LM2", "LM3"]),
-    ModLayerCombo([GUI_CTL, SFT],     nav, ["LH1", "LM2", "LM4"]),
-    ModLayerCombo([CTL_CMD, ALT],     nav, ["LH1", "LM1", "LM3"]),
-    ModLayerCombo([CTL_CMD, SFT],     nav, ["LH1", "LM1", "LM4"]),
+ModLayerCombo([GUI_CTL, CTL_GUI], nav, ["LH1", "LM2", "LM1"])
+ModLayerCombo([GUI_CTL, ALT],     nav, ["LH1", "LM2", "LM3"])
+ModLayerCombo([GUI_CTL, SFT],     nav, ["LH1", "LM2", "LM4"])
+ModLayerCombo([CTL_GUI, ALT],     nav, ["LH1", "LM1", "LM3"])
+ModLayerCombo([CTL_GUI, SFT],     nav, ["LH1", "LM1", "LM4"])
 
-    ModLayerCombo(CTL_CMD, sym, ["RH1", "LM1"]),
-    ModLayerCombo(GUI_CTL, sym, ["RH1", "LM2"]),
-    ModLayerCombo(ALT,     sym, ["RH1", "LM3"]),
-    ModLayerCombo(SFT,     sym, ["RH1", "LM4"]),
+ModLayerCombo(CTL_GUI, sym, ["RH1", "LM1"])
+ModLayerCombo(GUI_CTL, sym, ["RH1", "LM2"])
+ModLayerCombo(ALT,     sym, ["RH1", "LM3"])
+ModLayerCombo(SFT,     sym, ["RH1", "LM4"])
 
-    ModLayerCombo([GUI_CTL, CTL_CMD], sym, ["RH1", "LM2", "LM1"]),
-    ModLayerCombo([GUI_CTL, ALT],     sym, ["RH1", "LM2", "LM3"]),
-    ModLayerCombo([GUI_CTL, SFT],     sym, ["RH1", "LM2", "LM4"]),
-    ModLayerCombo([CTL_CMD, ALT],     sym, ["RH1", "LM1", "LM3"]),
-    ModLayerCombo([CTL_CMD, SFT],     sym, ["RH1", "LM1", "LM4"]),
-]
+ModLayerCombo([GUI_CTL, CTL_GUI], sym, ["RH1", "LM2", "LM1"])
+ModLayerCombo([GUI_CTL, ALT],     sym, ["RH1", "LM2", "LM3"])
+ModLayerCombo([GUI_CTL, SFT],     sym, ["RH1", "LM2", "LM4"])
+ModLayerCombo([CTL_GUI, ALT],     sym, ["RH1", "LM1", "LM3"])
+ModLayerCombo([CTL_GUI, SFT],     sym, ["RH1", "LM1", "LM4"])
 
 # ---------------------------------------------------------------------------
 # 5. Execute Keymap Generation
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
     output_directory = os.path.join(os.path.dirname(__file__), "generated_config")
-    generator = KeymapGenerator(
-        keyboards=all_keyboards,
-        layers=all_layers,
-        thumbs=(thumb_base, thumb_extras),
-        combos=combos,
-        behaviors=all_behaviors
-    )
+    generator = KeymapGenerator(thumbs=(thumb_base, thumb_extras))
     generator.generate_all(output_dir=output_directory)
     print(f"\nAll keymaps successfully generated into: '{output_directory}'")

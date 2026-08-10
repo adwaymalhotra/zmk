@@ -1,8 +1,7 @@
 import re
 from typing import List, Dict, Union, Optional, Tuple, Any
-from .os_key import OsKey, CTL_CMD, GUI_CTL
-from .behaviors import HRMCall, ModMorph, Macro, BehaviorCall
-from .layout import normalize_tokens, assemble_layer_thumbs
+from .os_key import OsKey, CTL_GUI, GUI_CTL
+from .layout import normalize_tokens
 
 def tokenize_line(line: str) -> List[str]:
     """
@@ -77,6 +76,8 @@ def normalize_layer_row(row: Any) -> Dict[str, List[Any]]:
 
 
 class Layer:
+    _registry: List["Layer"] = []
+
     def __init__(
         self,
         name: str,
@@ -108,6 +109,17 @@ class Layer:
                 self.rows = []
         else:
             self.rows = []
+
+        if self not in Layer._registry:
+            Layer._registry.append(self)
+
+    @classmethod
+    def all(cls) -> List["Layer"]:
+        return list(cls._registry)
+
+    @classmethod
+    def clear_registry(cls) -> None:
+        cls._registry.clear()
 
     @staticmethod
     def _parse_text_layout(layout: str) -> List[Dict[str, List[str]]]:
@@ -172,9 +184,9 @@ class Layer:
                 if len(parts) > 1:
                     new_parts = [parts[0]]
                     for p in parts[1:]:
-                        if p == "CTL_CMD":
-                            new_parts.append(CTL_CMD.get_kp(os_target))
-                        elif p == "CMD_CTL":
+                        if p == "CTL_GUI":
+                            new_parts.append(CTL_GUI.get_kp(os_target))
+                        elif p == "GUI_CTL":
                             new_parts.append(GUI_CTL.get_kp(os_target))
                         elif os_target == "mac" and p in ["Nav", "Sym", "Fn"]:
                             new_parts.append(f"{p}M")

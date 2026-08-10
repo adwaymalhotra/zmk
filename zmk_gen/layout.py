@@ -128,6 +128,8 @@ class Keyboard:
     Defines a physical keyboard layout, including position names, column counts,
     thumb clusters, and column index overrides.
     """
+    _registry: List["Keyboard"] = []
+
     def __init__(
         self,
         name: str,
@@ -151,6 +153,16 @@ class Keyboard:
         self.keys_l = keys_l
         self.keys_r = keys_r
         self.thumbs_pos = thumbs_pos
+        if self not in Keyboard._registry:
+            Keyboard._registry.append(self)
+
+    @classmethod
+    def all(cls) -> List["Keyboard"]:
+        return list(cls._registry)
+
+    @classmethod
+    def clear_registry(cls) -> None:
+        cls._registry.clear()
 
     def _slice_left_thumbs(
         self,

@@ -4,24 +4,34 @@ from .layout import Keyboard
 from .layer import Layer
 from .os_key import OsKey
 from .behaviors import Behavior, Macro, ModMorph, TriState, HoldTap
-from .combo import SimpleCombo, ModLayerCombo
+from .combo import Combo, SimpleCombo, ModLayerCombo
 
 class KeymapGenerator:
     def __init__(
         self,
-        keyboards: List[Keyboard],
-        layers: List[Layer],
+        keyboards: Optional[List[Keyboard]] = None,
+        layers: Optional[List[Layer]] = None,
         thumbs: Optional[Union[Tuple, List, Dict]] = None,
-        combos: Optional[List[Union[SimpleCombo, ModLayerCombo]]] = None,
-        behaviors: Optional[List[Union[Behavior, Macro, ModMorph, TriState, HoldTap]]] = None,
+        combos: Optional[List[Union[Combo, SimpleCombo, ModLayerCombo]]] = None,
+        behaviors: Optional[List[Behavior]] = None,
         thumb_base: Optional[Union[Tuple, List, Dict]] = None,
         thumb_extras: Optional[Dict] = None,
     ):
-        self.keyboards = keyboards
-        self.layers = layers
-        self.combos = combos or []
-        self.behaviors = behaviors or []
-        self.registered_behaviors = {b.name: b for b in self.behaviors}
+        self.keyboards = list(keyboards) if keyboards is not None else Keyboard.all()
+        self.layers = list(layers) if layers is not None else Layer.all()
+        
+        all_registered = Behavior.all()
+        if behaviors is not None:
+            self.behaviors = list(behaviors)
+        else:
+            self.behaviors = [b for b in all_registered if not isinstance(b, (Combo, ModLayerCombo))]
+
+        if combos is not None:
+            self.combos = list(combos)
+        else:
+            self.combos = [b for b in all_registered if isinstance(b, (Combo, ModLayerCombo))]
+
+        self.registered_behaviors = {b.name: b for b in (self.behaviors + self.combos)}
         
         if thumb_base is not None or thumb_extras is not None:
             self.thumb_base = thumb_base
@@ -77,6 +87,12 @@ class KeymapGenerator:
             lines.append(f"#define {name} {idx}")
         lines.append("")
 
+        # Collect all combos
+        all_combos = list(self.combos)
+        for b in self.behaviors:
+            if isinstance(b, (Combo, ModLayerCombo)) and b not in all_combos:
+                all_combos.append(b)
+
         # 1. Macros Section
         lines.append("/ {")
         lines.append("    macros {")
@@ -84,12 +100,12 @@ class KeymapGenerator:
         for b in self.behaviors:
             if isinstance(b, Macro):
                 if b.name not in emitted_macros:
-                    lines.append(b.render_dts("default", wrap_root=False))
+                    lines.append(b.render_dts(os_target="default", pos_map=pos_map, wrap_root=False))
                     emitted_macros.add(b.name)
                 
-        for c in self.combos:
+        for c in all_combos:
             if isinstance(c, ModLayerCombo):
-                for macro_name, macro_dts in zip(c.all_macro_names(layer_indices), c.render_all_macros(layer_indices)):
+                for macro_name, macro_dts in c.render_all_macros(layer_indices):
                     if macro_name not in emitted_macros:
                         lines.append(macro_dts)
                         emitted_macros.add(macro_name)
@@ -102,27 +118,13 @@ class KeymapGenerator:
         lines.append("    behaviors {")
         emitted_behaviors = set()
         for b in self.behaviors:
-            if isinstance(b, HoldTap):
-                if b.name not in emitted_behaviors:
-                    lines.append(b.render_dts("default", wrap_root=False))
-                    emitted_behaviors.add(b.name)
-            elif isinstance(b, TriState):
-                if b.name not in emitted_behaviors:
-                    lines.append(b.render_dts("default", pos_map=pos_map, wrap_root=False))
-                    emitted_behaviors.add(b.name)
-            elif isinstance(b, ModMorph):
-                if b.name not in emitted_behaviors:
-                    lines.append(b.render_dts("default", wrap_root=False))
-                    emitted_behaviors.add(b.name)
-                if any(isinstance(m, OsKey) for m in b.mods):
-                    mac_name = f"{b.name}_mac"
-                    if mac_name not in emitted_behaviors:
-                        lines.append(b.render_dts("mac", name_suffix="_mac", wrap_root=False))
-                        emitted_behaviors.add(mac_name)
-            elif isinstance(b, Behavior) and not isinstance(b, Macro):
-                if b.name not in emitted_behaviors:
-                    lines.append(b.render_dts("default", wrap_root=False))
-                    emitted_behaviors.add(b.name)
+            if isinstance(b, (Macro, Combo, ModLayerCombo)):
+                continue
+            if isinstance(b, Behavior):
+                for name, dts in b.render_all_dts(pos_map=pos_map, wrap_root=False):
+                    if name not in emitted_behaviors:
+                        lines.append(dts)
+                        emitted_behaviors.add(name)
         lines.append("    };")
         lines.append("};")
         lines.append("")
@@ -132,17 +134,12 @@ class KeymapGenerator:
         lines.append("    combos {")
         lines.append('        compatible = "zmk,combos";')
         emitted_combos = set()
-        for c in self.combos:
-            if isinstance(c, SimpleCombo):
-                if c.name not in emitted_combos:
-                    lines.append(c.render_dts("default", pos_map, layer_indices, self.registered_behaviors))
-                    emitted_combos.add(c.name)
-            elif isinstance(c, ModLayerCombo):
-                for macro_name, combo_dts in zip(c.all_macro_names(layer_indices), c.render_all_combos(pos_map, layer_indices)):
-                    combo_key = f"combo_{macro_name.replace('macro_', '', 1)}"
-                    if combo_key not in emitted_combos:
+        for c in all_combos:
+            if isinstance(c, (Combo, ModLayerCombo)):
+                for name, combo_dts in c.render_all_dts(pos_map=pos_map, layer_indices=layer_indices, wrap_root=False):
+                    if name not in emitted_combos:
                         lines.append(combo_dts)
-                        emitted_combos.add(combo_key)
+                        emitted_combos.add(name)
         lines.append("    };")
         lines.append("};")
         lines.append("")

@@ -1,11 +1,14 @@
-from typing import List, Union, Optional, Dict, Any
-from .os_key import OsKey, CTL_CMD, GUI_CTL, ALT, SFT
+from typing import List, Tuple, Union, Optional, Dict, Any
+from .os_key import OsKey, CTL_GUI, GUI_CTL, ALT, SFT
 
 class Behavior:
     """
     Base class for all ZMK Devicetree behaviors.
     Supports self-contained top-level DTSI block definitions (/ { <section> { <node> { ... }; }; };).
+    Automatically registers instances for keymap generation.
     """
+    _registry: List["Behavior"] = []
+
     def __init__(
         self,
         name: str,
@@ -19,9 +22,28 @@ class Behavior:
         self.section = section
         self.binding_cells = binding_cells
         self.properties = properties or {}
+        if self not in Behavior._registry:
+            Behavior._registry.append(self)
 
-    def render_node_dts(self, node_name_override: Optional[str] = None, indent: str = "        ") -> str:
-        name = node_name_override or self.name
+    @classmethod
+    def all(cls) -> List["Behavior"]:
+        return list(cls._registry)
+
+    @classmethod
+    def get_all(cls) -> List["Behavior"]:
+        return list(cls._registry)
+
+    @classmethod
+    def clear_registry(cls) -> None:
+        cls._registry.clear()
+
+    def render_node_dts(
+        self,
+        node_name_override: Optional[str] = None,
+        name_suffix: str = "",
+        indent: str = "        ",
+    ) -> str:
+        name = node_name_override if node_name_override is not None else f"{self.name}{name_suffix}"
         lines = [f"{indent}{name}: {name} {{"]
         lines.append(f'{indent}    compatible = "{self.compatible}";')
         lines.append(f'{indent}    #binding-cells = <{self.binding_cells}>;')
@@ -46,13 +68,35 @@ class Behavior:
         self,
         os_target: str = "default",
         node_name_override: Optional[str] = None,
+        name_suffix: str = "",
         pos_map: Optional[Dict[str, int]] = None,
         wrap_root: bool = True,
+        indent: str = "        ",
+        **kwargs: Any,
     ) -> str:
-        node_dts = self.render_node_dts(node_name_override=node_name_override)
+        node_dts = self.render_node_dts(
+            node_name_override=node_name_override,
+            name_suffix=name_suffix,
+            indent=indent,
+        )
         if not wrap_root:
             return node_dts
         return f"/ {{\n    {self.section} {{\n{node_dts}\n    }};\n}};\n"
+
+    def render_all_dts(
+        self,
+        pos_map: Optional[Dict[str, int]] = None,
+        wrap_root: bool = False,
+        indent: str = "        ",
+        **kwargs: Any,
+    ) -> List[Tuple[str, str]]:
+        return [(self.name, self.render_dts(
+            os_target="default",
+            pos_map=pos_map,
+            wrap_root=wrap_root,
+            indent=indent,
+            **kwargs,
+        ))]
 
     def render_call(self, os_target: str = "default") -> str:
         return f"&{self.name}"
@@ -82,8 +126,11 @@ class Macro(Behavior):
         self,
         os_target: str = "default",
         node_name_override: Optional[str] = None,
+        name_suffix: str = "",
         pos_map: Optional[Dict[str, int]] = None,
         wrap_root: bool = True,
+        indent: str = "        ",
+        **kwargs: Any,
     ) -> str:
         resolved_bindings = []
         for b in self.raw_bindings:
@@ -93,7 +140,15 @@ class Macro(Behavior):
                 resolved_bindings.append(str(b))
                 
         self.properties["bindings"] = f"<{', '.join(resolved_bindings)}>"
-        return super().render_dts(os_target=os_target, node_name_override=node_name_override, pos_map=pos_map, wrap_root=wrap_root)
+        return super().render_dts(
+            os_target=os_target,
+            node_name_override=node_name_override,
+            name_suffix=name_suffix,
+            pos_map=pos_map,
+            wrap_root=wrap_root,
+            indent=indent,
+            **kwargs,
+        )
 
 
 class ModMorph(Behavior):
@@ -130,11 +185,13 @@ class ModMorph(Behavior):
     def render_dts(
         self,
         os_target: str = "default",
+        node_name_override: Optional[str] = None,
         name_suffix: str = "",
         pos_map: Optional[Dict[str, int]] = None,
         wrap_root: bool = True,
+        indent: str = "        ",
+        **kwargs: Any,
     ) -> str:
-        node_name = f"{self.name}{name_suffix}"
         normal_str = self.format_key(self.normal, os_target)
         morph_str = self.format_key(self.morph, os_target)
         mods_str = self.format_mods(self.mods, os_target)
@@ -144,7 +201,45 @@ class ModMorph(Behavior):
         if self.keep_mods:
             self.properties["keep-mods"] = f"<({self.format_mods(self.keep_mods, os_target)})>"
             
-        return super().render_dts(os_target=os_target, node_name_override=node_name, pos_map=pos_map, wrap_root=wrap_root)
+        return super().render_dts(
+            os_target=os_target,
+            node_name_override=node_name_override,
+            name_suffix=name_suffix,
+            pos_map=pos_map,
+            wrap_root=wrap_root,
+            indent=indent,
+            **kwargs,
+        )
+
+    def render_all_dts(
+        self,
+        pos_map: Optional[Dict[str, int]] = None,
+        wrap_root: bool = False,
+        indent: str = "        ",
+        **kwargs: Any,
+    ) -> List[Tuple[str, str]]:
+        results = [
+            (self.name, self.render_dts(
+                os_target="default",
+                pos_map=pos_map,
+                wrap_root=wrap_root,
+                indent=indent,
+                **kwargs,
+            ))
+        ]
+        if self.has_mac_variant:
+            mac_name = f"{self.name}_mac"
+            results.append(
+                (mac_name, self.render_dts(
+                    os_target="mac",
+                    name_suffix="_mac",
+                    pos_map=pos_map,
+                    wrap_root=wrap_root,
+                    indent=indent,
+                    **kwargs,
+                ))
+            )
+        return results
 
     def render_call(self, os_target: str = "default") -> str:
         suffix = "_mac" if (os_target == "mac" and self.has_mac_variant) else ""
@@ -183,14 +278,25 @@ class TriState(Behavior):
         self,
         os_target: str = "default",
         node_name_override: Optional[str] = None,
+        name_suffix: str = "",
         pos_map: Optional[Dict[str, int]] = None,
         wrap_root: bool = True,
+        indent: str = "        ",
+        **kwargs: Any,
     ) -> str:
         self.properties["bindings"] = f"<{self.start}>, <{self.tap}>, <{self.end}>"
         if self.ignored_positions:
             pos_strs = [str(pos_map.get(p, p) if pos_map else p) for p in self.ignored_positions]
             self.properties["ignored-key-positions"] = f"<{' '.join(pos_strs)}>"
-        return super().render_dts(os_target=os_target, node_name_override=node_name_override, pos_map=pos_map, wrap_root=wrap_root)
+        return super().render_dts(
+            os_target=os_target,
+            node_name_override=node_name_override,
+            name_suffix=name_suffix,
+            pos_map=pos_map,
+            wrap_root=wrap_root,
+            indent=indent,
+            **kwargs,
+        )
 
 
 class HoldTap(Behavior):
@@ -218,6 +324,26 @@ class HoldTap(Behavior):
             
         super().__init__(name=name, compatible="zmk,behavior-hold-tap", section="behaviors", binding_cells=2, properties=props)
 
+    def render_dts(
+        self,
+        os_target: str = "default",
+        node_name_override: Optional[str] = None,
+        name_suffix: str = "",
+        pos_map: Optional[Dict[str, int]] = None,
+        wrap_root: bool = True,
+        indent: str = "        ",
+        **kwargs: Any,
+    ) -> str:
+        return super().render_dts(
+            os_target=os_target,
+            node_name_override=node_name_override,
+            name_suffix=name_suffix,
+            pos_map=pos_map,
+            wrap_root=wrap_root,
+            indent=indent,
+            **kwargs,
+        )
+
 
 class HRMCall:
     """
@@ -230,9 +356,21 @@ class HRMCall:
         self.is_layer = is_layer
 
     def render(self, os_target: str = "default") -> str:
-        behavior_name = f"hr{'l' if self.is_layer else 'm'}_{self.hand}"
+        behavior_name = f"hr{'l' if self.is_layer else 'm'}{self.hand}"
         mod_str = self.mod.get_kp(os_target) if isinstance(self.mod, OsKey) else str(self.mod)
         return f"&{behavior_name} {mod_str} {self.key}"
+
+    def render_dts(
+        self,
+        os_target: str = "default",
+        node_name_override: Optional[str] = None,
+        name_suffix: str = "",
+        pos_map: Optional[Dict[str, int]] = None,
+        wrap_root: bool = True,
+        indent: str = "        ",
+        **kwargs: Any,
+    ) -> str:
+        return self.render(os_target)
 
     def __call__(self, os_target: str = "default") -> str:
         return self.render(os_target)
@@ -276,9 +414,9 @@ class BehaviorCall:
                 else:
                     rendered_args.append(layer_name)
             elif isinstance(a, str):
-                if a == "CTL_CMD":
-                    rendered_args.append(CTL_CMD.get_kp(os_target))
-                elif a == "CMD_CTL":
+                if a == "CTL_GUI":
+                    rendered_args.append(CTL_GUI.get_kp(os_target))
+                elif a == "GUI_CTL":
                     rendered_args.append(GUI_CTL.get_kp(os_target))
                 elif os_target == "mac" and a in ["Nav", "Sym", "Fn"]:
                     rendered_args.append(f"{a}M")
@@ -295,6 +433,18 @@ class BehaviorCall:
         if rendered_args:
             return f"{beh} {' '.join(rendered_args)}"
         return beh
+
+    def render_dts(
+        self,
+        os_target: str = "default",
+        node_name_override: Optional[str] = None,
+        name_suffix: str = "",
+        pos_map: Optional[Dict[str, int]] = None,
+        wrap_root: bool = True,
+        indent: str = "        ",
+        **kwargs: Any,
+    ) -> str:
+        return self.render(os_target)
 
     def __call__(self, *call_args: Any, **kwargs: Any) -> Union[str, "BehaviorCall"]:
         if not call_args and not kwargs:
@@ -367,25 +517,21 @@ caps_word = BehaviorCall("caps_word")
 key_repeat = BehaviorCall("key_repeat")
 
 # Mod key helpers
-def ls(key: str) -> str: return f"LS({key})"
-def lc(key: str) -> str: return f"LC({key})"
-def la(key: str) -> str: return f"LA({key})"
-def lg(key: str) -> str: return f"LG({key})"
-def LS(key: str) -> str: return f"LS({key})"
-def LC(key: str) -> str: return f"LC({key})"
-def LA(key: str) -> str: return f"LA({key})"
-def LG(key: str) -> str: return f"LG({key})"
+def S(key: str) -> str: return f"LS({key})"
+def C(key: str) -> str: return f"LC({key})"
+def A(key: str) -> str: return f"LA({key})"
+def G(key: str) -> str: return f"LG({key})"
 
 # Home Row Mod Call Helpers
-def SL(key: str) -> HRMCall: return HRMCall("left", SFT, key)
-def CL(key: str) -> HRMCall: return HRMCall("left", CTL_CMD, key)
-def AL(key: str) -> HRMCall: return HRMCall("left", ALT, key)
-def ML(key: str) -> HRMCall: return HRMCall("left", GUI_CTL, key)
+def SL(key: str) -> HRMCall: return HRMCall("l", SFT, key)
+def CL(key: str) -> HRMCall: return HRMCall("l", CTL_GUI, key)
+def AL(key: str) -> HRMCall: return HRMCall("l", ALT, key)
+def ML(key: str) -> HRMCall: return HRMCall("l", GUI_CTL, key)
 
-def SR(key: str) -> HRMCall: return HRMCall("right", SFT, key)
-def CR(key: str) -> HRMCall: return HRMCall("right", CTL_CMD, key)
-def AR(key: str) -> HRMCall: return HRMCall("right", ALT, key)
-def MR(key: str) -> HRMCall: return HRMCall("right", GUI_CTL, key)
+def SR(key: str) -> HRMCall: return HRMCall("r", SFT, key)
+def CR(key: str) -> HRMCall: return HRMCall("r", CTL_GUI, key)
+def AR(key: str) -> HRMCall: return HRMCall("r", ALT, key)
+def MR(key: str) -> HRMCall: return HRMCall("r", GUI_CTL, key)
 
-def SYL(key: str) -> HRMCall: return HRMCall("left", "SYS", key, is_layer=True)
-def SYR(key: str) -> HRMCall: return HRMCall("right", "SYS", key, is_layer=True)
+def SYL(key: str) -> HRMCall: return HRMCall("l", "SYS", key, is_layer=True)
+def SYR(key: str) -> HRMCall: return HRMCall("r", "SYS", key, is_layer=True)

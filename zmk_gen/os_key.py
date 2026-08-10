@@ -25,9 +25,8 @@ class OsKey:
     def __repr__(self):
         return f"OsKey({self.default_kp}/{self.mac_kp})"
 
-# Global OS Key Constants (Only for keys that differ between Linux and Mac)
-CTL_CMD = OsKey(default="LCTL", mac="LGUI")
-GUI_CTL  = OsKey(default="LGUI", mac="LCTL")
+CTL_GUI = OsKey(default="LCTL", mac="LGUI")
+GUI_CTL = OsKey(default="LGUI", mac="LCTL")
 
 # Plain key string constants for keys identical across OSs
 ALT = "LALT"
