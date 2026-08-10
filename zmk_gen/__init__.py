@@ -5,7 +5,9 @@ from .behaviors import (
     SL, CL, AL, ML, SR, CR, AR, MR, SYL, SYR,
     mt, lt, mo, tog, sk, thl, thm, out, bt, bt_sel, bt_clr, bt_clr_all, kt_on, kt_off, kp,
     none, trans, bootloader, sys_reset, caps_word, key_repeat,
-    S, C, A, G
+    S, C, A, G,
+    PRIOR_IDLE_MS, QUICK_TAP_MS, TAPPING_TERM, COMBO_TERM,
+    KEYS_L, KEYS_R, THUMBS
 )
 from .layer import Layer, tokenize_line, normalize_layer_row
 from .combo import Combo, SimpleCombo, ModLayerCombo
@@ -19,6 +21,8 @@ __all__ = [
     "mt", "lt", "mo", "tog", "sk", "thl", "thm", "out", "bt", "bt_sel", "bt_clr", "bt_clr_all", "kt_on", "kt_off", "kp",
     "none", "trans", "bootloader", "sys_reset", "caps_word", "key_repeat",
     "S", "C", "A", "G",
+    "PRIOR_IDLE_MS", "QUICK_TAP_MS", "TAPPING_TERM", "COMBO_TERM",
+    "KEYS_L", "KEYS_R", "THUMBS",
     "Layer", "tokenize_line", "normalize_tokens", "assemble_layer_thumbs", "normalize_layer_row",
     "Combo", "SimpleCombo", "ModLayerCombo",
     "KeymapGenerator",

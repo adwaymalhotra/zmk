@@ -280,30 +280,59 @@ class Keyboard:
 
         return sel_l + sel_r
 
+    def get_thumb_halves(
+        self,
+        os_target: str = "default",
+        thumb_base: Optional[Any] = None,
+        thumb_extras: Optional[Any] = None,
+    ) -> Tuple[List[Any], List[Any]]:
+        if os_target in self.thumbs:
+            val = self.thumbs[os_target]
+            bindings = list(val) if isinstance(val, (list, tuple)) else [val]
+            mid = len(bindings) // 2
+            return bindings[:mid], bindings[mid:]
+        elif "default" in self.thumbs:
+            val = self.thumbs["default"]
+            bindings = list(val) if isinstance(val, (list, tuple)) else [val]
+            mid = len(bindings) // 2
+            return bindings[:mid], bindings[mid:]
+
+        t_base = thumb_base if thumb_base is not None else self.thumb_base
+        t_extras = thumb_extras if thumb_extras is not None else self.thumb_extras
+
+        left_thumbs, right_thumbs = assemble_layer_thumbs(t_base, t_extras)
+
+        lh_positions = []
+        rh_positions = []
+        for row in self.layout:
+            for key in row:
+                if key.startswith("LH"):
+                    lh_positions.append(key)
+                elif key.startswith("RH"):
+                    rh_positions.append(key)
+
+        n_lh = len(lh_positions)
+        n_rh = len(rh_positions)
+
+        if n_lh == 0 and n_rh == 0:
+            return left_thumbs, right_thumbs
+
+        base_l, base_r = get_base_halves(t_base)
+        ll, lr, rl, rr = get_extras_halves(t_extras)
+
+        sel_l = self._slice_left_thumbs(n_lh, ll, base_l, lr, left_thumbs)
+        sel_r = self._slice_right_thumbs(n_rh, rl, base_r, rr, right_thumbs)
+
+        return sel_l, sel_r
+
     def get_thumb_bindings(
         self,
         os_target: str = "default",
         thumb_base: Optional[Any] = None,
         thumb_extras: Optional[Any] = None,
     ) -> List[Any]:
-        if os_target in self.thumbs:
-            val = self.thumbs[os_target]
-            if isinstance(val, (list, tuple)):
-                return list(val)
-            return [val]
-        elif "default" in self.thumbs:
-            val = self.thumbs["default"]
-            if isinstance(val, (list, tuple)):
-                return list(val)
-            return [val]
-
-        t_base = thumb_base if thumb_base is not None else self.thumb_base
-        t_extras = thumb_extras if thumb_extras is not None else self.thumb_extras
-
-        if t_base is not None or t_extras is not None:
-            return self.resolve_thumbs(t_base, t_extras, os_target=os_target)
-        
-        return []
+        left_h, right_h = self.get_thumb_halves(os_target=os_target, thumb_base=thumb_base, thumb_extras=thumb_extras)
+        return left_h + right_h
 
     def _thumb_has_os_split(self) -> bool:
         """True if any mod produces different keys on linux vs mac."""

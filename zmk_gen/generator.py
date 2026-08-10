@@ -16,9 +16,17 @@ class KeymapGenerator:
         behaviors: Optional[List[Behavior]] = None,
         thumb_base: Optional[Union[Tuple, List, Dict]] = None,
         thumb_extras: Optional[Dict] = None,
+        prior_idle_ms: int = 160,
+        quick_tap_ms: int = 175,
+        tapping_term: int = 200,
+        combo_term: int = 50,
     ):
         self.keyboards = list(keyboards) if keyboards is not None else Keyboard.all()
         self.layers = list(layers) if layers is not None else Layer.all()
+        self.prior_idle_ms = prior_idle_ms
+        self.quick_tap_ms = quick_tap_ms
+        self.tapping_term = tapping_term
+        self.combo_term = combo_term
         
         all_registered = Behavior.all()
         if behaviors is not None:
@@ -71,6 +79,10 @@ class KeymapGenerator:
         pos_map = self.build_pos_map(keyboard)
         layer_indices = self.build_layer_indices()
 
+        keys_l_strs = [str(x) for x in keyboard.get_keys_l(pos_map)]
+        keys_r_strs = [str(x) for x in keyboard.get_keys_r(pos_map)]
+        thumbs_strs = [str(x) for x in keyboard.get_thumbs_pos(pos_map)]
+
         lines = [
             "// Auto-generated ZMK Keymap by Python zmk_gen system. DO NOT EDIT DIRECTLY.",
             "#include <dt-bindings/zmk/keys.h>",
@@ -78,6 +90,40 @@ class KeymapGenerator:
             "#include <dt-bindings/zmk/bt.h>",
             "#include <dt-bindings/zmk/outputs.h>",
             "#include <zmk-helpers/helper.h>",
+            "",
+            f"#define PRIOR_IDLE_MS {self.prior_idle_ms}",
+            f"#define QUICK_TAP_MS {self.quick_tap_ms}",
+            f"#define TAPPING_TERM {self.tapping_term}",
+            "",
+            "#undef COMBO_TERM",
+            f"#define COMBO_TERM {self.combo_term}",
+            "",
+            f"#define KEYS_L {' '.join(keys_l_strs)}",
+            f"#define KEYS_R {' '.join(keys_r_strs)}",
+            f"#define THUMBS {' '.join(thumbs_strs)}",
+            "",
+            "/* All Other Behaviors */",
+            "&sk {",
+            "    release-after-ms = <1000>;",
+            "    quick-release;",
+            "};",
+            "",
+            "&lt {",
+            "    tapping-term-ms = <TAPPING_TERM>;",
+            "    quick-tap-ms = <QUICK_TAP_MS>;",
+            "    flavor = \"hold-preferred\";",
+            "};",
+            "",
+            "&mt {",
+            "    tapping-term-ms = <TAPPING_TERM>;",
+            "    quick-tap-ms = <QUICK_TAP_MS>;",
+            "    flavor = \"hold-preferred\";",
+            "};",
+            "",
+            "&caps_word {",
+            "    continue-list = <UNDERSCORE MINUS BACKSPACE DELETE>;",
+            "    /delete-property/ ignore-modifiers;",
+            "};",
             "",
             "/* Layer ID Definitions */",
         ]

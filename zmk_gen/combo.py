@@ -17,7 +17,7 @@ class Combo(Behavior):
         key: Union[str, BehaviorCall, Behavior, OsKey, Any],
         positions: List[str],
         layers: Optional[List[str]] = None,
-        timeout_ms: int = 50,
+        timeout_ms: Union[int, str] = "COMBO_TERM",
         slow_release: bool = False,
     ):
         self.key = key
@@ -50,7 +50,8 @@ class Combo(Behavior):
 
         indices = [str(pos_map.get(p, p)) for p in self.positions]
         lines = [f"{indent}{node_name} {{"]
-        lines.append(f'{indent}    timeout-ms = <{self.timeout_ms}>;')
+        timeout_val = "<COMBO_TERM>" if self.timeout_ms in [50, "50", "COMBO_TERM"] else f"<{self.timeout_ms}>"
+        lines.append(f'{indent}    timeout-ms = {timeout_val};')
         lines.append(f'{indent}    key-positions = <{" ".join(indices)}>;')
 
         if isinstance(self.key, OsKey):
@@ -142,7 +143,7 @@ class ModLayerCombo(Behavior):
         mods: Union[Union[str, OsKey], List[Union[str, OsKey]]],
         layer: "Layer",
         positions: List[str],
-        timeout_ms: int = 50,
+        timeout_ms: Union[int, str] = "COMBO_TERM",
         name: Optional[str] = None,
     ):
         self.mods: List[Union[str, OsKey]] = mods if isinstance(mods, list) else [mods]
@@ -247,7 +248,8 @@ class ModLayerCombo(Behavior):
         scoped_layers = self.get_scoped_layers(os_target, layer_indices)
 
         lines = [f"{indent}{combo_name} {{"]
-        lines.append(f'{indent}    timeout-ms = <{self.timeout_ms}>;')
+        timeout_val = "<COMBO_TERM>" if self.timeout_ms in [50, "50", "COMBO_TERM"] else f"<{self.timeout_ms}>"
+        lines.append(f'{indent}    timeout-ms = {timeout_val};')
         lines.append(f'{indent}    key-positions = <{" ".join(indices)}>;')
         lines.append(f'{indent}    bindings = <&{macro_name}>;')
         if scoped_layers:

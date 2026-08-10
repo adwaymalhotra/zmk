@@ -299,6 +299,18 @@ class TriState(Behavior):
         )
 
 
+# Timing Constants (Defaults)
+PRIOR_IDLE_MS = 160
+QUICK_TAP_MS = 175
+TAPPING_TERM = 200
+COMBO_TERM = 50
+
+# Key Array Symbolic Constants
+KEYS_L = "KEYS_L"
+KEYS_R = "KEYS_R"
+THUMBS = "THUMBS"
+
+
 class HoldTap(Behavior):
     def __init__(
         self,
@@ -307,9 +319,9 @@ class HoldTap(Behavior):
         hold: str = "&kp",
         tap: str = "&kp",
         trigger_pos: Union[str, List[str], List[int]] = "",
-        tapping_term_ms: int = 200,
-        quick_tap_ms: int = 175,
-        require_prior_idle_ms: Optional[int] = 150,
+        tapping_term_ms: Union[int, str] = "TAPPING_TERM",
+        quick_tap_ms: Union[int, str] = "QUICK_TAP_MS",
+        require_prior_idle_ms: Optional[Union[int, str]] = "PRIOR_IDLE_MS",
         bindings: Optional[str] = None,
         properties: Optional[Dict[str, Any]] = None,
     ):
@@ -324,10 +336,17 @@ class HoldTap(Behavior):
 
         props = properties.copy() if properties else {}
         props["flavor"] = f'"{self.flavor}"'
-        props["tapping-term-ms"] = f"<{self.tapping_term_ms}>"
-        props["quick-tap-ms"] = f"<{self.quick_tap_ms}>"
+
+        tt = "TAPPING_TERM" if self.tapping_term_ms in [200, "TAPPING_TERM"] else str(self.tapping_term_ms)
+        props["tapping-term-ms"] = f"<{tt}>"
+
+        qt = "QUICK_TAP_MS" if self.quick_tap_ms in [175, "QUICK_TAP_MS"] else str(self.quick_tap_ms)
+        props["quick-tap-ms"] = f"<{qt}>"
+
         if self.require_prior_idle_ms is not None:
-            props["require-prior-idle-ms"] = f"<{self.require_prior_idle_ms}>"
+            pi = "PRIOR_IDLE_MS" if self.require_prior_idle_ms in [150, 160, "PRIOR_IDLE_MS"] else str(self.require_prior_idle_ms)
+            props["require-prior-idle-ms"] = f"<{pi}>"
+
         props["bindings"] = self.custom_bindings or f"<{self.hold}>, <{self.tap}>"
 
         super().__init__(
@@ -346,36 +365,9 @@ class HoldTap(Behavior):
         if not self.trigger_pos:
             return ""
         if isinstance(self.trigger_pos, (list, tuple)):
-            if pos_map:
-                resolved = [str(pos_map.get(p, p)) for p in self.trigger_pos]
-            else:
-                resolved = [str(p) for p in self.trigger_pos]
-            return " ".join(resolved)
+            return " ".join(str(p) for p in self.trigger_pos)
         if isinstance(self.trigger_pos, str):
-            tp = self.trigger_pos.strip()
-            if keyboard is not None or pos_map is not None:
-                keys_l = keyboard.get_keys_l(pos_map) if keyboard and hasattr(keyboard, "get_keys_l") else []
-                keys_r = keyboard.get_keys_r(pos_map) if keyboard and hasattr(keyboard, "get_keys_r") else []
-                thumbs = keyboard.get_thumbs_pos(pos_map) if keyboard and hasattr(keyboard, "get_thumbs_pos") else []
-
-                parts = tp.split()
-                resolved_indices = []
-                for p in parts:
-                    if p in ["KEYS_L", "L"]:
-                        resolved_indices.extend(keys_l)
-                    elif p in ["KEYS_R", "R"]:
-                        resolved_indices.extend(keys_r)
-                    elif p in ["THUMBS", "T"]:
-                        resolved_indices.extend(thumbs)
-                    elif pos_map and p in pos_map:
-                        resolved_indices.append(pos_map[p])
-                    elif p.isdigit():
-                        resolved_indices.append(int(p))
-                    else:
-                        resolved_indices.append(p)
-                if resolved_indices:
-                    return " ".join(str(x) for x in resolved_indices)
-            return tp
+            return self.trigger_pos.strip()
         return str(self.trigger_pos)
 
     def render_dts(

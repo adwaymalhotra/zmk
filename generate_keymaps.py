@@ -13,6 +13,14 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from zmk_gen import *
 
 # ---------------------------------------------------------------------------
+# 0. Global Timing & Behavior Constants
+# ---------------------------------------------------------------------------
+PRIOR_IDLE_MS = 160
+QUICK_TAP_MS = 175
+TAPPING_TERM = 200
+COMBO_TERM = 50
+
+# ---------------------------------------------------------------------------
 # 1. Macro & Behavior Definitions (Automatically registered)
 # ---------------------------------------------------------------------------
 uc_deg   = Macro("uc_deg", ["&kp RALT", "&kp O", "&kp O"])
@@ -246,6 +254,12 @@ ModLayerCombo([CTL_GUI, SFT],     sym, ["RH1", "LM1", "LM4"])
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
     output_directory = os.path.join(os.path.dirname(__file__), "generated_config")
-    generator = KeymapGenerator(thumbs=(thumb_base, thumb_extras))
+    generator = KeymapGenerator(
+        thumbs=(thumb_base, thumb_extras),
+        prior_idle_ms=PRIOR_IDLE_MS,
+        quick_tap_ms=QUICK_TAP_MS,
+        tapping_term=TAPPING_TERM,
+        combo_term=COMBO_TERM,
+    )
     generator.generate_all(output_dir=output_directory)
     print(f"\nAll keymaps successfully generated into: '{output_directory}'")

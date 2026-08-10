@@ -302,15 +302,26 @@ class Layer:
 
         # Thumbs
         if self.thumbs is not None:
-            thumb_tokens = normalize_tokens(self.thumbs)
+            if isinstance(self.thumbs, dict) and ("left" in self.thumbs or "right" in self.thumbs):
+                left_thumb_tokens = normalize_tokens(self.thumbs.get("left", []))
+                right_thumb_tokens = normalize_tokens(self.thumbs.get("right", []))
+            elif isinstance(self.thumbs, (list, tuple)) and len(self.thumbs) == 2 and isinstance(self.thumbs[0], (list, tuple)):
+                left_thumb_tokens = normalize_tokens(self.thumbs[0])
+                right_thumb_tokens = normalize_tokens(self.thumbs[1])
+            else:
+                all_t = normalize_tokens(self.thumbs)
+                mid = len(all_t) // 2
+                left_thumb_tokens = all_t[:mid]
+                right_thumb_tokens = all_t[mid:]
         else:
             t_base = self.thumb_base if self.thumb_base is not None else default_thumb_base
             t_extras = self.thumb_extras if self.thumb_extras is not None else default_thumb_extras
-            thumb_tokens = keyboard.get_thumb_bindings(os_target=os_target, thumb_base=t_base, thumb_extras=t_extras)
+            left_thumb_tokens, right_thumb_tokens = keyboard.get_thumb_halves(os_target=os_target, thumb_base=t_base, thumb_extras=t_extras)
 
-        thumb_bindings = [self.format_token(t, os_target, registered_behaviors) for t in thumb_tokens]
+        left_thumb_bindings = [self.format_token(t, os_target, registered_behaviors) for t in left_thumb_tokens]
+        right_thumb_bindings = [self.format_token(t, os_target, registered_behaviors) for t in right_thumb_tokens]
 
-        return rows_bindings, thumb_bindings
+        return rows_bindings, (left_thumb_bindings, right_thumb_bindings)
 
     def render_dts(
         self,
@@ -326,7 +337,7 @@ class Layer:
         lines = [f"        {layer_name} {{"]
         lines.append('            bindings = <')
         
-        rows_bindings, thumb_bindings = self.render_layer_bindings(
+        rows_bindings, (left_thumb_bindings, right_thumb_bindings) = self.render_layer_bindings(
             keyboard,
             os_target,
             registered_behaviors,
@@ -335,7 +346,7 @@ class Layer:
         )
         
         if self.is_raw_devicetree:
-            for b in thumb_bindings:
+            for b in left_thumb_bindings + right_thumb_bindings:
                 lines.append(f'                {b}')
         else:
             # Calculate column widths across all rows for alignment
@@ -354,8 +365,11 @@ class Layer:
                 right_str = " ".join(tok.ljust(col_widths_right[c]) for c, tok in enumerate(right_row))
                 lines.append(f'                {left_str} /**/ {right_str}')
 
-            if thumb_bindings:
-                lines.append(f'                {" ".join(thumb_bindings)}')
+            if left_thumb_bindings or right_thumb_bindings:
+                if left_thumb_bindings and right_thumb_bindings:
+                    lines.append(f'                {" ".join(left_thumb_bindings)} /**/ {" ".join(right_thumb_bindings)}')
+                else:
+                    lines.append(f'                {" ".join(left_thumb_bindings + right_thumb_bindings)}')
 
         lines.append('            >;')
         lines.append('        };')
