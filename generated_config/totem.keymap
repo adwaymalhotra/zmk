@@ -1062,57 +1062,57 @@
         };
         Nav {
             bindings = <
-                &none &kp win_switch LS(TAB)        &pre_tab &nex_tab &kp PRCNT /**/ &dot_home &n7_pgdn &n8_pgup &n9_end   &kp FSLH &none
-                &none &sk SFT        &sk ALT        &sk LGUI &sk LCTL &kp STAR  /**/ &eql_left &n4_down &n5_up   &n6_right &n0_ret  &none
-                &none &vi_sav        &kp key_repeat &kp TAB  &kp ESC  &kp QMARK /**/ &kp MINUS &kp N1   &kp N2   &kp N3    &kp PLUS &none
+                &none &alt_tab  &kp LS(TAB) &pre_tab &nex_tab &kp PRCNT /**/ &dot_home &n7_pgdn &n8_pgup &n9_end   &kp FSLH &none
+                &none &sk LSHFT &sk LALT    &sk LGUI &sk LCTL &kp STAR  /**/ &eql_left &n4_down &n5_up   &n6_right &n0_ret  &none
+                &none &vi_sav   &key_repeat &kp TAB  &kp ESC  &kp QMARK /**/ &kp MINUS &kp N1   &kp N2   &kp N3    &kp PLUS &none
                 &lt SYS GRAVE &mo Nav &kp SFT &thm LCTL SPC &mo Sym &lt SYS FSLH
             >;
         };
         NavM {
             bindings = <
-                &none &kp win_switch LS(TAB)        &pre_tab &nex_tab &kp PRCNT /**/ &dot_home_mac &n7_pgdn_mac &n8_pgup_mac &n9_end_mac   &kp FSLH    &none
-                &none &sk SFT        &sk ALT        &sk LCTL &sk LGUI &kp STAR  /**/ &eql_left_mac &n4_down_mac &n5_up_mac   &n6_right_mac &n0_ret_mac &none
-                &none &vi_sav        &kp key_repeat &kp TAB  &kp ESC  &kp QMARK /**/ &kp MINUS     &kp N1       &kp N2       &kp N3        &kp PLUS    &none
+                &none &gui_tab  &kp LS(TAB) &pre_tab &nex_tab &kp PRCNT /**/ &dot_home_mac &n7_pgdn_mac &n8_pgup_mac &n9_end_mac   &kp FSLH    &none
+                &none &sk LSHFT &sk LALT    &sk LCTL &sk LGUI &kp STAR  /**/ &eql_left_mac &n4_down_mac &n5_up_mac   &n6_right_mac &n0_ret_mac &none
+                &none &vi_sav   &key_repeat &kp TAB  &kp ESC  &kp QMARK /**/ &kp MINUS     &kp N1       &kp N2       &kp N3        &kp PLUS    &none
                 &lt SYS GRAVE &mo NavM &kp SFT &thm LGUI SPC &mo SymM &lt SYS FSLH
             >;
         };
         Sym {
             bindings = <
-                &none &kp GRAVE &kp LT    &kp LBKT &kp RBKT &kp GT      /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &sk RALT    &none
-                &none SL(EXCL)  AL(GB_AT) ML(LPAR) CL(RPAR) &kp GB_HASH /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp RET     &none
-                &none &kp AMPS  &kp DLLR  &kp LBRC &kp RBRC &kp CARET   /**/ &del_wor &kp BSPC  &kp DEL   &kp INS   &kp GB_BSLH &none
+                &none &kp GRAVE            &kp LT               &kp LBKT            &kp RBKT            &kp GT      /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &sk RALT    &none
+                &none &hrm_left LSHFT EXCL &hrm_left LALT GB_AT &hrm_left LGUI LPAR &hrm_left LCTL RPAR &kp GB_HASH /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp RET     &none
+                &none &kp AMPS             &kp DLLR             &kp LBRC            &kp RBRC            &kp CARET   /**/ &del_wor &kp BSPC  &kp DEL   &kp INS   &kp GB_BSLH &none
                 &lt SYS GRAVE &mo Nav &kp SFT &thm LCTL SPC &mo Sym &lt SYS FSLH
             >;
         };
         SymM {
             bindings = <
-                &none &kp GRAVE &kp LT    &kp LBKT &kp RBKT &kp GT      /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &sk RALT    &none
-                &none SL(EXCL)  AL(GB_AT) ML(LPAR) CL(RPAR) &kp GB_HASH /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp RET     &none
-                &none &kp AMPS  &kp DLLR  &kp LBRC &kp RBRC &kp CARET   /**/ &del_wor &kp BSPC  &kp DEL   &kp INS   &kp GB_BSLH &none
+                &none &kp GRAVE            &kp LT               &kp LBKT            &kp RBKT            &kp GT      /**/ &kp HOME &kp PG_DN &kp PG_UP &kp END   &sk RALT    &none
+                &none &hrm_left LSHFT EXCL &hrm_left LALT GB_AT &hrm_left LCTL LPAR &hrm_left LGUI RPAR &kp GB_HASH /**/ &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp RET     &none
+                &none &kp AMPS             &kp DLLR             &kp LBRC            &kp RBRC            &kp CARET   /**/ &del_wor &kp BSPC  &kp DEL   &kp INS   &kp GB_BSLH &none
                 &lt SYS GRAVE &mo NavM &kp SFT &thm LGUI SPC &mo SymM &lt SYS FSLH
             >;
         };
         Fn {
             bindings = <
-                &none &kp F1   &kp F2   &kp F3   &kp F4   &kp F5   /**/ &kp F6   &kp F7       &kp F8       &kp F9     &kp F10   &none
-                &none &sk SFT  &sk ALT  &sk LGUI &sk LCTL &kp F11  /**/ &kp F12  &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &vi_sav   &none
-                &none &tog SYS &kp none &kp none &kp none &kp none /**/ &kp CAPS &kp C_BRI_DN &kp C_BRI_UP &kp none   &kp PSCRN &none
+                &none &kp F1    &kp F2   &kp F3   &kp F4   &kp F5  /**/ &kp F6   &kp F7       &kp F8       &kp F9     &kp F10   &none
+                &none &sk LSHFT &sk LALT &sk LGUI &sk LCTL &kp F11 /**/ &kp F12  &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &vi_sav   &none
+                &none &tog SYS  &none    &none    &none    &none   /**/ &kp CAPS &kp C_BRI_DN &kp C_BRI_UP &none      &kp PSCRN &none
                 &lt SYS GRAVE &mo Nav &kp SFT &thm LCTL SPC &mo Sym &lt SYS FSLH
             >;
         };
         FnM {
             bindings = <
-                &none &kp F1   &kp F2   &kp F3   &kp F4   &kp F5   /**/ &kp F6   &kp F7       &kp F8       &kp F9     &kp F10   &none
-                &none &sk SFT  &sk ALT  &sk LCTL &sk LGUI &kp F11  /**/ &kp F12  &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &vi_sav   &none
-                &none &tog SYS &kp none &kp none &kp none &kp none /**/ &kp CAPS &kp C_BRI_DN &kp C_BRI_UP &kp none   &kp PSCRN &none
+                &none &kp F1    &kp F2   &kp F3   &kp F4   &kp F5  /**/ &kp F6   &kp F7       &kp F8       &kp F9     &kp F10   &none
+                &none &sk LSHFT &sk LALT &sk LCTL &sk LGUI &kp F11 /**/ &kp F12  &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &vi_sav   &none
+                &none &tog SYS  &none    &none    &none    &none   /**/ &kp CAPS &kp C_BRI_DN &kp C_BRI_UP &none      &kp PSCRN &none
                 &lt SYS GRAVE &mo NavM &kp SFT &thm LGUI SPC &mo SymM &lt SYS FSLH
             >;
         };
         sys {
             bindings = <
-                &none &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR     /**/ &bt BT_CLR_ALL &kp none &kp none &kp none &tog GAME &none
-                &none &kp none     &kp none     &kp C_BRI_UP &kp C_BRI_DN &kp sys_reset  /**/ &kp sys_reset  &kp none &kp none &tog QWM &tog QW   &none
-                &none &out OUT_BLE &out OUT_USB &kp none     &kp none     &kp bootloader /**/ &kp bootloader &kp none &kp none &kp none &tog GRM  &none
+                &none &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR  /**/ &bt BT_CLR_ALL &none &none &none    &tog GAME &none
+                &none &none        &none        &kp C_BRI_UP &kp C_BRI_DN &sys_reset  /**/ &sys_reset     &none &none &tog QWM &tog QW   &none
+                &none &out OUT_BLE &out OUT_USB &none        &none        &bootloader /**/ &bootloader    &none &none &none    &tog GRM  &none
                 &lt SYS GRAVE &mo Nav &kp SFT &thm LCTL SPC &mo Sym &lt SYS FSLH
             >;
         };

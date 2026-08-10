@@ -13,8 +13,11 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from zmk_gen import (
     Keyboard, Layer, OsKey, ModLayerCombo, SimpleCombo,
     Macro, ModMorph, NumMorph, TriState, KeymapGenerator,
-    CTL_CMD, CMD_CTL, ALT, SFT,
-    SL, CL, AL, ML, SR, CR, AR, MR, SYL, SYR
+    CTL_CMD, GUI_CTL, ALT, SFT, CTL, MET, GUI,
+    SL, CL, AL, ML, SR, CR, AR, MR, SYL, SYR,
+    mt, lt, mo, tog, sk, thl, thm, out, bt, bt_sel, bt_clr, bt_clr_all, kt_on, kt_off, kp,
+    none, trans, bootloader, sys_reset, caps_word, key_repeat,
+    ls, lc, la, lg, LS, LC, LA, LG
 )
 
 # ---------------------------------------------------------------------------
@@ -41,7 +44,7 @@ half_up  = Macro("half_up", ["&kp LC(U)"])
 del_wor  = Macro("del_wor", ["&kp LC(BSPC)"])
 
 # Mod Morphs (OS-Aware using CMD_CTL / CTL_CMD / SFT / ALT)
-bsdel    = ModMorph("bsdel", "&kp BACKSPACE", "&kp DELETE", mods=[ALT, CMD_CTL, SFT])
+bsdel    = ModMorph("bsdel", "&kp BACKSPACE", "&kp DELETE", mods=[ALT, GUI_CTL, SFT])
 dlr_gbp  = ModMorph("dlr_gbp", "&kp DLLR", "&uc_gbp", mods=["MOD_LSFT", "MOD_RSFT"])
 amps_eur = ModMorph("amps_eur", "&kp AMPS", "&uc_eur", mods=["MOD_LSFT", "MOD_RSFT"])
 star_rup = ModMorph("star_rup", "&kp STAR", "&uc_rup", mods=["MOD_LSFT", "MOD_RSFT"])
@@ -52,15 +55,15 @@ lpar_lt  = ModMorph("lpar_lt", "&kp LPAR", "&kp LT", mods=[SFT])
 rpar_gt  = ModMorph("rpar_gt", "&kp RPAR", "&kp GT", mods=[SFT])
 
 # NumMorphs (using CMD_CTL and ALT)
-eql_left = NumMorph("eql_left", "EQUAL", "LEFT", mods=[CMD_CTL, ALT])
-n4_down  = NumMorph("n4_down", "N4", "DOWN", mods=[CMD_CTL, ALT])
-n5_up    = NumMorph("n5_up", "N5", "UP", mods=[CMD_CTL, ALT])
-n6_right = NumMorph("n6_right", "N6", "RIGHT", mods=[CMD_CTL, ALT])
-n0_ret   = NumMorph("n0_ret", "N0", "RET", mods=[CMD_CTL, ALT])
-n7_pgdn  = NumMorph("n7_pgdn", "N7", "PG_DN", mods=[CMD_CTL, ALT])
-n8_pgup  = NumMorph("n8_pgup", "N8", "PG_UP", mods=[CMD_CTL, ALT])
-dot_home = NumMorph("dot_home", "DOT", "HOME", mods=[CMD_CTL, ALT])
-n9_end   = NumMorph("n9_end", "N9", "END", mods=[CMD_CTL, ALT])
+eql_left = NumMorph("eql_left", "EQUAL", "LEFT", mods=[GUI_CTL, ALT])
+n4_down  = NumMorph("n4_down", "N4", "DOWN", mods=[GUI_CTL, ALT])
+n5_up    = NumMorph("n5_up", "N5", "UP", mods=[GUI_CTL, ALT])
+n6_right = NumMorph("n6_right", "N6", "RIGHT", mods=[GUI_CTL, ALT])
+n0_ret   = NumMorph("n0_ret", "N0", "RET", mods=[GUI_CTL, ALT])
+n7_pgdn  = NumMorph("n7_pgdn", "N7", "PG_DN", mods=[GUI_CTL, ALT])
+n8_pgup  = NumMorph("n8_pgup", "N8", "PG_UP", mods=[GUI_CTL, ALT])
+dot_home = NumMorph("dot_home", "DOT", "HOME", mods=[GUI_CTL, ALT])
+n9_end   = NumMorph("n9_end", "N9", "END", mods=[GUI_CTL, ALT])
 
 # Tri States
 alt_tab  = TriState("alt_tab", start="&kt_on LALT", tap="&kp TAB", end="&kt_off LALT", ignored_positions=["LT3"])
@@ -79,10 +82,13 @@ all_behaviors = [
 # ---------------------------------------------------------------------------
 # 2. Keyboard Physical Layout Definitions
 # ---------------------------------------------------------------------------
-thumb_base = ("&mo Nav &kp SFT", "&thm CTL_CMD SPC &mo Sym")
+thumb_base = (
+    [mo("Nav"), "SFT"],
+    [thm(CTL_CMD, "SPC"), mo("Sym")]
+)
 thumb_extras = {
-    "left":  {"left": ["&mt MET TAB", "&lt SYS GRAVE"], "right": ["&mt LALT ESC"]},
-    "right": {"left": ["&mt LALT RET"], "right": ["&lt SYS FSLH", "&mt SFT BSPC"]},
+    "left":  {"left": [mt("MET", "TAB"), lt("SYS", "GRAVE")], "right": [mt("LALT", "ESC")]},
+    "right": {"left": [mt("LALT", "RET")], "right": [lt("SYS", "FSLH"), mt("SFT", "BSPC")]},
 }
 
 limoncello = Keyboard(
@@ -167,59 +173,59 @@ all_keyboards = [limoncello, totem, cygnus, discworld, endgame, atreus, pica40]
 # ---------------------------------------------------------------------------
 # 3. Shared Layer Definitions
 # ---------------------------------------------------------------------------
-graphite = Layer.from_text(
+graphite = Layer(
     name="Graphite",
-    layout="""
-        B  L  D  W  Z | sqt_dqt F  O       U     J
-        N  R  T  S  G | Y       H  A       E     I
-        Q  X  M  C  V | K       P  dot_col MINUS com_sem
-    """
+    rows=[
+        (["B", "L", "D", "W", "Z"], [sqt_dqt, "F", "O",     "U",     "J"]),
+        (["N", "R", "T", "S", "G"], ["Y",     "H", "A",     "E",     "I"]),
+        (["Q", "X", "M", "C", "V"], ["K",     "P", dot_col, "MINUS", com_sem]),
+    ],
 )
 
-qwerty = Layer.from_text(
+qwerty = Layer(
     name="Qwerty",
-    layout="""
-        Q  W  E  R  T | Y  U  I     O   P
-        A  S  D  F  G | H  J  K     L   SEMI
-        Z  X  C  V  B | N  M  COMMA DOT FSLH
-    """
+    rows=[
+        (["Q", "W", "E", "R", "T"], ["Y", "U", "I",     "O",   "P"]),
+        (["A", "S", "D", "F", "G"], ["H", "J", "K",     "L",   "SEMI"]),
+        (["Z", "X", "C", "V", "B"], ["N", "M", "COMMA", "DOT", "FSLH"]),
+    ],
 )
 
-nav = Layer.from_text(
+nav = Layer(
     name="Nav",
-    layout="""
-        win_switch  LS(TAB)    pre_tab     nex_tab     PRCNT | dot_home n7_pgdn n8_pgup n9_end   FSLH
-        &sk SFT     &sk ALT    &sk CMD_CTL &sk CTL_CMD STAR  | eql_left n4_down n5_up   n6_right n0_ret
-        vi_sav      key_repeat TAB         ESC         QMARK | MINUS    N1      N2      N3       PLUS
-    """
+    rows=[
+        ([win_switch, ls("TAB"),  pre_tab,     nex_tab,     "PRCNT"], [dot_home, n7_pgdn, n8_pgup, n9_end,   "FSLH"]),
+        ([sk(SFT),    sk(ALT),    sk(GUI_CTL), sk(CTL_CMD), "STAR"],  [eql_left, n4_down, n5_up,   n6_right, n0_ret]),
+        ([vi_sav,     key_repeat, "TAB",       "ESC",       "QMARK"], ["MINUS",  "N1",    "N2",    "N3",     "PLUS"]),
+    ],
 )
 
-sym = Layer.from_text(
+sym = Layer(
     name="Sym",
-    layout="""
-        GRAVE    LT        LBKT     RBKT     GT      | HOME    PG_DN PG_UP END   &sk RALT
-        SL(EXCL) AL(GB_AT) ML(LPAR) CL(RPAR) GB_HASH | LEFT    DOWN  UP    RIGHT RET
-        AMPS     DLLR      LBRC     RBRC     CARET   | del_wor BSPC  DEL   INS   GB_BSLH
-    """
+    rows=[
+        (["GRAVE",    "LT",        "LBKT",     "RBKT",     "GT"],      ["HOME",  "PG_DN", "PG_UP", "END",   sk("RALT")]),
+        ([SL("EXCL"), AL("GB_AT"), ML("LPAR"), CL("RPAR"), "GB_HASH"], ["LEFT",  "DOWN",  "UP",    "RIGHT", "RET"]),
+        (["AMPS",     "DLLR",      "LBRC",     "RBRC",     "CARET"],   [del_wor, "BSPC",  "DEL",   "INS",   "GB_BSLH"]),
+    ],
 )
 
-fn = Layer.from_text(
+fn = Layer(
     name="Fn",
-    layout="""
-        F1       F2      F3          F4          F5   | F6   F7       F8       F9     F10
-        &sk SFT  &sk ALT &sk CMD_CTL &sk CTL_CMD F11  | F12  C_VOL_DN C_VOL_UP C_MUTE vi_sav
-        &tog SYS none    none        none        none | CAPS C_BRI_DN C_BRI_UP none   PSCRN
-    """
+    rows=[
+        (["F1",       "F2",    "F3",        "F4",        "F5"],  ["F6",   "F7",       "F8",       "F9",     "F10"]),
+        ([sk(SFT),    sk(ALT), sk(GUI_CTL), sk(CTL_CMD), "F11"], ["F12",  "C_VOL_DN", "C_VOL_UP", "C_MUTE", vi_sav]),
+        ([tog("SYS"), none,    none,        none,        none],  ["CAPS", "C_BRI_DN", "C_BRI_UP", none,     "PSCRN"]),
+    ],
 )
 
-sys_layer = Layer.from_text(
+sys_layer = Layer(
     name="sys",
-    layout="""
-        &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR | &bt BT_CLR_ALL none none none     &tog GAME
-        none         none         C_BRI_UP     C_BRI_DN     sys_reset  | sys_reset      none none &tog QWM &tog QW
-        &out OUT_BLE &out OUT_USB none         none         bootloader | bootloader     none none none     &tog GRM
-    """,
-    generate_mac=False
+    rows=[
+        ([bt_sel(0),  bt_sel(1),  bt_sel(2),  bt_sel(3),  bt_clr()],   [bt_clr_all(), none, none, none,       tog("GAME")]),
+        ([none,       none,       "C_BRI_UP", "C_BRI_DN", sys_reset],  [sys_reset,    none, none, tog("QWM"), tog("QW")]),
+        ([out("BLE"), out("USB"), none,       none,       bootloader], [bootloader,   none, none, none,       tog("GRM")]),
+    ],
+    generate_mac=False,
 )
 
 all_layers = [graphite, qwerty, nav, sym, fn, sys_layer]
@@ -235,24 +241,24 @@ combos = [
     # OsKey mods (CTL_CMD, CMD_CTL) auto-generate both linux and mac combos+macros.
     # Plain string mods (ALT, SFT) are identical across OSs → only one combo is generated.
     ModLayerCombo(CTL_CMD, nav, ["LH1", "LM1"]),
-    ModLayerCombo(CMD_CTL, nav, ["LH1", "LM2"]),
+    ModLayerCombo(GUI_CTL, nav, ["LH1", "LM2"]),
     ModLayerCombo(ALT,     nav, ["LH1", "LM3"]),
     ModLayerCombo(SFT,     nav, ["LH1", "LM4"]),
 
-    ModLayerCombo([CMD_CTL, CTL_CMD], nav, ["LH1", "LM2", "LM1"]),
-    ModLayerCombo([CMD_CTL, ALT],     nav, ["LH1", "LM2", "LM3"]),
-    ModLayerCombo([CMD_CTL, SFT],     nav, ["LH1", "LM2", "LM4"]),
+    ModLayerCombo([GUI_CTL, CTL_CMD], nav, ["LH1", "LM2", "LM1"]),
+    ModLayerCombo([GUI_CTL, ALT],     nav, ["LH1", "LM2", "LM3"]),
+    ModLayerCombo([GUI_CTL, SFT],     nav, ["LH1", "LM2", "LM4"]),
     ModLayerCombo([CTL_CMD, ALT],     nav, ["LH1", "LM1", "LM3"]),
     ModLayerCombo([CTL_CMD, SFT],     nav, ["LH1", "LM1", "LM4"]),
 
     ModLayerCombo(CTL_CMD, sym, ["RH1", "LM1"]),
-    ModLayerCombo(CMD_CTL, sym, ["RH1", "LM2"]),
+    ModLayerCombo(GUI_CTL, sym, ["RH1", "LM2"]),
     ModLayerCombo(ALT,     sym, ["RH1", "LM3"]),
     ModLayerCombo(SFT,     sym, ["RH1", "LM4"]),
 
-    ModLayerCombo([CMD_CTL, CTL_CMD], sym, ["RH1", "LM2", "LM1"]),
-    ModLayerCombo([CMD_CTL, ALT],     sym, ["RH1", "LM2", "LM3"]),
-    ModLayerCombo([CMD_CTL, SFT],     sym, ["RH1", "LM2", "LM4"]),
+    ModLayerCombo([GUI_CTL, CTL_CMD], sym, ["RH1", "LM2", "LM1"]),
+    ModLayerCombo([GUI_CTL, ALT],     sym, ["RH1", "LM2", "LM3"]),
+    ModLayerCombo([GUI_CTL, SFT],     sym, ["RH1", "LM2", "LM4"]),
     ModLayerCombo([CTL_CMD, ALT],     sym, ["RH1", "LM1", "LM3"]),
     ModLayerCombo([CTL_CMD, SFT],     sym, ["RH1", "LM1", "LM4"]),
 ]

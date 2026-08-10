@@ -1,5 +1,5 @@
 from typing import List, Union, Optional, Dict, Any
-from .os_key import OsKey, CTL_CMD, CMD_CTL, ALT, SFT
+from .os_key import OsKey, CTL_CMD, GUI_CTL, ALT, SFT
 
 class Behavior:
     """
@@ -54,6 +54,12 @@ class Behavior:
             return node_dts
         return f"/ {{\n    {self.section} {{\n{node_dts}\n    }};\n}};\n"
 
+    def render_call(self, os_target: str = "default") -> str:
+        return f"&{self.name}"
+
+    def __call__(self, os_target: str = "default") -> str:
+        return self.render_call(os_target)
+
 
 class Macro(Behavior):
     def __init__(
@@ -105,6 +111,10 @@ class ModMorph(Behavior):
         self.keep_mods = keep_mods
         super().__init__(name=name, compatible="zmk,behavior-mod-morph", section="behaviors", binding_cells=0)
 
+    @property
+    def has_mac_variant(self) -> bool:
+        return any(isinstance(m, OsKey) for m in self.mods)
+
     def format_key(self, val: Union[str, OsKey], os_target: str) -> str:
         if isinstance(val, OsKey):
             return f"&kp {val.get_kp(os_target)}"
@@ -136,6 +146,13 @@ class ModMorph(Behavior):
             
         return super().render_dts(os_target=os_target, node_name_override=node_name, pos_map=pos_map, wrap_root=wrap_root)
 
+    def render_call(self, os_target: str = "default") -> str:
+        suffix = "_mac" if (os_target == "mac" and self.has_mac_variant) else ""
+        return f"&{self.name}{suffix}"
+
+    def __call__(self, os_target: str = "default") -> str:
+        return self.render_call(os_target)
+
 
 class NumMorph(ModMorph):
     """
@@ -143,7 +160,7 @@ class NumMorph(ModMorph):
     """
     def __init__(self, name: str, normal: str, morph: str, mods: Optional[List[Union[str, OsKey]]] = None):
         if mods is None:
-            mods = [CMD_CTL, ALT]
+            mods = [GUI_CTL, ALT]
         super().__init__(name=name, normal=normal, morph=morph, mods=mods, keep_mods=mods)
 
 
@@ -217,20 +234,158 @@ class HRMCall:
         mod_str = self.mod.get_kp(os_target) if isinstance(self.mod, OsKey) else str(self.mod)
         return f"&{behavior_name} {mod_str} {self.key}"
 
+    def __call__(self, os_target: str = "default") -> str:
+        return self.render(os_target)
+
     def __str__(self):
         return self.render("default")
 
 
-# Helper Functions for Layer Formatting
+class BehaviorCall:
+    """
+    Represents a ZMK behavior call in a layer binding (e.g. &mt LCTL RET, &mo Nav, &bt BT_SEL 0).
+    Can be evaluated with an OS target (default/mac) to produce a ZMK binding string.
+    """
+    def __init__(self, behavior_name: str, *args: Any):
+        self.behavior_name = behavior_name
+        self.args = list(args)
+
+    def render(self, os_target: str = "default") -> str:
+        rendered_args = []
+        for a in self.args:
+            if isinstance(a, OsKey):
+                rendered_args.append(a.get_kp(os_target))
+            elif isinstance(a, BehaviorCall):
+                rendered_args.append(a.render(os_target))
+            elif hasattr(a, "render_call") and callable(getattr(a, "render_call")):
+                rendered_args.append(a.render_call(os_target))
+            elif hasattr(a, "render") and callable(getattr(a, "render")):
+                rendered_args.append(a.render(os_target))
+            elif callable(a):
+                try:
+                    rendered_args.append(str(a(os_target)))
+                except TypeError:
+                    rendered_args.append(str(a()))
+            elif hasattr(a, "name"):
+                # E.g. Layer instance
+                layer_name = a.name
+                if os_target == "mac" and layer_name in ["Nav", "Sym", "Fn"]:
+                    rendered_args.append(f"{layer_name}M")
+                elif os_target == "mac" and layer_name in ["Graphite", "Qwerty"]:
+                    rendered_args.append(f"{layer_name}_mac")
+                else:
+                    rendered_args.append(layer_name)
+            elif isinstance(a, str):
+                if a == "CTL_CMD":
+                    rendered_args.append(CTL_CMD.get_kp(os_target))
+                elif a == "CMD_CTL":
+                    rendered_args.append(GUI_CTL.get_kp(os_target))
+                elif os_target == "mac" and a in ["Nav", "Sym", "Fn"]:
+                    rendered_args.append(f"{a}M")
+                elif os_target == "mac" and a in ["NAV", "SYM", "FN"]:
+                    rendered_args.append(f"{a}M")
+                elif os_target == "mac" and a in ["Graphite", "Qwerty"]:
+                    rendered_args.append(f"{a}_mac")
+                else:
+                    rendered_args.append(a)
+            else:
+                rendered_args.append(str(a))
+
+        beh = self.behavior_name if self.behavior_name.startswith("&") else f"&{self.behavior_name}"
+        if rendered_args:
+            return f"{beh} {' '.join(rendered_args)}"
+        return beh
+
+    def __call__(self, *call_args: Any, **kwargs: Any) -> Union[str, "BehaviorCall"]:
+        if not call_args and not kwargs:
+            return self.render("default")
+        if len(call_args) == 1 and call_args[0] in ["default", "mac"]:
+            return self.render(call_args[0])
+        return BehaviorCall(self.behavior_name, *(self.args + list(call_args)))
+
+    def __str__(self) -> str:
+        return self.render("default")
+
+    def __repr__(self) -> str:
+        return f"BehaviorCall({self.behavior_name}, {self.args})"
+
+
+# Standardized Behavior Factory Functions
+def mt(hold: Union[str, OsKey, Any], tap: Union[str, OsKey, Any]) -> BehaviorCall:
+    return BehaviorCall("mt", hold, tap)
+
+def lt(layer: Union[str, Any], tap: Union[str, OsKey, Any]) -> BehaviorCall:
+    return BehaviorCall("lt", layer, tap)
+
+def mo(layer: Union[str, Any]) -> BehaviorCall:
+    return BehaviorCall("mo", layer)
+
+def tog(layer: Union[str, Any]) -> BehaviorCall:
+    return BehaviorCall("tog", layer)
+
+def sk(mod: Union[str, OsKey, Any]) -> BehaviorCall:
+    return BehaviorCall("sk", mod)
+
+def thl(layer: Union[str, Any], tap: Union[str, OsKey, Any]) -> BehaviorCall:
+    return BehaviorCall("thl", layer, tap)
+
+def thm(mod: Union[str, OsKey, Any], tap: Union[str, OsKey, Any]) -> BehaviorCall:
+    return BehaviorCall("thm", mod, tap)
+
+def out(endpoint: str) -> BehaviorCall:
+    ep = endpoint if endpoint.startswith("OUT_") else f"OUT_{endpoint}"
+    return BehaviorCall("out", ep)
+
+def bt(command: str, *args: Any) -> BehaviorCall:
+    cmd = command if command.startswith("BT_") else f"BT_{command}"
+    return BehaviorCall("bt", cmd, *args)
+
+def bt_sel(index: Union[int, str]) -> BehaviorCall:
+    return bt("BT_SEL", str(index))
+
+def bt_clr() -> BehaviorCall:
+    return bt("BT_CLR")
+
+def bt_clr_all() -> BehaviorCall:
+    return bt("BT_CLR_ALL")
+
+def kt_on(key: Union[str, OsKey, Any]) -> BehaviorCall:
+    return BehaviorCall("kt_on", key)
+
+def kt_off(key: Union[str, OsKey, Any]) -> BehaviorCall:
+    return BehaviorCall("kt_off", key)
+
+def kp(key: Union[str, OsKey, Any]) -> BehaviorCall:
+    return BehaviorCall("kp", key)
+
+# Predefined 0-argument behaviors
+none = BehaviorCall("none")
+trans = BehaviorCall("trans")
+bootloader = BehaviorCall("bootloader")
+sys_reset = BehaviorCall("sys_reset")
+caps_word = BehaviorCall("caps_word")
+key_repeat = BehaviorCall("key_repeat")
+
+# Mod key helpers
+def ls(key: str) -> str: return f"LS({key})"
+def lc(key: str) -> str: return f"LC({key})"
+def la(key: str) -> str: return f"LA({key})"
+def lg(key: str) -> str: return f"LG({key})"
+def LS(key: str) -> str: return f"LS({key})"
+def LC(key: str) -> str: return f"LC({key})"
+def LA(key: str) -> str: return f"LA({key})"
+def LG(key: str) -> str: return f"LG({key})"
+
+# Home Row Mod Call Helpers
 def SL(key: str) -> HRMCall: return HRMCall("left", SFT, key)
 def CL(key: str) -> HRMCall: return HRMCall("left", CTL_CMD, key)
 def AL(key: str) -> HRMCall: return HRMCall("left", ALT, key)
-def ML(key: str) -> HRMCall: return HRMCall("left", CMD_CTL, key)
+def ML(key: str) -> HRMCall: return HRMCall("left", GUI_CTL, key)
 
 def SR(key: str) -> HRMCall: return HRMCall("right", SFT, key)
 def CR(key: str) -> HRMCall: return HRMCall("right", CTL_CMD, key)
 def AR(key: str) -> HRMCall: return HRMCall("right", ALT, key)
-def MR(key: str) -> HRMCall: return HRMCall("right", CMD_CTL, key)
+def MR(key: str) -> HRMCall: return HRMCall("right", GUI_CTL, key)
 
 def SYL(key: str) -> HRMCall: return HRMCall("left", "SYS", key, is_layer=True)
 def SYR(key: str) -> HRMCall: return HRMCall("right", "SYS", key, is_layer=True)

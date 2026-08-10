@@ -15,13 +15,24 @@ class OsKey:
     def get_mod(self, os_target: str = "default") -> str:
         return self.mac_mod if os_target == "mac" else self.default_mod
 
+    def render(self, os_target: str = "default") -> str:
+        val = self.get_kp(os_target)
+        return val if val.startswith("&") else f"&kp {val}"
+
+    def __call__(self, os_target: str = "default") -> str:
+        return self.render(os_target)
+
     def __repr__(self):
         return f"OsKey({self.default_kp}/{self.mac_kp})"
 
 # Global OS Key Constants (Only for keys that differ between Linux and Mac)
 CTL_CMD = OsKey(default="LCTL", mac="LGUI")
-CMD_CTL = OsKey(default="LGUI", mac="LCTL")
+GUI_CTL  = OsKey(default="LGUI", mac="LCTL")
 
 # Plain key string constants for keys identical across OSs
 ALT = "LALT"
 SFT = "LSHFT"
+CTL = "LCTL"
+MET = "LGUI"
+GUI = "LGUI"
+
