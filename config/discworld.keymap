@@ -655,7 +655,7 @@
             quick-tap-ms = <QUICK_TAP_MS>;
             require-prior-idle-ms = <PRIOR_IDLE_MS>;
             bindings = <&kp>, <&kp>;
-            hold-trigger-key-positions = <KEYS_L KEYS_R>;
+            hold-trigger-key-positions = <KEYS_L KEYS_R THUMBS>;
         };
         thl: thl {
             compatible = "zmk,behavior-hold-tap";
@@ -665,7 +665,7 @@
             quick-tap-ms = <QUICK_TAP_MS>;
             require-prior-idle-ms = <PRIOR_IDLE_MS>;
             bindings = <&mo>, <&kp>;
-            hold-trigger-key-positions = <KEYS_L KEYS_R>;
+            hold-trigger-key-positions = <KEYS_L KEYS_R THUMBS>;
         };
         kt_off: kt_off {
             compatible = "zmk,behavior-key-toggle";

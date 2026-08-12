@@ -136,8 +136,8 @@ hrm_l = HoldTap("hrm_l", flavor="tap-preferred", hold="&kp", tap="&kp", trigger_
 hrm_r = HoldTap("hrm_r", flavor="tap-preferred", hold="&kp", tap="&kp", trigger_pos="KEYS_L THUMBS", tapping_term_ms="TAPPING_TERM", quick_tap_ms="QUICK_TAP_MS", require_prior_idle_ms="PRIOR_IDLE_MS")
 hrl_l = HoldTap("hrl_l", flavor="tap-preferred", hold="&mo", tap="&kp", trigger_pos="KEYS_R THUMBS", tapping_term_ms="TAPPING_TERM", quick_tap_ms="QUICK_TAP_MS", require_prior_idle_ms="PRIOR_IDLE_MS")
 hrl_r = HoldTap("hrl_r", flavor="tap-preferred", hold="&mo", tap="&kp", trigger_pos="KEYS_L THUMBS", tapping_term_ms="TAPPING_TERM", quick_tap_ms="QUICK_TAP_MS", require_prior_idle_ms="PRIOR_IDLE_MS")
-thm_ht = HoldTap("thm", flavor="tap-preferred", hold="&kp", tap="&kp", trigger_pos="KEYS_L KEYS_R", tapping_term_ms="TAPPING_TERM", quick_tap_ms="QUICK_TAP_MS", require_prior_idle_ms="PRIOR_IDLE_MS")
-thl_ht = HoldTap("thl", flavor="tap-preferred", hold="&mo", tap="&kp", trigger_pos="KEYS_L KEYS_R", tapping_term_ms="TAPPING_TERM", quick_tap_ms="QUICK_TAP_MS", require_prior_idle_ms="PRIOR_IDLE_MS")
+thm_ht = HoldTap("thm", flavor="tap-preferred", hold="&kp", tap="&kp", trigger_pos="KEYS_L KEYS_R THUMBS", tapping_term_ms="TAPPING_TERM", quick_tap_ms="QUICK_TAP_MS", require_prior_idle_ms="PRIOR_IDLE_MS")
+thl_ht = HoldTap("thl", flavor="tap-preferred", hold="&mo", tap="&kp", trigger_pos="KEYS_L KEYS_R THUMBS", tapping_term_ms="TAPPING_TERM", quick_tap_ms="QUICK_TAP_MS", require_prior_idle_ms="PRIOR_IDLE_MS")
 
 # Home Row Mod Call Helpers
 def SL(key: str) -> HRMCall: return HRMCall("l", SFT, key)
