@@ -30,8 +30,12 @@ _build_single $board $shield $snippet $artifact *west_args:
         mkdir -p "{{ out }}" && cp "$build_dir/zephyr/zmk.bin" "{{ out }}/$artifact.bin"
     fi
 
+# generate keymaps from python configuration
+gen:
+    python3 config/keymap.py
+
 # build firmware for matching targets
-build expr *west_args:
+build expr *west_args: gen
     #!/usr/bin/env bash
     set -euo pipefail
     targets=$(just _parse_targets {{ expr }})

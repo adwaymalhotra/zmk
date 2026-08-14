@@ -5,8 +5,8 @@ Migrated Keymap Generation Script using the new pure generator architecture.
 import sys
 import os
 
-# Add workspace directory to python path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add config directory to python path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from generator import *
 
@@ -312,5 +312,5 @@ if __name__ == "__main__":
         tapping_term=TAPPING_TERM,
         combo_term=COMBO_TERM,
     )
-    output_directory = os.path.join(os.path.dirname(__file__), "../config")
+    output_directory = os.path.dirname(os.path.abspath(__file__))
     generator.generate_all(output_directory)

@@ -1,7 +1,12 @@
 """
 Unit tests for the new generator package.
 """
+import sys
+import os
 import unittest
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from generator import (
     Node, NodeProperty, PropertyType, Prop,
     Key, CtxKey, BehaviorCall, none, trans,
