@@ -14,6 +14,7 @@ class KeymapGenerator:
         thumbs: Optional[Union[Tuple, List, Dict]] = None,
         combos: Optional[List[Union[Combo, SimpleCombo, ModLayerCombo]]] = None,
         behaviors: Optional[List[Behavior]] = None,
+        conditional_layers: Optional[List[ConditionalLayer]] = None,
         thumb_base: Optional[Union[Tuple, List, Dict]] = None,
         thumb_extras: Optional[Dict] = None,
         prior_idle_ms: int = PRIOR_IDLE_MS,
@@ -27,6 +28,7 @@ class KeymapGenerator:
         self.quick_tap_ms = quick_tap_ms
         self.tapping_term = tapping_term
         self.combo_term = combo_term
+        self.conditional_layers = list(conditional_layers) if conditional_layers is not None else ConditionalLayer.all()
         
         all_registered = Behavior.all()
         if behaviors is not None:
@@ -192,7 +194,20 @@ class KeymapGenerator:
         lines.append("};")
         lines.append("")
 
-        # 4. Keymap Section
+        # 4. Conditional Layers Section
+        if self.conditional_layers:
+            lines.append("/ {")
+            lines.append("    conditional_layers {")
+            lines.append('        compatible = "zmk,conditional-layers";')
+            for cl in self.conditional_layers:
+                lines.append(cl.render_dts(os_target="default", layer_indices=layer_indices))
+                if cl.generate_mac and LayerRef(cl.then_layer).get_layer_name("mac") != LayerRef(cl.then_layer).get_layer_name("default"):
+                    lines.append(cl.render_dts(os_target="mac", layer_indices=layer_indices))
+            lines.append("    };")
+            lines.append("};")
+            lines.append("")
+
+        # 5. Keymap Section
         lines.append("/ {")
         lines.append("    keymap {")
         lines.append('        compatible = "zmk,keymap";')

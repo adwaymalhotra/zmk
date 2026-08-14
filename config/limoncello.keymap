@@ -1130,6 +1130,20 @@
 };
 
 / {
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        tri_layer_Fn {
+            if-layers = <Nav Sym>;
+            then-layer = <Fn>;
+        };
+        tri_layer_FnM {
+            if-layers = <NavM SymM>;
+            then-layer = <FnM>;
+        };
+    };
+};
+
+/ {
     keymap {
         compatible = "zmk,keymap";
 

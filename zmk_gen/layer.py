@@ -76,6 +76,61 @@ def normalize_layer_row(row: Any) -> Dict[str, List[Any]]:
     return {"left": [], "right": []}
 
 
+class ConditionalLayer:
+    """
+    Represents a ZMK Conditional Layer (tri-layer) configuration.
+    Activates `then_layer` when all `if_layers` are active.
+    """
+    _registry: List["ConditionalLayer"] = []
+
+    def __init__(
+        self,
+        then_layer: Union[str, "Layer", Any],
+        if_layers: List[Union[str, "Layer", Any]],
+        name: Optional[str] = None,
+        generate_mac: bool = True,
+    ):
+        self.then_layer = then_layer
+        self.if_layers = if_layers
+        self.name = name
+        self.generate_mac = generate_mac
+        if self not in ConditionalLayer._registry:
+            ConditionalLayer._registry.append(self)
+
+    @classmethod
+    def all(cls) -> List["ConditionalLayer"]:
+        return list(cls._registry)
+
+    @classmethod
+    def clear_registry(cls) -> None:
+        cls._registry.clear()
+
+    def get_node_name(self, os_target: str = "default") -> str:
+        if self.name:
+            suffix = "M" if os_target == "mac" else ""
+            return f"{self.name}{suffix}"
+        then_name = LayerRef(self.then_layer).get_layer_name(os_target)
+        return f"tri_layer_{then_name}"
+
+    def render_dts(
+        self,
+        os_target: str = "default",
+        layer_indices: Optional[Dict[str, int]] = None,
+        indent: str = "        ",
+    ) -> str:
+        node_name = self.get_node_name(os_target)
+        then_name = LayerRef(self.then_layer).get_layer_name(os_target)
+        if_names = [LayerRef(l).get_layer_name(os_target) for l in self.if_layers]
+
+        lines = [
+            f"{indent}{node_name} {{",
+            f"{indent}    if-layers = <{' '.join(if_names)}>;",
+            f"{indent}    then-layer = <{then_name}>;",
+            f"{indent}}};",
+        ]
+        return "\n".join(lines)
+
+
 class Layer:
     _registry: List["Layer"] = []
 
@@ -91,6 +146,8 @@ class Layer:
         is_raw_devicetree: bool = False,
         raw_content: str = "",
         layout: Optional[Union[str, List[Any]]] = None,
+        condition: Optional[List[Union[str, "Layer", Any]]] = None,
+        if_layers: Optional[List[Union[str, "Layer", Any]]] = None,
     ):
         self.name = name
         self.thumbs = thumbs
@@ -100,6 +157,14 @@ class Layer:
         self.generate_mac = generate_mac
         self.is_raw_devicetree = is_raw_devicetree
         self.raw_content = raw_content
+        self.condition = condition or if_layers
+
+        if self.condition:
+            ConditionalLayer(
+                then_layer=self,
+                if_layers=self.condition,
+                generate_mac=self.generate_mac,
+            )
 
         if rows is not None:
             self.rows = [normalize_layer_row(r) for r in rows]
@@ -405,5 +470,3 @@ class Layer:
             default_thumb_base=default_thumb_base,
             default_thumb_extras=default_thumb_extras,
         )
-
-

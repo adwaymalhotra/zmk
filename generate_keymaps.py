@@ -107,7 +107,7 @@ thumb_base = (
     [thm(CTL_GUI, "SPACE"), mo("Sym")]
 )
 thumb_extras = {
-    "left":  {"left": [mt("MET", "TAB"), lt("sys", "GRAVE")], "right": [mt("LALT", "ESC")]},
+    "left":  {"left": [mt("LGUI", "TAB"), lt("sys", "GRAVE")], "right": [mt("LALT", "ESC")]},
     "right": {"left": [mt("LALT", "RET")], "right": [lt("sys", "FSLH"), mt("SFT", "BSPC")]},
 }
 
@@ -239,6 +239,7 @@ fn = Layer(
         ([tog("sys"), none,    none,        none,        none],  ["CAPS", "C_BRI_DN", "C_BRI_UP", none,     "PSCRN"]),
     ],
     transparent_thumbs=True,
+    condition=[nav, sym],
 )
 
 sys_layer = Layer(
