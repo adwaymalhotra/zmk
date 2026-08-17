@@ -1,7 +1,8 @@
 """
 Behaviors subpackage re-exports.
 """
-from .hold_tap import HoldTap, SL, CL, AL, ML, SR, CR, AR, MR, SYL, SYR, hrm_l, hrm_r, hrl_l, hrl_r, thm_ht, thl_ht
+
+from .hold_tap import HoldTap, hrm_l, hrm_r, hrl_l, hrl_r, thm_ht, thl_ht
 from .macro import Macro
 from .mod_morph import ModMorph, NumMorph
 from .tri_state import TriState

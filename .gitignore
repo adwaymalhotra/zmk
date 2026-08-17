@@ -7,3 +7,4 @@ zephyr
 zmk
 draw/base.yaml
 __pycache__
+.venv
