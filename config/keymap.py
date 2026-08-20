@@ -152,7 +152,7 @@ limoncello = Keyboard(
         ["LT4", "LT3", "LT2", "LT1", "LT0", "RT0", "RT1", "RT2", "RT3", "RT4"],
         ["LM4", "LM3", "LM2", "LM1", "LM0", "RM0", "RM1", "RM2", "RM3", "RM4"],
         ["LB4", "LB3", "LB2", "LB1", "LB0", "RB0", "RB1", "RB2", "RB3", "RB4"],
-        ["LH3", "LH4", "LH1", "LH0", "LH2", "RH2", "RH0", "RH1", "RH4", "RH3"],
+        ["LH4", "LH3", "LH1", "LH0", "LH2", "RH2", "RH0", "RH1", "RH3", "RH4"],
     ], # fmt: skip
 )
 
@@ -234,8 +234,8 @@ sys_layer = CtxLayer("sys")
 
 # fmt: off
 thumbs = (
-    [mt(GUI_CTL, "TAB"), lt(sys_layer, "GRAVE"), mt(ALT, "ESC"), mo(nav), SFT],
-    [thm(CTL_GUI, "SPACE"), mo(sym), mt(ALT, "RET"), lt(sys_layer, "FSLH"), mt(SFT, "BSPC")],
+    [mt(ALT, "TAB"), lt(sys_layer, "GRAVE"), mt(GUI_CTL, "ESC"), mo(nav), SFT],
+    [thm(CTL_GUI, "SPACE"), mo(sym), mt(CTL_GUI, "RET"), lt(sys_layer, "FSLH"), mt(ALT, "BSPC")],
 ) 
 
 graphite.init(
